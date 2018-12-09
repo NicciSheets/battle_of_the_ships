@@ -36,6 +36,8 @@ class TddShipClass < Minitest::Test
 		assert_equal(0, ship2.damage)
 		2.times {|hit| ship2.hit}
 		assert_equal(false, ship2.sunk?)
+		2.times {|hit| ship2.hit}
+		assert_equal(true, ship2.sunk?)
 	end
 
 end

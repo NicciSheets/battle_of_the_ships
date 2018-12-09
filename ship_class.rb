@@ -13,5 +13,8 @@ class Ship
 		@damage +=1
 	end
 
-	
+	def sunk?
+		@length == @damage
+	end
+
 end
