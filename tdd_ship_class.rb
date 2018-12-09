@@ -27,4 +27,15 @@ class TddShipClass < Minitest::Test
 		# p "ship1 is #{ship1.damage} and ship2 is #{ship2.damage}"
 	end
 
+	def test_ship_sunk_if_length_equals_damage
+		ship1 = Ship.new(3)
+		assert_equal(0, ship1.damage)
+		3.times {|hit| ship1.hit}
+		assert_equal(true, ship1.sunk?)
+		ship2 = Ship.new(4)
+		assert_equal(0, ship2.damage)
+		2.times {|hit| ship2.hit}
+		assert_equal(false, ship2.sunk?)
+	end
+
 end
