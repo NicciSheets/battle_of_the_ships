@@ -34,8 +34,10 @@ class TddShipClass < Minitest::Test
 		assert_equal(true, ship1.sunk?)
 		ship2 = Ship.new(4)
 		assert_equal(0, ship2.damage)
+		# because the length of ship2 is 4, this returns false for whether or not the ship is sunk after being hit 2 times only
 		2.times {|hit| ship2.hit}
 		assert_equal(false, ship2.sunk?)
+		# if ship2 is hit 2 more times, it should return true for it being sunk
 		2.times {|hit| ship2.hit}
 		assert_equal(true, ship2.sunk?)
 	end
