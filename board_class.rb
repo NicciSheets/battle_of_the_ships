@@ -1,20 +1,23 @@
 class Board
 
+	DIFF_LEVEL_SIZE = {
+			"beginner"     => 12, 
+			"intermediate" => 24, 
+			"advanced"     => 36
+		}
+
 	attr_reader :difficulty
 
-DIFF_LEVEL = {
-		"beginner"     => 12, 
-		"intermediate" => 24, 
-		"advanced"     => 36
-	}
+
+# initializes Board class with the difficulty that user will eventually be able to choose (will be one of the keys from the constant DIFF_LEVEL)
+	def initialize(difficulty)
+		@difficulty = difficulty	
+	end
 
 
-def initialize(difficulty)
-	@difficulty = difficulty	
-end
-
-def grid_size?
-	DIFF_LEVEL[difficulty]
-end
+# this gives you the grid size that is associated with the diff level that is chosen
+	def grid_size?
+		DIFF_LEVEL_SIZE[difficulty]
+	end
 
 end
