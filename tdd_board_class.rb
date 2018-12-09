@@ -20,6 +20,13 @@ class TddBoardClass < Minitest::Test
 
 	def test_grid
 		board1 = Board.new("beginner")
-		p "board1 is #{board1.grid}"
+		beg_grid = board1.grid
+		# this is an array of 12 arrays that have 12 indexes in each array
+		assert_equal(12, beg_grid.length)
+		# this shows that there's individual arrays that hold 12 items each within the larger "grid" array
+		assert_equal(12, beg_grid[0].length)
+		assert_equal(12, beg_grid[11].length)
 	end
+
+
 end

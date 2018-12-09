@@ -21,6 +21,10 @@ class Board
 	end
 
 	def grid
-		Array.new(self.grid_size?) { Array.new(self.grid_size?) { 1.next } }		
+		val = nil
+		x = Array.new(self.grid_size?) { Array.new(self.grid_size?) { val } }	
+		x.each do |row|
+			row
+		end	
 	end
 end
