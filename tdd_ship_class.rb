@@ -8,6 +8,7 @@ class TddShipClass < Minitest::Test
 		assert_equal(Ship, ship1.class)
 		assert_equal(3, ship1.length)
 		assert_equal(0, ship1.damage)
+		assert_equal("cruiser", ship1.ship_name)
 	end
 
 	def test_adding_damage
@@ -40,6 +41,17 @@ class TddShipClass < Minitest::Test
 		# if ship2 is hit 2 more times, it should return true for it being sunk
 		2.times {|hit| ship2.hit}
 		assert_equal(true, ship2.sunk?)
+	end
+
+	def test_correct_ship_name_returns
+		ship1 = Ship.new(2)
+		assert_equal("battleship", ship1.ship_name)
+		ship2 = Ship.new(3)
+		assert_equal("cruiser", ship2.ship_name)
+		ship3 = Ship.new(4)
+		assert_equal("submarine", ship3.ship_name)
+		ship4 = Ship.new(5)
+		assert_equal("destroyer", ship4.ship_name)
 	end
 
 end

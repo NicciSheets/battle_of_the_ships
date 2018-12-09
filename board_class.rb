@@ -20,4 +20,7 @@ class Board
 		DIFF_LEVEL_SIZE[difficulty]
 	end
 
+	def grid
+		Array.new(self.grid_size?) { Array.new(self.grid_size?) { 1.next } }		
+	end
 end

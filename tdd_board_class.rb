@@ -17,4 +17,9 @@ class TddBoardClass < Minitest::Test
 		board3 = Board.new("advanced")
 		assert_equal(36, board3.grid_size?)
 	end
+
+	def test_grid
+		board1 = Board.new("beginner")
+		p "board1 is #{board1.grid}"
+	end
 end

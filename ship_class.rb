@@ -2,12 +2,21 @@ require_relative "board_class.rb"
 
 class Ship
 
-	attr_reader :length, :damage
+	SHIP_NAME = {
+		2 => "battleship",
+		3 => "cruiser",
+		4 => "submarine",
+		5 => "destroyer"
+	}
+
+	attr_reader :length, :damage, :ship_name
+
 
 # initializes with length of the ship (either 2, 3 or 4) and starts out with 0 damage
 	def initialize(length)
 		@length = length
 		@damage = 0
+		@ship_name = SHIP_NAME[length]
 	end
 
 
