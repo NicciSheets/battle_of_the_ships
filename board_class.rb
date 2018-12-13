@@ -69,7 +69,24 @@ class Board
 
 
 
-
+def grid_hash
+    	board = Hash.new
+    	new_row = []
+    	self.grid.each do |row|
+    		# p "row is #{row}"
+    		row.each do |space|
+    			# p "space is #{space}"
+        		board["#{space}"] = "*"
+        	end
+    	end
+    	board.each_key do |key|
+    		# p "key is #{key[0]}"
+    		board["#{key}"] = "*"
+    	end
+			# key.each_slice(self.grid_size) {|space| (new_row << space)}
+			# p "new_row is #{new_row}"
+			board
+    end
 
 
 
@@ -90,9 +107,9 @@ class Board
 
 end
 
-# board1 = Board.new("beginner")
+board1 = Board.new("beginner")
 # board1.pretty_grid
-# p board1.grid.class
+p board1.grid_hash
 
 
 
