@@ -38,6 +38,11 @@ class Board
 
 # this makes the y-axis numbers for the grid, mostly used for labeling the grid, but also to make the space coordinates held within
     def y_grid
+    	numbers = []
+    	(1..self.grid_size).each do |i|
+    		numbers << i.to_s
+    	end
+    	numbers
     end
 
 # this lays out the grid according to the size for each difficulty level, as an array of arrays
@@ -57,8 +62,8 @@ class Board
 
 end
 
-# board1 = Board.new("intermediate")
-# p board1.x_grid
+# board1 = Board.new("advanced")
+# p board1.y_grid
 
 
 
