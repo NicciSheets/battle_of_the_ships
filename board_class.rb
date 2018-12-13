@@ -36,6 +36,9 @@ class Board
     end
 
 
+# this makes the y-axis numbers for the grid, mostly used for labeling the grid, but also to make the space coordinates held within
+    def y_grid
+    end
 
 # this lays out the grid according to the size for each difficulty level, as an array of arrays
 # useful for seeing what grid looks like in terminal
