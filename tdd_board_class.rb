@@ -46,4 +46,33 @@ class TddBoardClass < Minitest::Test
 		assert_equal(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36"], grid3)
 	end
 
+	def test_grid
+		board1 = Board.new("beginner")
+		grid = board1.grid
+		assert_equal(Hash, grid.class)
+		assert_equal(144, grid.length)
+		assert_equal(true, grid.has_key?("A1"))
+		assert_equal(true, grid.has_key?("A12"))
+		assert_equal(true, grid.has_key?("L1"))
+		assert_equal(true, grid.has_key?("L12"))
+		board2 = Board.new("intermediate")
+		grid2 = board2.grid
+		assert_equal(Hash, grid2.class)
+		assert_equal(576, grid2.length)
+		assert_equal(true, grid2.has_key?("A1"))
+		assert_equal(true, grid2.has_key?("A24"))
+		assert_equal(true, grid2.has_key?("X1"))
+		assert_equal(true, grid2.has_key?("X24"))
+		board3 = Board.new("advanced")
+		grid3 = board3.grid
+		assert_equal(Hash, grid3.class)
+		assert_equal(1296, grid3.length)
+		assert_equal(true, grid3.has_key?("A1"))
+		assert_equal(true, grid3.has_key?("A36"))
+		assert_equal(true, grid3.has_key?("j1"))
+		assert_equal(true, grid3.has_key?("j36"))
+		
+	end
+
+
 end
