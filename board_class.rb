@@ -80,26 +80,9 @@ def grid_hash
     	board
     end
 
-
-
-# this lays out the grid according to the size for each difficulty level, as an array of arrays
-# useful for seeing what grid looks like in terminal
- #    def grid
-	# 	grid_letter = {12 => 76.chr, 24 => 88.chr, 36 => 106.chr}
-	# 	letter99 = grid_letter[grid_size]
-	# 	board99 = Hash.new
-	# 	(65.chr..letter99).each do |letter|
-	# 		(1..self.grid_size).each do |i|
-	# 			board99["#{letter.to_s.gsub(/[^A-Za-z]/, "")}#{i}"] = "*"
-	# 		end
-	# 	end
-	# 	board99
-	# end
-
-
 end
 
-board1 = Board.new("beginner")
+board1 = Board.new("advanced")
 # board1.pretty_grid
 p board1.grid_hash
 
