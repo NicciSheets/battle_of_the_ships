@@ -10,15 +10,22 @@ class TddBoardClass < Minitest::Test
 		assert_equal(12, board1.grid_size)
 	end
 
-	def test_grid
+	def test_x_grid
 		board1 = Board.new("beginner")
-		beg_grid = board1.grid
-		# p beg_grid
-		# this is an array of 12 arrays that have 12 indexes in each array
-		assert_equal(12, beg_grid.length)
-		# this shows that there's individual arrays that hold 12 items each within the larger "grid" array
-		assert_equal(12, beg_grid[0].length)
-		assert_equal(12, beg_grid[11].length)
+		grid = board1.x_grid
+		assert_equal(Array, grid.class)
+		assert_equal(12, grid.length)
+		assert_equal(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"], grid)
+		board2 = Board.new("intermediate")
+		grid2 = board2.x_grid
+		assert_equal(Array, grid2.class)
+		assert_equal(24, grid2.length)
+		assert_equal(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X"], grid2)
+		board3 = Board.new("advanced")
+		grid3 = board3.x_grid
+		assert_equal(Array, grid3.class)
+		assert_equal(36, grid3.length)
+		assert_equal(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"], grid3)
 	end
 
 
