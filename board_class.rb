@@ -45,17 +45,33 @@ class Board
     	numbers
     end
 
-    def grid()
-    	x_axis = self.x_grid
-    	y_axis = self.y_grid
-    	board99 = Hash.new
-    	x_axis.each do |letter|
-    		y_axis.each do |number|
-    			board99["#{letter}#{number}"] = "*"
+
+# this makes a multidimensional array using the x_grid and y_grid for each of the coordinates held within the grid for each difficulty level
+    def grid
+    	board99 = []
+    	self.x_grid.each do |letter|
+    		self.y_grid.each do |number|
+    			board99 << "#{letter}#{number}"
     		end
     	end
-    	board99
+    	pretty_board = []
+    	board99.each_slice(self.grid_size) {|space| (pretty_board << space)}
+    	pretty_board
     end
+
+
+# this makes it so much easier to see on the board, each row is broken down into separate arrays for console
+    def pretty_grid
+    	self.grid.each do |row|
+    		p row
+    	end
+    end
+
+
+
+
+
+
 
 # this lays out the grid according to the size for each difficulty level, as an array of arrays
 # useful for seeing what grid looks like in terminal
@@ -75,7 +91,10 @@ class Board
 end
 
 # board1 = Board.new("beginner")
-# p board1.grid.index("A12")
+# board1.pretty_grid
+# p board1.grid.class
+
+
 
 
 
