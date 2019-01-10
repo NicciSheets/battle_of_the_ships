@@ -15,7 +15,7 @@ class Ship
 
 	attr_reader :length, :type, :damage
 
-	# def to_s
-	# 	"#{@type}"
-	# end
+	def to_s
+		"#{@type}"
+	end
 end
