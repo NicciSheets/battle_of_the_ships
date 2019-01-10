@@ -76,5 +76,9 @@ class TddBoardClass < Minitest::Test
 		assert_equal(true, grid3[35].include?("j36"))
 	end
 
-
+	def test_x_axis_ship_start
+		ship1 = Ship.new(2, "A4")
+		board1 = Board.new("beginner")
+		p "board1.x_grid2grid is #{board1.x_grid2grid}"
+	end
 end

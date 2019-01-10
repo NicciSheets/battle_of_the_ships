@@ -1,34 +1,21 @@
-require_relative "board_class.rb"
-
 class Ship
 
-	SHIP_NAME = {
-		2 => "battleship",
-		3 => "cruiser",
-		4 => "submarine",
-		5 => "destroyer"
+	SHIP_INFO = {
+		:battleship => 2,
+		:cruiser    => 3,
+		:submarine  => 4,
+		:destroyer  => 5
 	}
 
-	attr_reader :length, :damage, :ship_name
-
-
-# initializes with length of the ship (either 2, 3 or 4) and starts out with 0 damage
-	def initialize(length)
-		@length = length
+	def initialize(type)
+		@type = type
+		@length = SHIP_INFO[type]
 		@damage = 0
-		@ship_name = SHIP_NAME[length]
 	end
 
+	attr_reader :length, :type, :damage
 
-# if the ship gets hit by opponent, @damage is increased by 1
-	def hit
-		@damage +=1
-	end
-
-
-# if the ship's damage is equal to its length, then the ship is considered sunk? and returns true for this method
-	def sunk?
-		@length == @damage
-	end
-
+	# def to_s
+	# 	"#{@type}"
+	# end
 end
