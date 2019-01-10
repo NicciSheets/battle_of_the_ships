@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require_relative "ship_class.rb"
+require_relative "junk_ship_class.rb"
 
 class TddShipClass < Minitest::Test
 
