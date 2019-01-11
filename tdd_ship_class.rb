@@ -49,6 +49,16 @@ class TddShipClass < Minitest::Test
 		2.times { |hit| battleship.hit }
 		# p battleship
 		assert_equal(true, battleship.sunk?)
+		cruiser = Ship.new(:cruiser)
+		assert_equal(false, cruiser.sunk?)
+		cruiser.hit
+		assert_equal(false, cruiser.sunk?)
+		cruiser.hit
+		# p cruiser
+		assert_equal(false, cruiser.sunk?)
+		cruiser.hit
+		# p cruiser
+		assert_equal(true, cruiser.sunk?)
 	end
 
 end
