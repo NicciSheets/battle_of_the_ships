@@ -8,6 +8,7 @@ class Board
 		:advanced     => 36
 	}
 
+# initializes the Board class with grid size attribute(how many cells in each row/column) and based on the difficulty attribute chosen
 	def initialize(difficulty)
 		@difficulty = difficulty
 		@grid_size = Grid_Size[@difficulty]

@@ -20,18 +20,22 @@ class Cell < Ship
 
 	attr_reader :coordinates, :status
 
+# changes the status of the cell to "X" if there is a hit
 	def hit_ship
 		@status = :hit
 	end
 
+# changes status of the cell to "0" if there was a miss attempt
 	def miss_ship
 		@status = :miss
 	end
 
+# returns the string representation of what the cell's value is(what it's holding)
 	def to_s
 		Status[@status]
 	end
 
+# allows you to place a certain ship in the cell and alters the status of that cell to appropriate symbol(B, C, S, D)
 	def place_ship(type)
 		Ship.new(type)
 		@status = Status[type]
