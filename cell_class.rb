@@ -1,6 +1,6 @@
 require_relative "ship_class.rb"
 
-class Cell
+class Cell < Ship
 
 	Status = {
 		:empty      => ".", 
@@ -32,5 +32,13 @@ class Cell
 		Status[@status]
 	end
 
-
+	def ship(type)
+		Ship.new(type)
+		@status = Status[type]
+	end
 end
+
+cell = Cell.new("B4")
+p cell
+p cell.ship(:battleship)
+p cell
