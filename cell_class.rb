@@ -21,7 +21,7 @@ class Cell < Ship
 	attr_reader :coordinates, :status
 
 # changes the status of the cell to "X" if there is a hit
-	def hit_ship
+	def hit
 		@status = :hit
 	end
 
@@ -42,7 +42,9 @@ class Cell < Ship
 	end
 end
 
-cell = Cell.new("B4")
-p cell
-p cell.place_ship(:battleship)
-p cell
+# cell = Cell.new("B4")
+# p cell
+# p cell.place_ship(:battleship)
+# p cell
+# p cell.hit
+# p cell
