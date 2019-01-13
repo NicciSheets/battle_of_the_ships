@@ -32,7 +32,7 @@ class Cell < Ship
 		Status[@status]
 	end
 
-	def ship(type)
+	def place_ship(type)
 		Ship.new(type)
 		@status = Status[type]
 	end
@@ -40,5 +40,5 @@ end
 
 cell = Cell.new("B4")
 p cell
-p cell.ship(:battleship)
+p cell.place_ship(:battleship)
 p cell
