@@ -12,17 +12,25 @@ class Cell < Ship
 		:destroyer  => "D"
 	}
 
-# intiliazes Cell class with @coordinates for each individual cell
+# intiliazes Cell class with @coordinates for each individual cell and empty status(".")
 	def initialize(coordinates)
 		@coordinates = coordinates
 		@status = :empty
+		@damage = Ship.new(type).damage
 	end
 
-	attr_reader :coordinates, :status
+	attr_reader :coordinates, :status, :damage
+
+
+	def cell_status
+		Status[@status]
+	end
 
 # changes the status of the cell to "X" if there is a hit
 	def hit
+		@damage = Ship.new(type).hit
 		@status = :hit
+
 	end
 
 # changes status of the cell to "0" if there was a miss attempt
@@ -38,7 +46,7 @@ class Cell < Ship
 # allows you to place a certain ship in the cell and alters the status of that cell to appropriate symbol(B, C, S, D)
 	def place_ship(type)
 		Ship.new(type)
-		@status = Status[type]
+		@status = type
 	end
 end
 
@@ -47,4 +55,5 @@ end
 # p cell.place_ship(:battleship)
 # p cell
 # p cell.hit
+# p cell.damage
 # p cell
