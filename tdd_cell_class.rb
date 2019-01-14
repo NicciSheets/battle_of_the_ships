@@ -47,5 +47,11 @@ class TddCellClass < Minitest::Test
 	end
 
 	def test_cell_hit_changes_damage_to_ship
+		cell = Cell.new("B4")
+		cell.place_ship(:cruiser)
+		cell.hit
+		assert_equal(:hit, cell.status)
+		assert_equal("X", cell.cell_status)
+		assert_equal(1, cell.damage)
 	end
 end
