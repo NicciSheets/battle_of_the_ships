@@ -14,7 +14,9 @@ class Ship
 		@damage = 0
 	end
 
-	attr_reader :length, :type, :damage
+	attr_reader :length, :type
+
+	attr_accessor :damage
 
 # custom return for ship class
 	def to_s

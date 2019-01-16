@@ -1,6 +1,6 @@
 require_relative "ship_class.rb"
 
-class Cell < Ship
+class Cell
 
 	Status = {
 		:empty      => ".", 
@@ -16,10 +16,12 @@ class Cell < Ship
 	def initialize(coordinates)
 		@coordinates = coordinates
 		@status = :empty
-		@damage = Ship.new(type).damage
+		# @damage = Ship.new(type).damage
 	end
 
-	attr_reader :coordinates, :status, :damage
+	attr_reader :coordinates, :status
+
+	attr_accessor :damage
 
 
 	def cell_status
@@ -28,9 +30,8 @@ class Cell < Ship
 
 # changes the status of the cell to "X" if there is a hit
 	def hit
-		@damage = Ship.new(type).hit
+		# @damage = Ship.new(type).hit
 		@status = :hit
-
 	end
 
 # changes status of the cell to "0" if there was a miss attempt
@@ -48,12 +49,20 @@ class Cell < Ship
 		Ship.new(type)
 		@status = type
 	end
-end
 
+	# def ship
+	# 	ship = self.place_ship(type)
+	# 	Status[ship]
+
+	
+	# end
+end
+# ship - Ship.new(:battleship)
 # cell = Cell.new("B4")
 # p cell
 # p cell.place_ship(:battleship)
 # p cell
 # p cell.hit
+# p cell.ship
 # p cell.damage
 # p cell
