@@ -19,8 +19,23 @@ class Board
 	def initialize(difficulty)
 		@difficulty = difficulty
 		@grid_size = GRID_SIZE[@difficulty]
+		@grid_row = ROW.take(@grid_size)
+		@grid_column = COLUMN.take(@grid_size)
 	end
 
-	attr_reader :difficulty, :grid_size
+	attr_reader :difficulty, :grid_size, :grid_row, :grid_column
+
+	def grid_it
+		grid = []
+		@grid_row.each do 
+			@grid_column.each do 
+				grid << Cell.new()
+			end
+		end
+		grid
+	end
 
 end
+# 
+# p board = Board.new(:beginner)
+# p board.grid_it
