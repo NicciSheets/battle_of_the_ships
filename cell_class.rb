@@ -2,7 +2,7 @@ require_relative "ship_class.rb"
 
 class Cell
 
-	Status = {
+	STATUS = {
 		:empty      => ".", 
 		:hit        => "X",
 		:miss       => "0", 
@@ -16,53 +16,49 @@ class Cell
 	def initialize(coordinates)
 		@coordinates = coordinates
 		@status = :empty
-		# @damage = Ship.new(type).damage
 	end
 
 	attr_reader :coordinates, :status
 
-	attr_accessor :damage
-
-
-	def cell_status
-		Status[@status]
+# returns the status of the cell with symbol in string from above STATUS hash, the second STATUE[@status.type] is used when there is a Ship object pointer as the status
+	def render_status
+		STATUS[@status] || STATUS[@status.type]
 	end
 
-# changes the status of the cell to "X" if there is a hit
+# changes the status of the cell to :hit if there is a hit
 	def hit
-		# @damage = Ship.new(type).hit
-		@status = :hit
+		# self.status.damage += 1
+		@status = :hit 
 	end
 
-# changes status of the cell to "0" if there was a miss attempt
-	def miss_ship
+# changes status of the cell to :miss if there was a miss attempt
+	def miss
 		@status = :miss
 	end
 
-# returns the string representation of what the cell's value is(what it's holding)
-	def to_s
-		Status[@status]
-	end
-
-# allows you to place a certain ship in the cell and alters the status of that cell to appropriate symbol(B, C, S, D)
+# allows you to place a certain ship in the cell and makes that ship object pointer the status
 	def place_ship(type)
-		Ship.new(type)
+		# Ship.new(type)
 		@status = type
 	end
 
-	# def ship
-	# 	ship = self.place_ship(type)
-	# 	Status[ship]
-
-	
-	# end
 end
-# ship - Ship.new(:battleship)
-# cell = Cell.new("B4")
-# p cell
-# p cell.place_ship(:battleship)
-# p cell
-# p cell.hit
-# p cell.ship
-# p cell.damage
-# p cell
+
+
+# cruiser = Ship.new(:cruiser)
+# cell_1 = Cell.new("B4")
+# p cruiser
+# p cell_1
+# p cell_1.render_status
+# p cell_1.place_ship(cruiser)
+# p cell_1
+# p cell_1.render_status
+# p cell_1.status.damage
+# p cell_1.status.type
+# p cruiser.hit
+# p cell_1.hit
+# p cell_1
+# p cell_1.render_status
+# p cruiser
+# p cruiser.hit
+# p cruiser.sunk?
