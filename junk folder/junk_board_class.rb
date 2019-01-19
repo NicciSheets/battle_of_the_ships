@@ -196,16 +196,16 @@ class Board
 end
 
 
-# board1 = Board.new("beginner") 
-# p board1.grid2_ship("D3")
-# p "board1.grid2_ship('D3') is #{board1.grid2_ship('D3')}"
-# board99.pretty_grid_ship
-# p "board99 is #{board99}"
-# p board1.x_grid2grid
-# p "board1.y_grid2grid('D3') is #{board1.y_grid2grid('D3')}"
-# p board1.grid2
-# p board1.ships_2b_placed
-# 
+board1 = Board.new("beginner") 
+p board1.grid2_ship("D3")
+p "board1.grid2_ship('D3') is #{board1.grid2_ship('D3')}"
+board99.pretty_grid_ship
+p "board99 is #{board99}"
+p board1.x_grid2grid
+p "board1.y_grid2grid('D3') is #{board1.y_grid2grid('D3')}"
+p board1.grid2
+p board1.ships_2b_placed
+
 
 
 

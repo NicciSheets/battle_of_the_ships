@@ -40,20 +40,32 @@ class Cell
 # allows you to place a certain ship in the cell and makes that ship object pointer the status
 	def place_ship(ship)
 		# Ship.new(type)
-		@status = ship	
+		@status = STATUS[ship.type]
 	end
 
 	def render_without_ships
-		STATUS[@status] = "."
+		if @status == "B"
+			@status = "."
+		elsif @status == "C"
+			@status = "."
+		elsif @status == "S"
+			@status = "."
+		elsif @status == "D"
+			@status = "."
+		else
+			@status
+		end
 	end
 
 	def render_with_ships
-		STATUS[@status] = STATUS[@status.type]
+		@status
+		# STATUS[@status] = STATUS[@status.type] 
+
 	end
 
-	def to_s
-		"#{STATUS.key(self.status)}"
-	end
+	# def to_s
+	# 	"#{STATUS.key(self.status)}"
+	# end
 end
 
 
