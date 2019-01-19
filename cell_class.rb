@@ -33,7 +33,6 @@ class Cell
 
 # allows you to place a certain ship in the cell and makes that ship object pointer the status
 	def place_ship(ship)
-		# Ship.new(type)
 		@status = STATUS[ship.type]
 	end
 

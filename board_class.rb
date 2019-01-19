@@ -1,4 +1,5 @@
 require_relative "cell_class.rb"
+require_relative "ship_class.rb"
 
 class Board
 
@@ -82,17 +83,21 @@ class Board
 		end
 	end
 	
+	def valid_placement?(ship, cells)
+		ship
+		ship_length = ship.length
+		ship_length == cells.length
+	end
 end
 
 
 # p board = Board.new(:beginner)
-#  cruiser = Ship.new(:cruiser)
-
+# p cruiser = Ship.new(:cruiser)
 #  p board.cell_coordinates("A1")
 #  p board.cell_coordinates("A1").coordinates
 #  p board.cell_coordinates("A1").status
-#  p board.cell_coordinates("A1").place_ship(cruiser)
-#  p board.cell_coordinates("A2").place_ship(cruiser)
+#  p board.cell_coordinates("A1").place_ship(Ship.new(:cruiser))
+#  p board.cell_coordinates("A2").place_ship(Ship.new(:cruiser))
 #  # p board.no_show_ships
 #  # board.pretty_no_show
 #  p board.show_ships
@@ -100,9 +105,13 @@ end
 #  p board.cell_coordinates("A1")
 #  p board.cell_coordinates("A1").hit
 #  p cruiser.hit
+#  p board.cell_coordinates("A2").hit
+#  p cruiser.hit
 #  p cruiser
+#  p cruiser.sunk?
 # # p board.no_show_ships
 # # board.pretty_no_show
 # p board.show_ships
+# p board.grid[0][0]
 # board.pretty_show
-#  
+# p board.valid_placement?(cruiser, ["A1", "A2", "A3"])
