@@ -85,24 +85,24 @@ class Board
 end
 
 
-p board = Board.new(:beginner)
- cruiser = Ship.new(:cruiser)
+# p board = Board.new(:beginner)
+#  cruiser = Ship.new(:cruiser)
 
- p board.cell_coordinates("A1")
- p board.cell_coordinates("A1").coordinates
- p board.cell_coordinates("A1").status
- p board.cell_coordinates("A1").place_ship(cruiser)
- p board.cell_coordinates("A2").place_ship(cruiser)
- # p board.no_show_ships
- # board.pretty_no_show
- p board.show_ships
- board.pretty_show
- p board.cell_coordinates("A1")
- p board.cell_coordinates("A1").hit
- p cruiser.hit
- p cruiser
-# p board.no_show_ships
-# board.pretty_no_show
-p board.show_ships
-board.pretty_show
- 
+#  p board.cell_coordinates("A1")
+#  p board.cell_coordinates("A1").coordinates
+#  p board.cell_coordinates("A1").status
+#  p board.cell_coordinates("A1").place_ship(cruiser)
+#  p board.cell_coordinates("A2").place_ship(cruiser)
+#  # p board.no_show_ships
+#  # board.pretty_no_show
+#  p board.show_ships
+#  board.pretty_show
+#  p board.cell_coordinates("A1")
+#  p board.cell_coordinates("A1").hit
+#  p cruiser.hit
+#  p cruiser
+# # p board.no_show_ships
+# # board.pretty_no_show
+# p board.show_ships
+# board.pretty_show
+#  
