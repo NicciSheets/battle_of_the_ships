@@ -20,12 +20,6 @@ class Cell
 
 	attr_reader :coordinates, :status
 
-# returns the status of the cell with symbol in string from above STATUS hash, the second STATUE[@status.type] is used when there is a Ship object pointer as the status
-	# def render_status
-	# 	# @type = @status
-	# 	STATUS[@status]
-	# end
-
 # changes the status of the cell to :hit if there is a hit
 	def hit
 		# self.status.damage += 1
@@ -43,6 +37,7 @@ class Cell
 		@status = STATUS[ship.type]
 	end
 
+# does not show the ships status symbol, but instead "hides" it under the empty status "." - if there is a hit or a miss, it shows it, however
 	def render_without_ships
 		if @status == "B"
 			@status = "."
@@ -57,35 +52,11 @@ class Cell
 		end
 	end
 
+# shows all cell status's as they are
 	def render_with_ships
 		@status
-		# STATUS[@status] = STATUS[@status.type] 
-
 	end
-
-	# def to_s
-	# 	"#{STATUS.key(self.status)}"
-	# end
 end
-
-
-# cruiser = Ship.new(:cruiser)
-# cell_1 = Cell.new("B4")
-# p cruiser
-# p cell_1
-# p cell_1.render_status
-# p cell_1.place_ship(cruiser)
-# p cell_1
-# p cell_1.render_status
-# p cell_1.status.damage
-# p cell_1.status.type
-# p cruiser.hit
-# p cell_1.hit
-# p cell_1
-# p cell_1.render_status
-# p cruiser
-# p cruiser.hit
-# p cruiser.sunk?
 
 
 # !!!!!Thinking of way to not show opponents ships on board by rendering the ship status symbols as ".", should still keep the ship object pointer in its place, though.
