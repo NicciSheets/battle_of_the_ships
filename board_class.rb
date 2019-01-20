@@ -83,11 +83,34 @@ class Board
 		end
 	end
 	
+	# def valid_placement?(ship, cells)
+	# 	ship
+	# 	ship_length = ship.length
+	# 	ship_length == cells.length
+	# end
+
 	def valid_placement?(ship, cells)
 		ship
-		ship_length = ship.length
-		ship_length == cells.length
+		row_arr = []
+		column_arr = []
+		cells.each do |row|
+			row_arr << row[0]
+		end
+		cells.each do |column| 
+			column_arr << column[1]
+		end
+		if column_arr.uniq.count == 1
+			true
+		else
+			if row_arr.uniq.count == 1
+				true
+			else
+				false
+			end
+		end
 	end
+
+
 end
 
 
@@ -114,4 +137,8 @@ end
 # p board.show_ships
 # p board.grid[0][0]
 # board.pretty_show
+# p board.valid_placement?(cruiser, ["A1", "A2", "B3"])
 # p board.valid_placement?(cruiser, ["A1", "A2", "A3"])
+# p board.valid_placement?(cruiser, ["A1", "B1", "C1"])
+# p board.valid_placement?(cruiser, ["A1", "B2", "C3"])
+

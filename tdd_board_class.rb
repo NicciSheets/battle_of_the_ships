@@ -16,13 +16,19 @@ class TddBoardClass < Minitest::Test
 
 
 
-	def test_valid_placement_cells_versis_ship_length
+	def test_valid_placement_for_cells_on_board
 		board = Board.new(:beginner)
 		cruiser = Ship.new(:cruiser)
 		cells = ["A1", "A2", "A3"]
-		cells2 = ["A1", "A2"]
+		cells2 = ["A1", "C2"]
 		assert_equal(true, board.valid_placement?(cruiser, cells))
 		assert_equal(false, board.valid_placement?(cruiser, cells2))
+		cells3 = ["A1", "A2", "B3"]
+		assert_equal(false, board.valid_placement?(cruiser, cells3))
+		cells4 = ["A1", "B1", "C1"]
+		assert_equal(true, board.valid_placement?(cruiser, cells4))
+		cells5 = ["A1", "B2", "C3"]
+		assert_equal(false, board.valid_placement?(cruiser, cells5))
 	end
 
 end
