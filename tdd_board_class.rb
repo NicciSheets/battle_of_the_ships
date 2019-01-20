@@ -29,6 +29,8 @@ class TddBoardClass < Minitest::Test
 		assert_equal(true, board.valid_placement?(cruiser, cells4))
 		cells5 = ["A1", "B2", "C3"]
 		assert_equal(false, board.valid_placement?(cruiser, cells5))
+		cells6 = ["A1", "A2"]
+		assert_equal(false, board.valid_placement?(cruiser, cells6))
 	end
 
 end

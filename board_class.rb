@@ -82,13 +82,7 @@ class Board
 			p row
 		end
 	end
-	
-	# def valid_placement?(ship, cells)
-	# 	ship
-	# 	ship_length = ship.length
-	# 	ship_length == cells.length
-	# end
-
+# checks the length of the ship is equal to how many cells where you're wanting to place the ship, if equal is true; also checks that the cells are all beside each other horizontally or vertically, and if yes to either, returns true; otherwise, false 
 	def valid_placement?(ship, cells)
 		ship
 		row_arr = []
@@ -99,14 +93,18 @@ class Board
 		cells.each do |column| 
 			column_arr << column[1]
 		end
-		if column_arr.uniq.count == 1
-			true
-		else
-			if row_arr.uniq.count == 1
+		if ship.length == cells.length
+			if column_arr.uniq.count == 1
 				true
 			else
-				false
+				if row_arr.uniq.count == 1
+					true
+				else
+					false
+				end
 			end
+		else
+			false
 		end
 	end
 
