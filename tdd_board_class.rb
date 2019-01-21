@@ -53,6 +53,16 @@ class TddBoardClass < Minitest::Test
 		assert_equal(["A", "C", "A"], beginner.row_arr(cells2))
 	end
 
+	def test_column_arr_returns_only_column_numbers_for_cell_array
+		beginner = Board.new(:beginner)
+		cells = [["A", "1"], ["A", "2"], ["A", "3"]]
+		assert_equal(["1", "2", "3"], beginner.column_arr(cells))
+		cells2 = [["A", "1"], ["B", "1"], ["C", "1"]]
+		assert_equal(["1", "1", "1"], beginner.column_arr(cells2))
+	end
+
+
+
 
 
 
