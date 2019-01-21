@@ -71,8 +71,7 @@ class Board
 	def pretty_no_show
 		p @grid_size.cons
 		puts "   1   2   3   4   5"
-		self.no_show_ships.each do |row|
-			
+		self.no_show_ships.each do |row|	
 			puts "\nA #{row}"
 		end
 	end

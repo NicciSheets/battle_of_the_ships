@@ -45,6 +45,19 @@ class TddBoardClass < Minitest::Test
 		assert_equal(".", beginner.cell_coordinates("A", "1").status)
 	end
 
+	def test_row_array_returns_only_row_letters_for_cell_array
+		beginner = Board.new(:beginner)
+		cells = [["A", "1"], ["A", "2"], ["A", "3"]]
+		assert_equal(["A", "A", "A"], beginner.row_arr(cells))
+		cells2 = [["A", "1"], ["C", "2"], ["A", "3"]]
+		assert_equal(["A", "C", "A"], beginner.row_arr(cells2))
+	end
+
+
+
+
+
+
 	def test_valid_placement_for_cells_on_board
 		board = Board.new(:beginner)
 		cruiser = Ship.new(:cruiser)
