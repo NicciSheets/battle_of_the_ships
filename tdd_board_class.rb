@@ -26,14 +26,24 @@ class TddBoardClass < Minitest::Test
 		assert_equal(1296, advanced.coordinates.count)
 	end
 
-	def test_row_index_returns_correctly_for_coordinates
+	def test_row_index_returns_correctly_for_coordinates_letter_row
 		beginner = Board.new(:beginner)
 		assert_equal(0, beginner.row_index("A", "1"))
 		assert_equal(2, beginner.row_index("C", "4"))
 	end
 
+	def test_column_index_returns_correctly_for_coordinates_number_column
+		beginner = Board.new(:beginner)
+		assert_equal(0, beginner.column_index("A", "1"))
+		assert_equal(4, beginner.column_index("A", "5"))
+	end
 
-
+	def test_returns_cell_coordinates_using_rowindex_and_columnindex
+		beginner = Board.new(:beginner)
+		assert_equal(Cell, beginner.cell_coordinates("A", "1").class)
+		assert_equal("A1", beginner.cell_coordinates("A", "1").coordinates)
+		assert_equal(".", beginner.cell_coordinates("A", "1").status)
+	end
 
 	def test_valid_placement_for_cells_on_board
 		board = Board.new(:beginner)
