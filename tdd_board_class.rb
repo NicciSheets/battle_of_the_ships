@@ -107,6 +107,15 @@ class TddBoardClass < Minitest::Test
 		assert_equal(false, beginner.valid_placement_empty?(battleship, cells2))
 	end
 
+	def test_cells_are_part_of_grid_row_if_outside_of_available_row_returns_false
+		beginner = Board.new(:beginner)
+		cruiser = Ship.new(:cruiser)
+		cells = [["A", "1"], ["A", "2"], ["A", "3"]]
+		assert_equal(true, beginner.valid_row?(cruiser, cells))
+		cells2 = [["A", "1"], ["A", "2"], ["Z", "3"]]
+		assert_equal(false, beginner.valid_row?(cruiser, cells2))
+	end
+
 
 
 	def test_valid_placement_for_cells_on_board
