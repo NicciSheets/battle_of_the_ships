@@ -96,7 +96,16 @@ class TddBoardClass < Minitest::Test
 		assert_equal(false, beginner.valid_placement_length?(cruiser, cells2))
 	end
 		
-
+	def test_returns_true_if_status_of_each_cell_is_empty_only
+		beginner = Board.new(:beginner)
+		cruiser = Ship.new(:cruiser)
+		battleship = Ship.new(:battleship)
+		cells = [["A", "1"], ["A", "2"], ["A", "3"]]
+		assert_equal(true, beginner.valid_placement_empty?(cruiser, cells))
+		beginner.cell_coordinates("A", "1").place_ship(Ship.new(:cruiser))
+		cells2 = [["A", "1"], ["A", "2"]]
+		assert_equal(false, beginner.valid_placement_empty?(battleship, cells2))
+	end
 
 
 
