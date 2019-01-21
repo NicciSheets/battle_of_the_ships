@@ -61,6 +61,21 @@ class TddBoardClass < Minitest::Test
 		assert_equal(["1", "1", "1"], beginner.column_arr(cells2))
 	end
 
+	def test_valid_placement_row_returns_true_if_cells_in_same_row_in_consecutive_columns
+		beginner = Board.new(:beginner)
+		cruiser = Ship.new(:cruiser)
+		cells = [["A", "1"], ["A", "2"], ["A", "3"]]
+		assert_equal(true, beginner.valid_placement_row?(cruiser, cells))
+		cells2 = [["A", "1"], ["A", "2"], ["A", "5"]]
+		assert_equal(false, beginner.valid_placement_row?(cruiser, cells2))
+		cells3 = [["A", "1"], ["A", "2"], ["C", "3"]]
+		assert_equal(false, beginner.valid_placement_row?(cruiser, cells3))
+		cells4 = [["A", "1"], ["A", "3"], ["A", "2"]]
+		assert_equal(false, beginner.valid_placement_row?(cruiser, cells4))
+
+
+	end
+
 
 
 
