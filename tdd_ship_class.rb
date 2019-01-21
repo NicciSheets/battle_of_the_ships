@@ -26,13 +26,6 @@ class TddShipClass < Minitest::Test
 		assert_equal(0, destroyer.damage)
 	end
 
-	# def test_to_s
-	# 	battleship = Ship.new(:battleship)
-	# 	assert_equal("battleship", battleship.to_s)
-	# 	submarine = Ship.new(:submarine)
-	# 	assert_equal("submarine", submarine.to_s)
-	# end
-
 	def test_hit_increases_damage_by_1
 		battleship = Ship.new(:battleship)
 		assert_equal(0, battleship.damage)
@@ -61,4 +54,10 @@ class TddShipClass < Minitest::Test
 		assert_equal(true, cruiser.sunk?)
 	end
 
+	# def test_to_s
+	# 	battleship = Ship.new(:battleship)
+	# 	assert_equal("battleship", battleship.to_s)
+	# 	submarine = Ship.new(:submarine)
+	# 	assert_equal("submarine", submarine.to_s)
+	# end
 end

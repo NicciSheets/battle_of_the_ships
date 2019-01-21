@@ -18,12 +18,6 @@ class Ship
 
 	attr_accessor :damage
 
-# # custom return for ship class
-# 	def to_s
-# 		"#{@type}"
-# 	end
-
-		
 # with each correct hit, adds +1 damage to the ship
 	def hit
 		@damage +=1
@@ -34,4 +28,8 @@ class Ship
 		@damage == @length
 	end
 	
+	# # custom return for ship class
+# 	def to_s
+# 		"#{@type}"
+# 	end
 end

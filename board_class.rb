@@ -107,7 +107,7 @@ class Board
 			false
 		end
 	end
-
+# if valid_placement? comes back true for the ship and the cells desired, then it places desired ship in those desired cells, otherwise returns "Invalid Placement" and would need to choose different ship or different cells to place
 	def place(ship, cells)
 		ship
 		if self.valid_placement?(ship, cells) == true
