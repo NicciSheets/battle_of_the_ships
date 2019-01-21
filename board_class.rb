@@ -37,13 +37,55 @@ class Board
 
 
 # is first array of multidimensional row array - row[row_index(coordinates)][column_index(coordinates)]
-	def row_index(coordinates)	
-		ROW.index(coordinates[0])
+	def row_index(coordinates)
+		double_letter = ""
+		if coordinates.length != 2
+			if coordinates[0] == coordinates[1]
+				ROW.index(coordinates[0]+coordinates[1].to_s)
+			else
+				ROW.index(coordinates[0])
+			end
+		else 
+			ROW.index(coordinates[0])
+		end
 	end
+	
 # second array of multidimensional row array - row[row_index(coordnates)][column_index(coordinates)]
 	def column_index(coordinates)
-		column = (coordinates[1].to_i - 1)
+		double_digit = ""
+		if coordinates.length == 2
+			COLUMN.index(coordinates[1])
+		else
+			if coordinates[0] != coordinates[1]
+				COLUMN.index(coordinates[1]+coordinates[2].to_s)
+			else
+				if coordinates.length == 4
+					COLUMN.index(coordinates[2]+coordinates[3].to_s)
+				else
+					COLUMN.index(coordinates[2])
+				end
+			end
+		end
 	end
+
+	# 	if coordinates.length != 2
+	# 		if coordinates[0] != coordinates[1]
+	# 			if coordinates.length == 2
+	# 				coordinates[1].to_i - 1
+	# 			else
+	# 				(coordinates[1].to_i+coordinates[2].to_i) - 1
+	# 			end
+	# 		else
+	# 			if coordinates.length == 3
+	# 				coordinates[2].to_i - 1
+	# 			else
+	# 				(coordinates[2].to_i+coordinates[3].to_i) - 1
+	# 			end
+	# 		end
+	# 	end
+	# end
+		# column = (coordinates[1].to_i - 1)
+	# end
 # pulls out individual cell class information with cooresponding board coordinates
 	def cell_coordinates(coordinates)
 		row = row_index(coordinates)
@@ -86,25 +128,34 @@ class Board
 # returns the index of corresponding letter in ROW array constant
 	def row_arr(cells)
 		row_arr = []
-		cells.each_with_index do |row, i|
-			# row_arr << row[0]
-			row_arr << ROW.index(row[0])
+		row_arr2 = []
+		cells.each do |row|
+			row_arr << row
 		end
-		row_arr
+		row_arr.each do |coordinates|
+			row_arr2 << row_index(coordinates)
+		end
+		row_arr2
 	end
 # returns array of the integers in the column for each cell's coordinates
 	def column_arr(cells)
 		column_arr = []
+		column_arr2 = []
 		cells.each do |column|
-			column_arr << column[1]
+			column_arr << column
 		end
-		column_arr
+		column_arr.each do |coordinates|
+			column_arr2 << column_index(coordinates)
+		end
+		column_arr2
 	end
 # checks to see if the cells are consecutive in a row, if so returns true
 	def valid_placement_row?(ship, cells)
 		ship
 		row_arr = row_arr(cells)
+		p "row_arr is #{row_arr}"
 		column_arr = column_arr(cells)
+		p "column_arr is #{column_arr}"
 		((column_arr.last.to_i - column_arr.first.to_i) == (column_arr.count - 1)) && (row_arr.uniq.count == 1)
 	end
 # checks to see if cells are horizontally and consecutively in a column, if so returns true
@@ -129,18 +180,6 @@ class Board
 		status_arr.uniq.count == 1
 	end
 
-# if valid_placement? comes back true for the ship and the cells desired, then it places desired ship in those desired cells, otherwise returns "Invalid Placement" and would need to choose different ship or different cells to place
-	# def place(ship, cells)
-	# 	ship
-	# 	if self.valid_placement?(ship, cells) == true
-	# 		cells.each do |coordinates|
-	# 			self.cell_coordinates(coordinates).place_ship(ship)
-	# 		end
-	# 	else
-	# 		"Invalid Placement"
-	# 	end
-	# end
-
 	def valid_placement?(ship, cells)
 		(valid_placement_empty?(ship, cells) && valid_placement_length?(ship, cells)) && (valid_placement_row?(ship, cells) || valid_placement_column?(ship, cells))
 	end
@@ -158,12 +197,21 @@ class Board
 end
 
 
-p board = Board.new(:beginner)
+p board = Board.new(:advanced)
 p cruiser = Ship.new(:cruiser)
 p battleship = Ship.new(:battleship)
+# p board.row_index("B1")
+# p board.row_index("AA1")
+# p board.row_index("AA2")
+# p board.row_index("C12")
+# p board.row_index("BB12")
+# p board.column_index("A2")
+# p board.column_index("AA2")
+# p board.column_index("A12")
+# p board.column_index("AA12")
 #  p board.cell_coordinates("A1")
-#  p board.cell_coordinates("A1").coordinates
-#  p board.cell_coordinates("A1").status
+ # p board.cell_coordinates("A11").coordinates
+ # p board.cell_coordinates("A11").status
  # p board.cell_coordinates("A1").place_ship(Ship.new(:cruiser))
 #  p board.cell_coordinates("A2").place_ship(Ship.new(:cruiser))
 #  # p board.no_show_ships
@@ -189,17 +237,19 @@ p battleship = Ship.new(:battleship)
 # p board.valid_placement?(cruiser, ["A1", "B1", "C1"])
 # p board.valid_placement?(cruiser, ["A1", "B2", "C3"])
 p board.place(cruiser, ["A1", "A2", "A3"])
-# p board.show_ships
+# # p board.show_ships
+# board.pretty_show
+# p board.valid_placement_empty?(battleship, ["A1", "B1"])
+# p board.valid_placement?(battleship, ["A1", "B1"])
+# p board.place(battleship, ["A1", "B1"])
 board.pretty_show
-p board.valid_placement_empty?(battleship, ["A1", "B1"])
-p board.valid_placement?(battleship, ["A1", "B1"])
-p board.place(battleship, ["A1", "B1"])
-board.pretty_show
-p board.valid_placement?(battleship, ["B2", "B5"])
-p board.place(battleship, ["B2", "B5"])
-p board.valid_placement?(battleship, ["B2", "D2"])
-p board.place(battleship, ["B2", "D2"])
-p board.place(battleship, ["B12", "C1"])
+# p board.valid_placement?(battleship, ["B2", "B5"])
+# p board.place(battleship, ["B2", "B5"])
+# p board.valid_placement?(battleship, ["B2", "D2"])
+# p board.place(battleship, ["B2", "D2"])
+p board.valid_placement?(battleship, ["AA1", "AA2"])
+p board.place(battleship, ["AA1", "AA2"])
+# p board.place(battleship, ["B12", "C1"])
 board.pretty_show
 # p board.cell_coordinates("A1").hit
 # p cruiser.hit
