@@ -82,53 +82,89 @@ class Board
 			p row
 		end
 	end
-# checks the length of the ship is equal to how many cells where you're wanting to place the ship, if equal is true; also checks that the cells are all beside each other horizontally or vertically, and if yes to either, returns true; otherwise, false 
-	def valid_placement?(ship, cells)
-		ship
+
+# returns the index of corresponding letter in ROW array constant
+	def row_arr(cells)
 		row_arr = []
-		column_arr = []
-		cells.each do |row|
-			row_arr << row[0]
+		cells.each_with_index do |row, i|
+			# row_arr << row[0]
+			row_arr << ROW.index(row[0])
 		end
-		cells.each do |column| 
+		row_arr
+	end
+# returns array of the integers in the column for each cell's coordinates
+	def column_arr(cells)
+		column_arr = []
+		cells.each do |column|
 			column_arr << column[1]
 		end
-		if ship.length == cells.length
-			if column_arr.uniq.count == 1
-				true
-			else
-				if row_arr.uniq.count == 1
-					true
-				else
-					false
-				end
-			end
-		else
-			false
-		end
+		column_arr
 	end
-# if valid_placement? comes back true for the ship and the cells desired, then it places desired ship in those desired cells, otherwise returns "Invalid Placement" and would need to choose different ship or different cells to place
-	def place(ship, cells)
+# checks to see if the cells are consecutive in a row, if so returns true
+	def valid_placement_row?(ship, cells)
 		ship
-		if self.valid_placement?(ship, cells) == true
+		row_arr = row_arr(cells)
+		column_arr = column_arr(cells)
+		((column_arr.last.to_i - column_arr.first.to_i) == (column_arr.count - 1)) && (row_arr.uniq.count == 1)
+	end
+# checks to see if cells are horizontally and consecutively in a column, if so returns true
+	def valid_placement_column?(ship, cells)
+		ship
+		row_arr = row_arr(cells)
+		column_arr = column_arr(cells)
+		((row_arr.last - row_arr.first) == (row_arr.count - 1)) && (column_arr.uniq.count == 1)
+	end
+# ship.length must be same as the number of cells given for ship to be placed in - returns true if so, false if not
+	def valid_placement_length?(ship, cells)
+		ship
+		ship.length == cells.length
+	end
+# doesn't let you place a ship where there's already another ship, all cells coordinates must have status of empty, if all empty, returns true.
+	def valid_placement_empty?(ship, cells)
+		ship
+		status_arr = []
+		cells.each do |cells|
+			status_arr << self.cell_coordinates(cells).status
+		end
+		status_arr.uniq.count == 1
+	end
+
+# if valid_placement? comes back true for the ship and the cells desired, then it places desired ship in those desired cells, otherwise returns "Invalid Placement" and would need to choose different ship or different cells to place
+	# def place(ship, cells)
+	# 	ship
+	# 	if self.valid_placement?(ship, cells) == true
+	# 		cells.each do |coordinates|
+	# 			self.cell_coordinates(coordinates).place_ship(ship)
+	# 		end
+	# 	else
+	# 		"Invalid Placement"
+	# 	end
+	# end
+
+	def valid_placement?(ship, cells)
+		(valid_placement_empty?(ship, cells) && valid_placement_length?(ship, cells)) && (valid_placement_row?(ship, cells) || valid_placement_column?(ship, cells))
+	end
+
+	def place(ship, cells)
+		if valid_placement?(ship, cells) == false
+			"Invalid Placement, Try Again"
+		else
 			cells.each do |coordinates|
 				self.cell_coordinates(coordinates).place_ship(ship)
 			end
-		else
-			"Invalid Placement"
 		end
 	end
-
 
 end
 
 
-# p board = Board.new(:beginner)
-# p cruiser = Ship.new(:cruiser)
+p board = Board.new(:beginner)
+p cruiser = Ship.new(:cruiser)
+p battleship = Ship.new(:battleship)
 #  p board.cell_coordinates("A1")
 #  p board.cell_coordinates("A1").coordinates
 #  p board.cell_coordinates("A1").status
-#  p board.cell_coordinates("A1").place_ship(Ship.new(:cruiser))
+ # p board.cell_coordinates("A1").place_ship(Ship.new(:cruiser))
 #  p board.cell_coordinates("A2").place_ship(Ship.new(:cruiser))
 #  # p board.no_show_ships
 #  # board.pretty_no_show
@@ -152,9 +188,19 @@ end
 # p board.valid_placement?(cruiser, ["A1", "A2", "A3"])
 # p board.valid_placement?(cruiser, ["A1", "B1", "C1"])
 # p board.valid_placement?(cruiser, ["A1", "B2", "C3"])
-# p board.place(cruiser, ["A1", "A2", "A3"])
+p board.place(cruiser, ["A1", "A2", "A3"])
 # p board.show_ships
-# board.pretty_show
+board.pretty_show
+p board.valid_placement_empty?(battleship, ["A1", "B1"])
+p board.valid_placement?(battleship, ["A1", "B1"])
+p board.place(battleship, ["A1", "B1"])
+board.pretty_show
+p board.valid_placement?(battleship, ["B2", "B5"])
+p board.place(battleship, ["B2", "B5"])
+p board.valid_placement?(battleship, ["B2", "D2"])
+p board.place(battleship, ["B2", "D2"])
+p board.place(battleship, ["B12", "C1"])
+board.pretty_show
 # p board.cell_coordinates("A1").hit
 # p cruiser.hit
 # p board.show_ships
