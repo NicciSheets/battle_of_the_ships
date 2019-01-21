@@ -69,8 +69,11 @@ class Board
 	end
 # opponent's board console ready
 	def pretty_no_show
+		p @grid_size.cons
+		puts "   1   2   3   4   5"
 		self.no_show_ships.each do |row|
-			p row
+			
+			puts "\nA #{row}"
 		end
 	end
 # renders grid, showing where the ships are for user's board
@@ -155,8 +158,7 @@ class Board
 # final method to determine if grid holds cell's row and column
 	def valid_row_column?(ship, cells)
 		(valid_row?(ship, cells)) && (valid_column?(ship, cells))
-	end
-			
+	end			
 # returns true if all criteria are true for the cells and ship desired
 	def valid_placement?(ship, cells)
 		(valid_row_column?(ship, cells) && valid_placement_empty?(ship, cells) && valid_placement_length?(ship, cells)) && (valid_placement_row?(ship, cells) || valid_placement_column?(ship, cells))
@@ -176,10 +178,10 @@ class Board
 end
 
 
-board = Board.new(:beginner)
-p board
-cruiser = Ship.new(:cruiser)
-battleship = Ship.new(:battleship)
+# board = Board.new(:beginner)
+# p board
+# cruiser = Ship.new(:cruiser)
+# battleship = Ship.new(:battleship)
 # submarine = Ship.new(:submarine)
 # p board.row_index("B", "1")
 # p board.row_index("AA", "1")
@@ -218,11 +220,11 @@ battleship = Ship.new(:battleship)
 
 # p board.show_ships
 # board.pretty_show
-p board.valid_placement?(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
-p board.valid_placement?(cruiser, [["A", "1"], ["B", "1"], ["C", "1"]])
-p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "3"]])
-p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["Z", "3"]])
-p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "33"]])
+# p board.valid_placement?(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
+# p board.valid_placement?(cruiser, [["A", "1"], ["B", "1"], ["C", "1"]])
+# p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "3"]])
+# p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["Z", "3"]])
+# p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "33"]])
 
 
 # p board.place(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
@@ -242,6 +244,8 @@ p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "33"]])
 # board.pretty_no_show
 # p board.cell_coordinates("A", "1")
 # p board.cell_coordinates("B", "1")
+# cruiser.hit
+# p board.cell_coordinates("A", "1")
 # p board.place(submarine, ["AA1", "BB1", "CC1", "DD1"])
 # p board.place(submarine, ["BB1", "CC1", "DD1", "EE1"])
 # p board.no_show_ships
