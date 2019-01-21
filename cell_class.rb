@@ -12,9 +12,19 @@ class Cell
 		:destroyer  => "D"
 	}
 
+	# STATUS_NO_SHIP = {
+	# 	:empty      => ".",
+	# 	:hit        => "X",
+	# 	:miss       => "0", 
+	# 	:battleship => ".", 
+	# 	:cruiser    => ".", 
+	# 	:submarine  => ".",
+	# 	:destroyer  => "."
+	# }
+
 # intiliazes Cell class with @coordinates for each individual cell and empty status(".")
-	def initialize(coordinates)
-		@coordinates = coordinates
+	def initialize(row, column)
+		@coordinates = "#{row}#{column}"
 		@status = STATUS[:empty]
 	end
 
@@ -33,34 +43,41 @@ class Cell
 
 # allows you to place a certain ship in the cell and makes that ship object pointer the status
 	def place_ship(ship)
-		@status = STATUS[ship.type]
+		# @status = STATUS[ship.type]
+		@status = ship
 	end
 
 # does not show the ships status symbol, but instead "hides" it under the empty status "." - if there is a hit or a miss, it shows it, however
 	def render_without_ships
-		if @status == "B"
-			@status = "."
-		elsif @status == "C"
-			@status = "."
-		elsif @status == "S"
-			@status = "."
-		elsif @status == "D"
-			@status = "."
+		if @status == "."
+			"."
+		elsif @status == "X"
+			"X"
+		elsif @status == "0"
+			"0"
 		else
-			@status
+			"."
 		end
 	end
 
 # shows all cell status's as they are
 	def render_with_ships
-		@status
+		if @status == "."
+			"."
+		elsif @status == "X"
+			"X"
+		elsif @status == "0"
+			"0"
+		else
+			STATUS[@status.type]
+		end
 	end
 end
 
 
 # !!!!!Thinking of way to not show opponents ships on board by rendering the ship status symbols as ".", should still keep the ship object pointer in its place, though.
 # cruiser = Ship.new(:cruiser)
-# cell = Cell.new("B4")
+# cell = Cell.new("B", "4")
 # p cruiser 
 # p cell
 # cell.place_ship(cruiser)
@@ -72,4 +89,4 @@ end
 # p cell.render_with_ships
 # p cell.hit
 # p cell
-# p cell.to_s
+# p cell.render_without_ships
