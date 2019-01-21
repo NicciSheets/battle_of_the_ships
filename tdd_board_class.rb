@@ -6,7 +6,6 @@ class TddBoardClass < Minitest::Test
 
 	def test_board_is_class_and_returns_difficulty_attribute_and_gridsize_attribute
 		beginner = Board.new(:beginner)
-		# p beginner
 		assert_equal(Board, beginner.class)
 		assert_equal(:beginner, beginner.difficulty)
 		assert_equal(12, beginner.grid_row.count)
@@ -27,6 +26,11 @@ class TddBoardClass < Minitest::Test
 		assert_equal(1296, advanced.coordinates.count)
 	end
 
+	def test_row_index_returns_correctly_for_coordinates
+		beginner = Board.new(:beginner)
+		assert_equal(0, beginner.row_index("A", "1"))
+		assert_equal(2, beginner.row_index("C", "4"))
+	end
 
 
 
