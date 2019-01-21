@@ -108,6 +108,17 @@ class Board
 		end
 	end
 
+	def place(ship, cells)
+		ship
+		if self.valid_placement?(ship, cells) == true
+			cells.each do |coordinates|
+				self.cell_coordinates(coordinates).place_ship(ship)
+			end
+		else
+			"Invalid Placement"
+		end
+	end
+
 
 end
 
@@ -136,7 +147,17 @@ end
 # p board.grid[0][0]
 # board.pretty_show
 # p board.valid_placement?(cruiser, ["A1", "A2", "B3"])
+# p board.show_ships
+# board.pretty_show
 # p board.valid_placement?(cruiser, ["A1", "A2", "A3"])
 # p board.valid_placement?(cruiser, ["A1", "B1", "C1"])
 # p board.valid_placement?(cruiser, ["A1", "B2", "C3"])
+# p board.place(cruiser, ["A1", "A2", "A3"])
+# p board.show_ships
+# board.pretty_show
+# p board.cell_coordinates("A1").hit
+# p cruiser.hit
+# p board.show_ships
+# board.pretty_show
+# p cruiser
 
