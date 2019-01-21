@@ -116,7 +116,14 @@ class TddBoardClass < Minitest::Test
 		assert_equal(false, beginner.valid_row?(cruiser, cells2))
 	end
 
-
+	def test_cells_are_part_of_grid_column_if_outside_of_available_column_returns_false
+		beginner = Board.new(:beginner)
+		cruiser = Ship.new(:cruiser)
+		cells = [["A", "1"], ["B", "1"], ["C", "1"]]
+		assert_equal(true, beginner.valid_column?(cruiser, cells))
+		cells2 = [["A", "1"], ["B", "1"], ["C", "33"]]
+		assert_equal(false, beginner.valid_column?(cruiser, cells2))
+	end
 
 	def test_valid_placement_for_cells_on_board
 		board = Board.new(:beginner)
