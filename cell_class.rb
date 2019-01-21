@@ -12,16 +12,6 @@ class Cell
 		:destroyer  => "D"
 	}
 
-	# STATUS_NO_SHIP = {
-	# 	:empty      => ".",
-	# 	:hit        => "X",
-	# 	:miss       => "0", 
-	# 	:battleship => ".", 
-	# 	:cruiser    => ".", 
-	# 	:submarine  => ".",
-	# 	:destroyer  => "."
-	# }
-
 # intiliazes Cell class with @coordinates for each individual cell and empty status(".")
 	def initialize(row, column)
 		@coordinates = "#{row}#{column}"

@@ -132,9 +132,34 @@ class Board
 		end
 		status_arr.uniq.count == 1
 	end
+# checks to make sure the cell rows are valid places in the grid
+	def valid_row?(ship, cells)
+		row_arr = row_arr(cells)
+		arr = []
+		row_arr.each do |letter|
+			arr << (ROW.index(letter) < @grid_size)
+		end
+		arr
+		arr.uniq == [true]
+	end
+# checks to make sure the cell columns are valid places in grid
+	def valid_column?(ship, cells)
+		column_arr = column_arr(cells)
+		arr2 = []
+		column_arr.each do |number|
+			arr2 << (COLUMN.index(number) < @grid_size)
+		end
+		arr2
+		arr2.uniq == [true]
+	end
+# final method to determine if grid holds cell's row and column
+	def valid_row_column?(ship, cells)
+		(valid_row?(ship, cells)) && (valid_column?(ship, cells))
+	end
+			
 # returns true if all criteria are true for the cells and ship desired
 	def valid_placement?(ship, cells)
-		(valid_placement_empty?(ship, cells) && valid_placement_length?(ship, cells)) && (valid_placement_row?(ship, cells) || valid_placement_column?(ship, cells))
+		(valid_row_column?(ship, cells) && valid_placement_empty?(ship, cells) && valid_placement_length?(ship, cells)) && (valid_placement_row?(ship, cells) || valid_placement_column?(ship, cells))
 	end
 # places a ship into the desired cells if it is true for valid_placement?
 	def place(ship, cells)
@@ -151,10 +176,10 @@ class Board
 end
 
 
-# board = Board.new(:beginner)
-# p board
-# cruiser = Ship.new(:cruiser)
-# battleship = Ship.new(:battleship)
+board = Board.new(:beginner)
+p board
+cruiser = Ship.new(:cruiser)
+battleship = Ship.new(:battleship)
 # submarine = Ship.new(:submarine)
 # p board.row_index("B", "1")
 # p board.row_index("AA", "1")
@@ -186,24 +211,32 @@ end
 # p board.valid_placement_length?(cruiser, [["A", "1"], ["B", "1"]])
 # p board.valid_placement_empty?(battleship, [["A", "1"], ["B", "1"]])
 # p board.valid_placement_empty?(battleship, [["B", "1"], ["C", "1"]])
+# p board.valid_row_column?(battleship, [["B", "1"], ["C", "1"]])
+# p board.valid_row_column?(battleship, [["L", "13"], ["C", "2"]])
+# p board.valid_row_column?(battleship, [["M", "1"], ["A", "1"]])
+
 
 # p board.show_ships
 # board.pretty_show
-# p board.valid_placement?(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
-# p board.valid_placement?(cruiser, [["A", "1"], ["B", "1"], ["C", "1"]])
-# p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "3"]])
+p board.valid_placement?(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
+p board.valid_placement?(cruiser, [["A", "1"], ["B", "1"], ["C", "1"]])
+p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "3"]])
+p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["Z", "3"]])
+p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "33"]])
+
+
 # p board.place(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
 # # p board.show_ships
 # board.pretty_show
 
 # p board.place(battleship, [["A", "1"], ["B", "1"]])
 # board.pretty_show
-# p board.place(battleship, [["B", "1"], ["B", "2"]])
+# p board.place(battleship, [["B", "12"], ["C", "1"]])
 # p board.place(battleship, ["B2", "B5"])
 # p board.valid_placement?(battleship, ["B2", "D2"])
 # p board.place(battleship, ["B2", "D2"])
 # p board.valid_placement?(battleship, ["AA1", "AA2"])
-# p board.place(battleship, ["AA1", "AA2"])
+# p board.place(battleship, [["AA", "1"], ["AA", "2"]])
 # p board.place(battleship, ["B12", "C1"])
 # board.pretty_show
 # board.pretty_no_show
