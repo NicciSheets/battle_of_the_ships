@@ -45,6 +45,7 @@ class TddBoardClass < Minitest::Test
 		assert_equal("C", board.cell_coordinates("A2").status)
 		assert_equal("C", board.cell_coordinates("A3").status)
 		assert_equal(".", board.cell_coordinates("A4").status)
+		assert_equal(true, board.cell_coordinates("A1").status==board.cell_coordinates("A2").status)
 		cells2 = ["B1", "B2"]
 		assert_equal(false, board.valid_placement?(cruiser, cells2))
 		ship_on_board2 = board.place(cruiser, cells2)

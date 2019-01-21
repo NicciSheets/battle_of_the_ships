@@ -132,8 +132,8 @@ end
 #  p board.cell_coordinates("A2").place_ship(Ship.new(:cruiser))
 #  # p board.no_show_ships
 #  # board.pretty_no_show
-#  p board.show_ships
-#  board.pretty_show
+ # p board.show_ships
+ # board.pretty_show
 #  p board.cell_coordinates("A1")
 #  p board.cell_coordinates("A1").hit
 #  p cruiser.hit
@@ -160,4 +160,7 @@ end
 # p board.show_ships
 # board.pretty_show
 # p cruiser
+# p board.cell_coordinates("A1")
+# p board.cell_coordinates("A2")
+# p board.cell_coordinates("A1").status == board.cell_coordinates("A2").status
 
