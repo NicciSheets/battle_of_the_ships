@@ -87,6 +87,15 @@ class TddBoardClass < Minitest::Test
 		assert_equal(false, beginner.valid_placement_column?(cruiser, cells4))		
 	end
 
+	def test_valid_placement_length_returns_true_if_cells_length_equals_ship_length
+		beginner = Board.new(:beginner)
+		cruiser = Ship.new(:cruiser)
+		cells = [["A", "1"], ["A", "2"], ["A", "3"]]
+		assert_equal(true, beginner.valid_placement_length?(cruiser, cells))
+		cells2 = [["A", "1"], ["A", "2"]]
+		assert_equal(false, beginner.valid_placement_length?(cruiser, cells2))
+	end
+		
 
 
 
