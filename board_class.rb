@@ -151,10 +151,10 @@ class Board
 end
 
 
-board = Board.new(:beginner)
-p board
-cruiser = Ship.new(:cruiser)
-battleship = Ship.new(:battleship)
+# board = Board.new(:beginner)
+# p board
+# cruiser = Ship.new(:cruiser)
+# battleship = Ship.new(:battleship)
 # submarine = Ship.new(:submarine)
 # p board.row_index("B", "1")
 # p board.row_index("AA", "1")
@@ -192,13 +192,13 @@ battleship = Ship.new(:battleship)
 # p board.valid_placement?(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
 # p board.valid_placement?(cruiser, [["A", "1"], ["B", "1"], ["C", "1"]])
 # p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "3"]])
-p board.place(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
+# p board.place(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
 # # p board.show_ships
 # board.pretty_show
 
 # p board.place(battleship, [["A", "1"], ["B", "1"]])
 # board.pretty_show
-p board.place(battleship, [["B", "1"], ["B", "2"]])
+# p board.place(battleship, [["B", "1"], ["B", "2"]])
 # p board.place(battleship, ["B2", "B5"])
 # p board.valid_placement?(battleship, ["B2", "D2"])
 # p board.place(battleship, ["B2", "D2"])
@@ -206,9 +206,9 @@ p board.place(battleship, [["B", "1"], ["B", "2"]])
 # p board.place(battleship, ["AA1", "AA2"])
 # p board.place(battleship, ["B12", "C1"])
 # board.pretty_show
-board.pretty_no_show
-p board.cell_coordinates("A", "1")
-p board.cell_coordinates("B", "1")
+# board.pretty_no_show
+# p board.cell_coordinates("A", "1")
+# p board.cell_coordinates("B", "1")
 # p board.place(submarine, ["AA1", "BB1", "CC1", "DD1"])
 # p board.place(submarine, ["BB1", "CC1", "DD1", "EE1"])
 # p board.no_show_ships

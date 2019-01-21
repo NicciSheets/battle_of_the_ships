@@ -26,7 +26,7 @@ class TddCellClass < Minitest::Test
 		assert_equal(".", cell.status)
 		assert_equal("B4", cell.coordinates)
 		cell.place_ship(cruiser)
-		assert_equal("C", cell.status)
+		assert_equal(:cruiser, cell.status.type)
 		assert_equal(3, cruiser.length)
 		assert_equal(0, cruiser.damage)
 		assert_equal("C", cell.render_with_ships)
