@@ -5,12 +5,26 @@ require_relative "ship_class.rb"
 class TddBoardClass < Minitest::Test
 
 	def test_board_is_class_and_returns_difficulty_attribute_and_gridsize_attribute
-		beg_board = Board.new(:beginner)
-		# p beg_board
-		int_board = Board.new(:intermediate)
-		# p int_board
-		adv_board = Board.new(:advanced)
-		# p adv_board
+		beginner = Board.new(:beginner)
+		# p beginner
+		assert_equal(Board, beginner.class)
+		assert_equal(:beginner, beginner.difficulty)
+		assert_equal(12, beginner.grid_row.count)
+		assert_equal(12, beginner.grid_column.count)
+		assert_equal(144, beginner.coordinates.count)
+		assert_equal(".", beginner.grid[0][0].status)
+		intermediate = Board.new(:intermediate)
+		assert_equal(Board, intermediate.class)
+		assert_equal(:intermediate, intermediate.difficulty)
+		assert_equal(24, intermediate.grid_row.count)
+		assert_equal(24, intermediate.grid_column.count)
+		assert_equal(576, intermediate.coordinates.count)
+		advanced = Board.new(:advanced)
+		assert_equal(Board, advanced.class)
+		assert_equal(:advanced, advanced.difficulty)
+		assert_equal(36, advanced.grid_row.count)
+		assert_equal(36, advanced.grid_column.count)
+		assert_equal(1296, advanced.coordinates.count)
 	end
 
 
