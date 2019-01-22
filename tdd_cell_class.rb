@@ -7,6 +7,8 @@ class TddCellClass < Minitest::Test
 		cell = Cell.new("B", "4")
 		# p cell
 		assert_equal(Cell, cell.class)
+		assert_equal("B", cell.row)
+		assert_equal("4", cell.column)
 		assert_equal("B4", cell.coordinates)
 		assert_equal(".", cell.status)
 	end
@@ -39,5 +41,10 @@ class TddCellClass < Minitest::Test
 		cell.place_ship(cruiser)
 		assert_equal("C", cell.render_with_ships)
 		assert_equal(".", cell.render_without_ships)
+	end
+
+	def test_to_s
+		cell = Cell.new("B", "4")
+		assert_equal("B4", cell.to_s)
 	end
 end

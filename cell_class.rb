@@ -14,11 +14,13 @@ class Cell
 
 # intiliazes Cell class with @coordinates for each individual cell and empty status(".")
 	def initialize(row, column)
+		@row = row
+		@column = column
 		@coordinates = "#{row}#{column}"
 		@status = STATUS[:empty]
 	end
 
-	attr_reader :coordinates, :status
+	attr_reader :coordinates, :status, :row, :column
 
 # changes the status of the cell to :hit if there is a hit
 	def hit
@@ -62,6 +64,11 @@ class Cell
 			STATUS[@status.type]
 		end
 	end
+
+# returns the coordinates of row and column for each cell as one string
+	def to_s
+		"#{@coordinates}"
+	end
 end
 
 
@@ -72,6 +79,7 @@ end
 # p cell
 # cell.place_ship(cruiser)
 # p cell
+# p cell.to_s
 # p cell.render_with_ships
 # p cell.render_without_ships
 # p cell.status
