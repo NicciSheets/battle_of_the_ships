@@ -1,5 +1,6 @@
 require_relative "cell_class.rb"
 require_relative "ship_class.rb"
+require "pp"
 
 class Board
 
@@ -15,7 +16,7 @@ class Board
 # grid columns
 	COLUMN = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36']
 
-
+	
 # initializes the Board class with grid size attribute(how many cells in each row/column) and based on the difficulty attribute chosen
 	def initialize(difficulty)
 		@difficulty = difficulty
@@ -42,7 +43,6 @@ class Board
 
 	attr_reader :difficulty, :grid_size, :grid_row, :grid_column, :grid, :coordinates
 
-
 # is first array of multidimensional row array - row[row_index(coordinates)][column_index(coordinates)]
 	def row_index(row, column)
 		ROW.index(row)
@@ -67,13 +67,30 @@ class Board
 		end
 		grid.each_slice(self.grid_size).to_a
 	end
+
+	def heading
+		len = @grid_size.to_s.length
+		Array.new(@grid_size){|i|(i+1).to_s.rjust(len,'O')}
+	end
 # opponent's board console ready
 	def pretty_no_show
-		p @grid_size.cons
-		puts "   1   2   3   4   5"
-		self.no_show_ships.each do |row|	
-			puts "\nA #{row}"
+		rows = ""
+		first_row = ""
+		heading.each do |number|
+			print "   #{number}"
 		end
+		puts ""
+		self.grid_row.each do |letter|
+			# print "#{letter}|"
+			self.no_show_ships.each_with_index do |row, index| 
+				rows = row[0..(@grid_size-1)]
+				first_row = "#{letter}|"
+			end
+			print first_row
+			print rows
+			puts ""
+		end
+		puts ""
 	end
 # renders grid, showing where the ships are for user's board
 	def show_ships
@@ -166,7 +183,7 @@ class Board
 	def place(ship, cells)
 		# @ship = ship
 		if valid_placement?(ship, cells) == false
-			"Invalid Placement, Try Again"
+			"Invalid Coordinates"
 		else
 			cells.each do |row, column|
 				self.cell_coordinates(row, column).place_ship(ship)
@@ -177,7 +194,11 @@ class Board
 end
 
 
-# board = Board.new(:beginner)
+board = Board.new(:beginner)
+# board = Board.new(:intermediate)
+# p board.column_heading
+# p board.heading
+# board.pretty_no_show
 # p board
 # cruiser = Ship.new(:cruiser)
 # battleship = Ship.new(:battleship)
@@ -189,12 +210,15 @@ end
 # p board.column_index("AA", "2")
 # p board.column_index("AA", "12")
  # p board.cell_coordinates("A", "1")
- # p board.cell_coordinates("A", "1").coordinates
- # p board.cell_coordinates("A", "1").status
+ p board.cell_coordinates("A", "1").coordinates
+ p board.cell_coordinates("A", "1").status
  # p board.cell_coordinates("A", "1").place_ship(Ship.new(:cruiser))
  # p board.cell_coordinates("A", "2").place_ship(Ship.new(:cruiser))
+ p board.cell_coordinates("A", "3").miss
+  p board.cell_coordinates("A", "3").status
+
  # p board.no_show_ships
- # board.pretty_no_show
+ board.pretty_no_show
 # p board.show_ships
  # board.pretty_show
 #  p board.cell_coordinates("A1")
