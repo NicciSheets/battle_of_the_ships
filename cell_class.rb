@@ -80,6 +80,7 @@ end
 # cell.place_ship(cruiser)
 # p cell
 # p cell.to_s
+# p cell.row
 # p cell.render_with_ships
 # p cell.render_without_ships
 # p cell.status

@@ -43,8 +43,14 @@ class TddCellClass < Minitest::Test
 		assert_equal(".", cell.render_without_ships)
 	end
 
-	def test_to_s
+	def test_to_s_can_still_access_cell_row_and_column_from_this_also
 		cell = Cell.new("B", "4")
 		assert_equal("B4", cell.to_s)
+		assert_equal("B", cell.row)
+		assert_equal("4", cell.column)
+		cell2 = Cell.new("AA", "13")
+		assert_equal("AA13", cell2.to_s)
+		assert_equal("AA", cell2.row)
+		assert_equal("13", cell2.column)
 	end
 end
