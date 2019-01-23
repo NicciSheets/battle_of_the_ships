@@ -8,14 +8,13 @@ class Player
 	def initialize(player, difficulty)
 		@player = player
 		@board = Board.new(difficulty)
-		@computer_board = Board.new(difficulty)
 		@battleship = Ship.new(:battleship)
 		@cruiser = Ship.new(:cruiser)
 		@submarine = Ship.new(:submarine)
 		@destroyer = Ship.new(:destroyer)
 	end
 
-	attr_reader :player, :board, :computer_board, :battleship, :cruiser, :submarine, :destroyer
+	attr_reader :player, :board, :battleship, :cruiser, :submarine, :destroyer
 
 	def pretty_show
 		board_layout = @board.show_ships
@@ -54,10 +53,10 @@ class Player
  	end
 end
 
-nicci = Player.new("nicci", :beginner)
+# nicci = Player.new("nicci", :beginner)
 # nicci.pretty_show
 # nicci.pretty_no_show
 # nicci.board.place(nicci.cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
 # nicci.pretty_show
 # nicci.pretty_no_show
-p nicci.to_s
+# p nicci.to_s
