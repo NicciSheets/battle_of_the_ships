@@ -1,5 +1,5 @@
-require_relative "ship_class.rb"
-require_relative "cell_class.rb"
+# require_relative "ship_class.rb"
+# require_relative "cell_class.rb"
 require_relative "board_class.rb"
 
 class Player
@@ -33,9 +33,9 @@ class Player
 	end
 # the "\t" places a tab (indention of 5 spaces) 
 	def pretty_no_show
-		board_layout = @computer_board.no_show_ships
-		row_label = @computer_board.grid_column
-		column_label = @computer_board.grid_row
+		board_layout = @board.no_show_ships
+		row_label = @board.grid_column
+		column_label = @board.grid_row
 
 		print "\t"
 		print row_label.join("\t")

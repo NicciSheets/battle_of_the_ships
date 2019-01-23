@@ -1,7 +1,7 @@
 require "minitest/autorun"
-require_relative "board_class.rb"
-require_relative "ship_class.rb"
-require_relative "cell_class.rb"
+# require_relative "board_class.rb"
+# require_relative "ship_class.rb"
+# require_relative "cell_class.rb"
 require_relative "player_class.rb"
 
 class TddPlayerClass < Minitest::Test
@@ -20,6 +20,26 @@ class TddPlayerClass < Minitest::Test
 		assert_equal(Ship, nicci.submarine.class)
 		assert_equal(:destroyer, nicci.destroyer.type)
 		assert_equal(Ship, nicci.destroyer.class)
+		opponent = Player.new("opponent", :beginner)
+		assert_equal(Player, opponent.class)
+		assert_equal("opponent", opponent.player)
+		assert_equal(:beginner, opponent.board.difficulty)
+		assert_equal(Board, opponent.board.class)
+		assert_equal(:battleship, opponent.battleship.type)
+		assert_equal(Ship, opponent.battleship.class)
+		assert_equal(:cruiser, opponent.cruiser.type)
+		assert_equal(Ship, opponent.cruiser.class)
+		assert_equal(:submarine, opponent.submarine.type)
+		assert_equal(Ship, opponent.submarine.class)
+		assert_equal(:destroyer, opponent.destroyer.type)
+		assert_equal(Ship, opponent.destroyer.class)
+		
+	end
+
+	def test_grids_start_out_the_same_with_pretty_printing
+		nicci = Player.new("nicci", :beginner)
+		opponent = Player.new("opponent", :beginner)
+		assert_equal(nicci.pretty_show, opponent.pretty_no_show)
 	end
 
 	def test_to_s

@@ -1,5 +1,5 @@
 require_relative "cell_class.rb"
-require_relative "ship_class.rb"
+# require_relative "ship_class.rb"
 
 class Board
 
