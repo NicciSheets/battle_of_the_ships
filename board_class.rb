@@ -1,6 +1,5 @@
 require_relative "cell_class.rb"
 require_relative "ship_class.rb"
-require "pp"
 
 class Board
 
@@ -56,59 +55,7 @@ class Board
 		row = row_index(row, column)
 		column = column_index(row, column)
 		self.grid[row][column]
-	end
-# need to use this no_sho_ships with cloned opponent's grid and make changes to the regular grid, then translate it to the render_without_ships grid for console; renders the grid without showing where the ships are placed, used for opponent's board
-	def no_show_ships
-		grid = []
-		self.grid.each do |row|
-			row.each do |cell|
-				grid << cell.render_without_ships
-			end
-		end
-		grid.each_slice(self.grid_size).to_a
-	end
-# opponent's board console ready
-	def pretty_no_show
-		board_layout = self.no_show_ships
-		row_label = @grid_column
-		column_label = @grid_row
-
-		print "\t"
-		print row_label.join("\t")
-		puts
-		board_layout.each_with_index do |row, i|
-  			print column_label[i]
- 			print "\t"
-  			print row.join("\t")
-  			puts
-  		end
- 	end
-# renders grid, showing where the ships are for user's board
-	def show_ships
-		grid = []
-		self.grid.each do |row|
-			row.each do |cell|
-				grid << cell.render_with_ships
-			end
-		end
-		grid.each_slice(self.grid_size).to_a
-	end
-# user's board console ready
-	def pretty_show
-		board_layout = self.show_ships
-		row_label = @grid_column
-		column_label = @grid_row
-
-		print "\t"
-		print row_label.join("\t")
-		puts
-		board_layout.each_with_index do |row, i|
-  			print column_label[i]
- 			print "\t"
-  			print row.join("\t")
-  			puts
-  		end
-	end
+	end	
 # gives the row value for each cell
 	def row_arr(cells)
 		row_arr = []
@@ -191,17 +138,68 @@ class Board
 			end
 		end
 	end
+# need to use this no_sho_ships with cloned opponent's grid and make changes to the regular grid, then translate it to the render_without_ships grid for console; renders the grid without showing where the ships are placed, used for opponent's board
+	def no_show_ships
+		grid = []
+		self.grid.each do |row|
+			row.each do |cell|
+				grid << cell.render_without_ships
+			end
+		end
+		grid.each_slice(self.grid_size).to_a
+	end
+# opponent's board console ready
+	# def pretty_no_show
+	# 	board_layout = self.no_show_ships
+	# 	row_label = @grid_column
+	# 	column_label = @grid_row
 
+	# 	print "\t"
+	# 	print row_label.join("\t")
+	# 	puts
+	# 	board_layout.each_with_index do |row, i|
+ #  			print column_label[i]
+ # 			print "\t"
+ #  			print row.join("\t")
+ #  			puts
+ #  		end
+ # 	end
+# renders grid, showing where the ships are for user's board
+	def show_ships
+		grid = []
+		self.grid.each do |row|
+			row.each do |cell|
+				grid << cell.render_with_ships
+			end
+		end
+		grid.each_slice(self.grid_size).to_a
+	end
+# user's board console ready
+	# def pretty_show
+	# 	board_layout = self.show_ships
+	# 	row_label = @grid_column
+	# 	column_label = @grid_row
+
+	# 	print "\t"
+	# 	print row_label.join("\t")
+	# 	puts
+	# 	board_layout.each_with_index do |row, i|
+ #  			print column_label[i]
+ # 			print "\t"
+ #  			print row.join("\t")
+ #  			puts
+ #  		end
+	# end
 end
 
 
-board = Board.new(:beginner)
+# board = Board.new(:beginner)
 # board = Board.new(:intermediate)
 # p board.column_heading
 # p board.heading
 # board.pretty_no_show
 # p board
-cruiser = Ship.new(:cruiser)
+# cruiser = Ship.new(:cruiser)
 # battleship = Ship.new(:battleship)
 # submarine = Ship.new(:submarine)
 # p board.row_index("B", "1")
@@ -251,13 +249,13 @@ cruiser = Ship.new(:cruiser)
 # p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "33"]])
 
 
-board.place(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
+# board.place(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
 # # p board.show_ships
 # board.pretty_show
 # board.pretty_no_show
-board.pretty_show
-p board.cell_coordinates("A", "1").status
-board.cell_coordinates("A", "1").hit
+# board.pretty_show
+# p board.cell_coordinates("A", "1").status
+# board.cell_coordinates("A", "1").hit
 # board.pretty_no_show
 # p board.place(battleship, [["A", "1"], ["B", "1"]])
 # board.pretty_show
