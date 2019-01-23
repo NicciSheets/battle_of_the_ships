@@ -12,9 +12,10 @@ class Player
 		@cruiser = Ship.new(:cruiser)
 		@submarine = Ship.new(:submarine)
 		@destroyer = Ship.new(:destroyer)
+		@coordinates_to_play = Board.new(difficulty).coordinates
 	end
 
-	attr_reader :player, :board, :battleship, :cruiser, :submarine, :destroyer
+	attr_reader :player, :board, :battleship, :cruiser, :submarine, :destroyer, :coordinates_to_play
 
 	def pretty_show
 		board_layout = @board.show_ships
@@ -54,6 +55,7 @@ class Player
 end
 
 # nicci = Player.new("nicci", :beginner)
+# p nicci
 # nicci.pretty_show
 # nicci.pretty_no_show
 # nicci.board.place(nicci.cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])

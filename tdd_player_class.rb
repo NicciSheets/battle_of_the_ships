@@ -20,6 +20,7 @@ class TddPlayerClass < Minitest::Test
 		assert_equal(Ship, nicci.submarine.class)
 		assert_equal(:destroyer, nicci.destroyer.type)
 		assert_equal(Ship, nicci.destroyer.class)
+		assert_equal(144, nicci.coordinates_to_play.count)
 		opponent = Player.new("opponent", :beginner)
 		assert_equal(Player, opponent.class)
 		assert_equal("opponent", opponent.player)
@@ -33,6 +34,7 @@ class TddPlayerClass < Minitest::Test
 		assert_equal(Ship, opponent.submarine.class)
 		assert_equal(:destroyer, opponent.destroyer.type)
 		assert_equal(Ship, opponent.destroyer.class)
+		assert_equal(144, opponent.coordinates_to_play.count)
 		
 	end
 
