@@ -21,4 +21,9 @@ class TddPlayerClass < Minitest::Test
 		assert_equal(:destroyer, nicci.destroyer.type)
 		assert_equal(Ship, nicci.destroyer.class)
 	end
+
+	def test_to_s
+		nicci = Player.new("nicci", :beginner)
+		assert_equal("Nicci", nicci.to_s)
+	end
 end
