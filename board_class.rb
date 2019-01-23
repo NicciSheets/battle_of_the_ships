@@ -67,31 +67,22 @@ class Board
 		end
 		grid.each_slice(self.grid_size).to_a
 	end
-
-	def heading
-		len = @grid_size.to_s.length
-		Array.new(@grid_size){|i|(i+1).to_s.rjust(len,'O')}
-	end
 # opponent's board console ready
 	def pretty_no_show
-		rows = ""
-		first_row = ""
-		heading.each do |number|
-			print "   #{number}"
-		end
-		puts ""
-		self.grid_row.each do |letter|
-			# print "#{letter}|"
-			self.no_show_ships.each_with_index do |row, index| 
-				rows = row[0..(@grid_size-1)]
-				first_row = "#{letter}|"
-			end
-			print first_row
-			print rows
-			puts ""
-		end
-		puts ""
-	end
+		board_layout = self.no_show_ships
+		row_label = @grid_column
+		column_label = @grid_row
+
+		print "\t"
+		print row_label.join("\t")
+		puts
+		board_layout.each_with_index do |row, i|
+  			print column_label[i]
+ 			print "\t"
+  			print row.join("\t")
+  			puts
+  		end
+ 	end
 # renders grid, showing where the ships are for user's board
 	def show_ships
 		grid = []
@@ -104,9 +95,19 @@ class Board
 	end
 # user's board console ready
 	def pretty_show
-		self.show_ships.each do |row|
-			p row
-		end
+		board_layout = self.show_ships
+		row_label = @grid_column
+		column_label = @grid_row
+
+		print "\t"
+		print row_label.join("\t")
+		puts
+		board_layout.each_with_index do |row, i|
+  			print column_label[i]
+ 			print "\t"
+  			print row.join("\t")
+  			puts
+  		end
 	end
 # gives the row value for each cell
 	def row_arr(cells)
@@ -200,7 +201,7 @@ board = Board.new(:beginner)
 # p board.heading
 # board.pretty_no_show
 # p board
-# cruiser = Ship.new(:cruiser)
+cruiser = Ship.new(:cruiser)
 # battleship = Ship.new(:battleship)
 # submarine = Ship.new(:submarine)
 # p board.row_index("B", "1")
@@ -210,15 +211,15 @@ board = Board.new(:beginner)
 # p board.column_index("AA", "2")
 # p board.column_index("AA", "12")
  # p board.cell_coordinates("A", "1")
- p board.cell_coordinates("A", "1").coordinates
- p board.cell_coordinates("A", "1").status
+ # board.cell_coordinates("A", "1").coordinates
+ # board.cell_coordinates("A", "1").status
  # p board.cell_coordinates("A", "1").place_ship(Ship.new(:cruiser))
  # p board.cell_coordinates("A", "2").place_ship(Ship.new(:cruiser))
- p board.cell_coordinates("A", "3").miss
-  p board.cell_coordinates("A", "3").status
+ # board.cell_coordinates("A", "3").miss
+ # board.cell_coordinates("A", "3").status
 
  # p board.no_show_ships
- board.pretty_no_show
+ # board.pretty_no_show
 # p board.show_ships
  # board.pretty_show
 #  p board.cell_coordinates("A1")
@@ -250,10 +251,14 @@ board = Board.new(:beginner)
 # p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "33"]])
 
 
-# p board.place(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
+board.place(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
 # # p board.show_ships
 # board.pretty_show
-
+# board.pretty_no_show
+board.pretty_show
+p board.cell_coordinates("A", "1").status
+board.cell_coordinates("A", "1").hit
+# board.pretty_no_show
 # p board.place(battleship, [["A", "1"], ["B", "1"]])
 # board.pretty_show
 # p board.place(battleship, [["B", "12"], ["C", "1"]])
