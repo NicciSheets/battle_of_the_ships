@@ -31,6 +31,7 @@ class Player
   			print row.join("\t")
   			puts
   		end
+  		puts
 	end
 # the "\t" places a tab (indention of 5 spaces) 
 	def pretty_no_show
@@ -47,6 +48,7 @@ class Player
   			print row.join("\t")
   			puts
   		end
+  		puts
  	end
 
  	def to_s
