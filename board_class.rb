@@ -175,21 +175,21 @@ class Board
 		grid.each_slice(self.grid_size).to_a
 	end
 # user's board console ready
-	# def pretty_show
-	# 	board_layout = self.show_ships
-	# 	row_label = @grid_column
-	# 	column_label = @grid_row
+	def pretty_show
+		board_layout = self.show_ships
+		row_label = @grid_column
+		column_label = @grid_row
 
-	# 	print "\t"
-	# 	print row_label.join("\t")
-	# 	puts
-	# 	board_layout.each_with_index do |row, i|
- #  			print column_label[i]
- # 			print "\t"
- #  			print row.join("\t")
- #  			puts
- #  		end
-	# end
+		print "\t"
+		print row_label.join("\t")
+		puts
+		board_layout.each_with_index do |row, i|
+  			print column_label[i]
+ 			print "\t"
+  			print row.join("\t")
+  			puts
+  		end
+	end
 end
 
 
