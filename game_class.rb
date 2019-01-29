@@ -129,6 +129,7 @@ class Game
 				redo if @player1.board.place(ship, cells) == "Invalid Coordinates" 
 				redo if @player1.board.valid_placement?(ship, cells) == false
 
+
 				valid = false
 				if @player1.board.valid_placement?(ship, cells)
 					@player1.board.place(ship, cells)
@@ -215,6 +216,8 @@ def player_round
 			
 			valid = true
 		end
+		redo if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "0"
+		redo if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "X"
 		coordinates
 		if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "."
 			puts "\n\"MISS!\""
@@ -222,7 +225,6 @@ def player_round
 		else
 			puts "\n\"HIT!\""
 			@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
-		
 		end
 	end
 end
@@ -269,7 +271,7 @@ def coordinates2array(coordinates)
   			self.show_boards
   			player_round
   			self.show_boards
-  			game_over = true
+  			# game_over = true
   		end
 
   	end
