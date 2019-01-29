@@ -41,14 +41,15 @@ class Game
 	def set_player_board
 		difficulty = @difficulty
 		@player_board = Board.new(difficulty)
-		# p "@player_board is #{@player_board}"
 	end
 
 	def show_player_board
-		# @player_board
 		board_layout = @player_board.show_ships
 		row_label = @player_board.grid_column
 		column_label = @player_board.grid_row
+		puts
+		print "#{@player}'s Board:"
+		puts
 		puts
 		print "\t"
 		print row_label.join("\t")
@@ -60,6 +61,7 @@ class Game
   			puts
   		end
   		puts
+  		puts
 	end
 
 	def set_opponent
@@ -68,7 +70,6 @@ class Game
 		puts
 		puts
 	end
-		# SHIPS = {:destroyer => ["Destroyer", 5], :submarine => ["Submarine", 4], :cruiser => ["Cruiser", 3], :battleship => ["Battleship", 2]}
 
 	def setup_player1
 		print "Each board will be set up like the following:"
@@ -141,7 +142,7 @@ class Game
 			columns
 			cells = rows.zip(columns)
 		end
-		# p "cells are #{cells} and #{cells.class}"
+		# p "cells are #{cells}""
 		cells
 		if @player_board.place((Ship.new(ship)), cells) != "Invalid Coordinates"
 			@player_board.place((Ship.new(ship)), cells)
@@ -149,6 +150,77 @@ class Game
 		end
 	end
 
+	def place_opponent_ships
+		ships = Ship::SHIP_INFO.keys
+		
+		difficulty = @difficulty
+		@opponent_board = Board.new(difficulty)
+		ships.reverse.each do |type|
+			ship_length = Ship::SHIP_INFO[type]
+			# valid = false
+			# while valid == false do
+				orientation = [:horizontal, :vertical].sample
+				starting_coord = @opponent_board.coordinates.sample
+				p "orientation is #{orientation} and starting_coord = #{starting_coord}"
+				if orientation == :horizontal
+					rows = []
+					columns = []
+					count = 0
+					ship_length.times do 
+					rows << starting_coord[0]
+					columns << (starting_coord[1].to_i + count).to_s
+					count += 1
+				end
+				rows
+				columns
+				cells = rows.zip(columns)
+				p cells
+			else orientation == :vertical
+				rows = []
+				columns = []
+				count = 0
+				ship_length.times do
+					rows << Board::ROW[(Board::ROW.index(starting_coord[0]) + count)]
+					columns << starting_coord[1]
+					count += 1
+				end
+				rows
+				columns
+				cells = rows.zip(columns)
+				p cells
+			end
+			cells
+			redo if @opponent_board.place((Ship.new(type)), cells) == "Invalid Placement"
+
+			if @opponent_board.place((Ship.new(type)), cells) != "Invalid Placement"
+				# valid = true
+				@opponent_board.place((Ship.new(type)), cells)
+			end
+		end
+	end
+
+# opponent's board console ready
+	def show_opponent_board
+		# board_layout = @opponent_board.no_show_ships
+		board_layout = @opponent_board.show_ships
+		row_label = @opponent_board.grid_column
+		column_label = @opponent_board.grid_row
+		puts
+		print "#{@opponent}'s Board:"
+		puts
+		puts
+		print "\t"
+		print row_label.join("\t")
+		puts
+		board_layout.each_with_index do |row, i|
+  			print " #{column_label[i]}"
+ 			print "\t"
+  			print row.join("\t")
+  			puts
+  		end
+  		puts
+  		puts
+  	end
 
 
 end
@@ -163,10 +235,12 @@ game.set_difficulty
 game.set_player_board
 game.set_opponent
 game.setup_player1
-game.player1_add_ships(:destroyer)
-game.player1_add_ships(:submarine)
-game.player1_add_ships(:cruiser)
-game.player1_add_ships(:battleship)
+# game.player1_add_ships(:destroyer)
+# game.player1_add_ships(:submarine)
+# game.player1_add_ships(:cruiser)
+# game.player1_add_ships(:battleship)
+game.place_opponent_ships
+game.show_opponent_board
 
 
 
