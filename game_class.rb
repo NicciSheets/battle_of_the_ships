@@ -142,16 +142,13 @@ class Game
 
 
 	def place_opponent_ships
-		# ships = Ship::SHIP_INFO.keys
 		ships = ships = [@opponent.destroyer, @opponent.submarine, @opponent.cruiser, @opponent.battleship]
-		# difficulty = @difficulty
-		# @opponent_board = Board.new(difficulty)
 		1.times do
 			ships.each do |ship|
 				ship_length = ship.length
 					orientation = [:horizontal, :vertical].sample
 					starting_coord = @opponent.coordinates_to_play.sample
-					p "orientation is #{orientation} and starting_coord = #{starting_coord}"
+					# p "orientation is #{orientation} and starting_coord = #{starting_coord}"
 					if orientation == :horizontal
 						rows = []
 						columns = []
@@ -181,7 +178,6 @@ class Game
 				end
 				cells
 				if @opponent.board.place(ship, cells) != "Invalid Coordinates"
-				# valid = true
 					@opponent.board.place(ship, cells)
 				end
 				redo if @opponent.board.place(ship, cells) ==  "Invalid Coordinates"
@@ -189,29 +185,7 @@ class Game
 		end
 	end
 
-# uncomment @opponent_board.no_show_ships and comment out @opponent_board.show_ships for real game play - this just allows me to see ships to debug
-# opponent's board console ready
-	# def show_opponent_board
-	# 	# board_layout = @opponent_board.no_show_ships
-	# 	board_layout = @opponent_board.show_ships
-	# 	row_label = @opponent_board.grid_column
-	# 	column_label = @opponent_board.grid_row
-	# 	puts
-	# 	print "#{@opponent} Board:"
-	# 	puts
-	# 	puts
-	# 	print "\t"
-	# 	print row_label.join("\t")
-	# 	puts
-	# 	board_layout.each_with_index do |row, i|
- #  			print " #{column_label[i]}"
- # 			print "\t"
- #  			print row.join("\t")
- #  			puts
- #  		end
- #  		puts
- #  		puts
- #  	end
+
 # replace the system clear, keeping it commented out right now to see previous screen for debugging
   	def boards_set
   		self.player1_add_ships
@@ -234,11 +208,6 @@ game = Game.new()
 game.set_difficulty
 game.set_opponent
 game.setup_player1
-# game.player1_add_ships
-# system('cls')
-
-# game.place_opponent_ships
-# game.show_opponent_board
 game.boards_set
 
 

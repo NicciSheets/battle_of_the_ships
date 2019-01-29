@@ -17,39 +17,6 @@ class Player
 
 	attr_reader :player, :board, :battleship, :cruiser, :submarine, :destroyer, :coordinates_to_play
 
-# 	def pretty_show
-# 		board_layout = @board.show_ships
-# 		row_label = @board.grid_column
-# 		column_label = @board.grid_row
-
-# 		print "\t"
-# 		print row_label.join("\t")
-# 		puts
-# 		board_layout.each_with_index do |row, i|
-#   			print column_label[i]
-#  			print "\t"
-#   			print row.join("\t")
-#   			puts
-#   		end
-#   		puts
-# 	end
-# # the "\t" places a tab (indention of 5 spaces) 
-# 	def pretty_no_show
-# 		board_layout = @board.no_show_ships
-# 		row_label = @board.grid_column
-# 		column_label = @board.grid_row
-
-# 		print "\t"
-# 		print row_label.join("\t")
-# 		puts
-# 		board_layout.each_with_index do |row, i|
-#   			print column_label[i]
-#  			print "\t"
-#   			print row.join("\t")
-#   			puts
-#   		end
-#   		puts
-#  	end
 	def show_player_board
 		board_layout = @board.show_ships
 		row_label = @board.grid_column
@@ -72,6 +39,7 @@ class Player
 	end
 
 	def show_opponent_board
+		# board_layout = @board.no_show_ships
 		board_layout = @board.show_ships
 		row_label = @board.grid_column
 		column_label = @board.grid_row
