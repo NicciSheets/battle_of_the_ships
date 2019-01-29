@@ -1,4 +1,7 @@
 require "minitest/autorun"
+# require_relative "board_class.rb"
+# require_relative "ship_class.rb"
+# require_relative "cell_class.rb"
 require_relative "player_class.rb"
 
 class TddPlayerClass < Minitest::Test
@@ -18,7 +21,6 @@ class TddPlayerClass < Minitest::Test
 		assert_equal(:destroyer, nicci.destroyer.type)
 		assert_equal(Ship, nicci.destroyer.class)
 		assert_equal(144, nicci.coordinates_to_play.count)
-		assert_equal(4, nicci.ships_left)
 		opponent = Player.new("opponent", :beginner)
 		assert_equal(Player, opponent.class)
 		assert_equal("opponent", opponent.player)
@@ -33,7 +35,6 @@ class TddPlayerClass < Minitest::Test
 		assert_equal(:destroyer, opponent.destroyer.type)
 		assert_equal(Ship, opponent.destroyer.class)
 		assert_equal(144, opponent.coordinates_to_play.count)
-		assert_equal(4, opponent.ships_left)
 		
 	end
 

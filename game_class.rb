@@ -185,6 +185,11 @@ class Game
 		end
 	end
 
+	def show_boards
+		@player1.show_player_board
+		@opponent.show_opponent_board
+	end
+
 
 # replace the system clear, keeping it commented out right now to see previous screen for debugging
   	def boards_set
@@ -193,22 +198,93 @@ class Game
   		# system('cls')
   		print "Ships have been placed on both boards. To play, please choose a coordinate on your opponent's board to fire upon."
   		puts
-  		print "To win, sink all of your opponent's ships.  First player will be chosen at random.  Good luck!"
+  		print "To win, sink all of your opponent's ships.  Good luck, #{@player1}!"
    		puts
-  		@player1.show_player_board
-  		@opponent.show_opponent_board
+  	end
+
+def player_round
+	valid = false
+	while valid == false do
+		input = ""
+		while input.empty? do
+			print "Please choose a coordinate to fire upon: "
+			input = gets.chomp.strip.upcase
+			coordinates = coordinates2array(input)
+			redo if @opponent.board.grid_row.include?(coordinates[0]) == false
+			redo if @opponent.board.grid_column.include?(coordinates[1]) == false
+			
+			valid = true
+		end
+		coordinates
+		if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "."
+			puts "\n\"MISS!\""
+			@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).miss
+		else
+			puts "\n\"HIT!\""
+			@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
+		
+		end
+	end
+end
+	
+
+def coordinates2array(coordinates)
+		row = ""
+		column = ""
+		cell_coordinates = []
+		if self.opponent.board.grid_size == 12 || self.opponent.board.grid_size == 24
+			row << coordinates[0]
+			if coordinates.length == 3
+				column << coordinates[1] << coordinates[2]
+			else
+				column << coordinates[1]
+			end
+		else self.opponent.board.grid_size == 36
+			if coordinates.length == 3
+				if coordinates[0] == coordinates[1]
+					row << coordinates[0] << coordinates[1]
+					column << coordinates[2]
+				else
+					coordinates[1] == coordinates[2]
+					row << coordinates[0] 
+					column << coordinates[1] << coordinates[2]
+				end
+			elsif coordinates.length == 4
+				row << coordinates[0] << coordinates[1]
+				column << coordinates[2] << coordinates[3]
+			else
+				row << coordinates[0]
+				column << coordinates[1]
+			end
+		end
+		row
+		column
+		cell_coordinates << row << column
+	end
+
+# alternates player1 and opponent turns
+  	def play_rounds
+  		game_over = false
+  		while game_over == false do
+  			self.show_boards
+  			player_round
+  			self.show_boards
+  			game_over = true
+  		end
+
   	end
 end
 
 			
 #!!!!!!!!!!!!!!!!!!!!!!!!!!  Enemy Board is not redoing the placing of a ship if cells are off the available grid
-#!!!!!!!!!!!!!!!!!!!!!!!!!!  Player 1 Board is doing the same, but also allows for overlapping of boards.					
+#!!!!!!!!!!!!!!!!!!!!!!!!!!  Player 1 Board is doing the same, but also allows for overlapping of boards.	This only happens if the ship you're trying to place is completely contained in another ship on grid				
 
 game = Game.new()
 game.set_difficulty
 game.set_opponent
 game.setup_player1
 game.boards_set
+game.play_rounds
 
 
 
