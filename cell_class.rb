@@ -24,7 +24,6 @@ class Cell
 
 # changes the status of the cell to :hit if there is a hit
 	def hit
-		# self.status.damage += 1
 		@status = STATUS[:hit] 
 	end
 
@@ -35,7 +34,6 @@ class Cell
 
 # allows you to place a certain ship in the cell and makes that ship object pointer the status
 	def place_ship(ship)
-		# @status = STATUS[ship.type]
 		@status = ship
 	end
 
@@ -72,20 +70,12 @@ class Cell
 end
 
 
-# !!!!!Thinking of way to not show opponents ships on board by rendering the ship status symbols as ".", should still keep the ship object pointer in its place, though.
 # cruiser = Ship.new(:cruiser)
 # cell = Cell.new("B", "4")
-# p cruiser 
-# p cell
 # cell.place_ship(cruiser)
-# p cell
 # p cell.to_s
 # p cell.row
 # p cell.render_with_ships
 # p cell.render_without_ships
 # p cell.status
-# p cell.render_without_ships
-# p cell.render_with_ships
 # p cell.hit
-# p cell
-# p cell.render_without_ships

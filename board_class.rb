@@ -1,5 +1,5 @@
 require_relative "cell_class.rb"
-# require_relative "ship_class.rb"
+
 
 class Board
 
@@ -28,10 +28,12 @@ class Board
     	grid_column = self.grid_column
     	grid_row.each do |letter|
 	  		grid_column.each do |number|
-	 			coordinates << "#{letter}#{number}"
+	 			coordinates << [letter, number]
 	 		end
+	 		coordinates
 	 	end
 	 	@coordinates = coordinates
+	 	# @coordinates = coordinates
 		grid_row.each do |letter|
 	  		grid_column.each do |number|
 	 			grid << Cell.new(row = "#{letter}", column = "#{number}")
@@ -148,6 +150,17 @@ class Board
 		end
 		grid.each_slice(self.grid_size).to_a
 	end
+# renders grid, showing where the ships are for user's board
+def show_ships
+		grid = []
+		self.grid.each do |row|
+			row.each do |cell|
+				grid << cell.render_with_ships
+			end
+		end
+		grid.each_slice(self.grid_size).to_a
+	end
+
 # opponent's board console ready
 	# def pretty_no_show
 	# 	board_layout = self.no_show_ships
@@ -164,62 +177,41 @@ class Board
  #  			puts
  #  		end
  # 	end
-# renders grid, showing where the ships are for user's board
-	def show_ships
-		grid = []
-		self.grid.each do |row|
-			row.each do |cell|
-				grid << cell.render_with_ships
-			end
-		end
-		grid.each_slice(self.grid_size).to_a
-	end
+	
 # user's board console ready
-	def pretty_show
-		board_layout = self.show_ships
-		row_label = @grid_column
-		column_label = @grid_row
+	# def pretty_show
+	# 	board_layout = self.show_ships
+	# 	row_label = @grid_column
+	# 	column_label = @grid_row
 
-		print "\t"
-		print row_label.join("\t")
-		puts
-		board_layout.each_with_index do |row, i|
-  			print column_label[i]
- 			print "\t"
-  			print row.join("\t")
-  			puts
-  		end
-	end
+	# 	print "\t"
+	# 	print row_label.join("\t")
+	# 	puts
+	# 	board_layout.each_with_index do |row, i|
+ #  			print column_label[i]
+ # 			print "\t"
+ #  			print row.join("\t")
+ #  			puts
+ #  		end
+	# end
 end
 
 
 # board = Board.new(:beginner)
-# board = Board.new(:intermediate)
-# p board.column_heading
-# p board.heading
-# board.pretty_no_show
 # p board
 # cruiser = Ship.new(:cruiser)
 # battleship = Ship.new(:battleship)
 # submarine = Ship.new(:submarine)
-# p board.row_index("B", "1")
-# p board.row_index("AA", "1")
-# p board.row_index("BB", "12")
-# p board.column_index("A", "2")
-# p board.column_index("AA", "2")
-# p board.column_index("AA", "12")
- # p board.cell_coordinates("A", "1")
- # board.cell_coordinates("A", "1").coordinates
- # board.cell_coordinates("A", "1").status
- # p board.cell_coordinates("A", "1").place_ship(Ship.new(:cruiser))
- # p board.cell_coordinates("A", "2").place_ship(Ship.new(:cruiser))
- # board.cell_coordinates("A", "3").miss
- # board.cell_coordinates("A", "3").status
+# board.cell_coordinates("A", "1").coordinates
+# board.cell_coordinates("A", "1").status
+# p board.cell_coordinates("A", "1").place_ship(Ship.new(:cruiser))
+# board.cell_coordinates("A", "3").miss
+# board.cell_coordinates("A", "3").status
 
- # p board.no_show_ships
- # board.pretty_no_show
-# p board.show_ships
- # board.pretty_show
+# p board.no_show_ships
+# board.pretty_no_show
+
+
 #  p board.cell_coordinates("A1")
 #  p board.cell_coordinates("A1").hit
 #  p cruiser.hit
@@ -240,8 +232,6 @@ end
 # p board.valid_row_column?(battleship, [["M", "1"], ["A", "1"]])
 
 
-# p board.show_ships
-# board.pretty_show
 # p board.valid_placement?(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
 # p board.valid_placement?(cruiser, [["A", "1"], ["B", "1"], ["C", "1"]])
 # p board.valid_placement?(cruiser, [["A", "1"], ["B", "2"], ["C", "3"]])
@@ -250,43 +240,11 @@ end
 
 
 # board.place(cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
-# # p board.show_ships
-# board.pretty_show
-# board.pretty_no_show
-# board.pretty_show
 # p board.cell_coordinates("A", "1").status
 # board.cell_coordinates("A", "1").hit
 # board.pretty_no_show
 # p board.place(battleship, [["A", "1"], ["B", "1"]])
-# board.pretty_show
-# p board.place(battleship, [["B", "12"], ["C", "1"]])
-# p board.place(battleship, ["B2", "B5"])
-# p board.valid_placement?(battleship, ["B2", "D2"])
-# p board.place(battleship, ["B2", "D2"])
-# p board.valid_placement?(battleship, ["AA1", "AA2"])
-# p board.place(battleship, [["AA", "1"], ["AA", "2"]])
-# p board.place(battleship, ["B12", "C1"])
-# board.pretty_show
-# board.pretty_no_show
 # p board.cell_coordinates("A", "1")
 # p board.cell_coordinates("B", "1")
 # cruiser.hit
 # p board.cell_coordinates("A", "1")
-# p board.place(submarine, ["AA1", "BB1", "CC1", "DD1"])
-# p board.place(submarine, ["BB1", "CC1", "DD1", "EE1"])
-# p board.no_show_ships
-# board.pretty_no_show
-# p board.cell_coordinates("A1").
-# board.pretty_no_show
-
-# p board.cell_coordinates("A1").hit
-# p cruiser.hit
-# p board.show_ships
-# board.pretty_show
-# p cruiser
-# p board.cell_coordinates("A1")
-# p board.cell_coordinates("A2")
-# p board.cell_coordinates("A1").status == board.cell_coordinates("A2").status
-
-
-# !!!!!!!!!!!!my render without showing ships is not working properly!!

@@ -28,8 +28,4 @@ class Ship
 		@damage == @length
 	end
 	
-	# # custom return for ship class
-# 	def to_s
-# 		"#{@type}"
-# 	end
 end
