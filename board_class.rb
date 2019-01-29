@@ -151,7 +151,7 @@ class Board
 		grid.each_slice(self.grid_size).to_a
 	end
 # renders grid, showing where the ships are for user's board
-def show_ships
+	def show_ships
 		grid = []
 		self.grid.each do |row|
 			row.each do |cell|

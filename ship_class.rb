@@ -7,6 +7,8 @@ class Ship
 		:destroyer  => 5
 	}
 
+
+
 # initializes with the type(name) of ship, length(how many cells it takes up) and starts out with 0 damage 
 	def initialize(type)
 		@type = type

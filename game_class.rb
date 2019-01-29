@@ -1,4 +1,5 @@
 require_relative "board_class.rb"
+require_relative "player_class.rb"
 
 
 class Game
@@ -11,18 +12,19 @@ class Game
 		while player.empty? do
 			print "Player 1: Please enter your name: "
 			player = gets.chomp
-			@player = player.strip.capitalize
+			player = player.strip.capitalize
 			if player == ""
 				player = ""
 			end
 		end
-		@player
+		player
 	end
 
 	def set_difficulty
+		player = set_player
 		difficulty = ""
 		while difficulty.empty? do 
-			print "Welcome to Battleship Console, #{@player}! Please choose a difficulty level: [b]Beginner; [i]Intermediate; [a]Advanced: "
+			print "Welcome to Battleship Console, #{player}! Please choose a difficulty level: [b]Beginner; [i]Intermediate; [a]Advanced: "
 			difficulty = gets.chomp
 			if difficulty.strip.downcase == "b" || difficulty.strip.downcase == "beginner"
 				@difficulty = :beginner
@@ -35,38 +37,15 @@ class Game
 			end
 		end
 		@difficulty
-		puts
-	end
-
-	def set_player_board
 		difficulty = @difficulty
-		@player_board = Board.new(difficulty)
-	end
-
-	def show_player_board
-		board_layout = @player_board.show_ships
-		row_label = @player_board.grid_column
-		column_label = @player_board.grid_row
 		puts
-		print "#{@player}'s Board:"
-		puts
-		puts
-		print "\t"
-		print row_label.join("\t")
-		puts
-		board_layout.each_with_index do |row, i|
-  			print " #{column_label[i]}"
- 			print "\t"
-  			print row.join("\t")
-  			puts
-  		end
-  		puts
-  		puts
+		@player1 = Player.new(player, difficulty)
 	end
 
 	def set_opponent
-		@opponent = "Enemy"
-		print "Begin Game: #{@player} VS #{@opponent}, #{@difficulty.capitalize} Level."
+		difficulty = @difficulty
+		@opponent = Player.new("Enemy", difficulty)
+		print "Begin Game: #{@player1} VS #{@opponent}, #{difficulty.capitalize} Level."
 		puts
 		puts
 	end
@@ -74,95 +53,105 @@ class Game
 	def setup_player1
 		print "Each board will be set up like the following:"
 		puts
-		self.show_player_board
-		# self.pretty_show
+		@player1.show_player_board
 		print "Four ships (Destroyer, Submarine, Cruiser and Battleship) will be placed on the board.  Ships may only be placed horizontally or vertically, never diagonally, and ships may not overlap board coordinates with one another."
 		puts
 	end
 
-	def player1_add_ships(ship)
-		ship_length = Ship::SHIP_INFO[ship]
-		reply_direction = ""
-		while reply_direction.empty? do
-			print "Would you like to place your #{ship.capitalize} ship [h]Horizontally or [v]Vertically? "
-			reply_direction = gets.chomp
-			if reply_direction.strip.downcase == "h" || reply_direction.strip.downcase == "horizontally" || reply_direction.strip.downcase == "horizontal"
-				@reply_direction = :horizontal
-			elsif reply_direction.strip.downcase == "v" || reply_direction.strip.downcase == "vertically" || reply_direction.strip.downcase == "vertical"
-				@reply_direction = :vertical
-			else
+	def player1_add_ships
+		valid = false
+		while valid == false do
+			ships = [@player1.destroyer, @player1.submarine, @player1.cruiser, @player1.battleship]
+			ships.each do |ship|
+				ship_length = ship.length
 				reply_direction = ""
-			end
-		end
-		@reply_direction
-		reply_row = ""
-		while reply_row.empty? do
-			print "What Row would you like to place your #{ship.capitalize} ship? " 
-			reply_row = gets.chomp
-			if @player_board.grid_row.include?(reply_row.strip.upcase) == true
-				@reply_row = reply_row.strip.upcase
-			else				
+				while reply_direction.empty? do
+					print "Would you like to place your #{ship.type} ship [h]Horizontally or [v]Vertically? "
+					reply_direction = gets.chomp
+					if reply_direction.strip.downcase == "h" || reply_direction.strip.downcase == "horizontally" || reply_direction.strip.downcase == "horizontal"
+						reply_direction = :horizontal
+					elsif reply_direction.strip.downcase == "v" || reply_direction.strip.downcase == "vertically" || reply_direction.strip.downcase == "vertical"
+						reply_direction = :vertical
+					else
+						reply_direction = ""
+					end
+				end
+				reply_direction
 				reply_row = ""
-			end
-		end
-		@reply_row
-		reply_column = ""
-		while reply_column.empty? do
-			print "What Column would you like to place your #{ship.capitalize} ship? " 
-			reply_column = gets.chomp
-			if @player_board.grid_column.include?(reply_column.strip) == true
-				@reply_column = reply_column.strip
-			else
+				while reply_row.empty? do
+					print "What Row would you like to place your #{ship.type} ship? " 
+					reply_row = gets.chomp
+					if @player1.board.grid_row.include?(reply_row.strip.upcase) == true
+						reply_row = reply_row.strip.upcase
+					else				
+						reply_row = ""
+					end
+				end
+				reply_row
 				reply_column = ""
+				while reply_column.empty? do
+					print "What Column would you like to place your #{ship.type} ship? " 
+					reply_column = gets.chomp
+					if @player1.board.grid_column.include?(reply_column.strip) == true
+						reply_column = reply_column.strip
+					else
+						reply_column = ""
+					end
+				end
+				reply_column
+				if reply_direction == :horizontal
+					rows = []
+					columns = []
+					count = 0
+					ship_length.times do 
+						rows << reply_row
+						columns << (reply_column.to_i + count).to_s
+						count += 1
+					end
+					rows
+					columns
+					cells = rows.zip(columns)
+				else reply_direction == :vertical
+					rows = []
+					columns = []
+					count = 0
+					ship_length.times do
+						rows << Board::ROW[(Board::ROW.index(reply_row) + count)]
+						columns << reply_column
+						count += 1
+					end
+					rows
+					columns
+					cells = rows.zip(columns)
+				end
+				cells
+
+				redo if @player1.board.place(ship, cells) == "Invalid Coordinates" 
+				redo if @player1.board.valid_placement?(ship, cells) == false
+
+				valid = false
+				if @player1.board.valid_placement?(ship, cells)
+					@player1.board.place(ship, cells)
+					@player1.show_player_board
+					valid = true
+				end
 			end
-		end
-		@reply_column
-		if @reply_direction == :horizontal
-			rows = []
-			columns = []
-			count = 0
-			ship_length.times do 
-				rows << @reply_row
-				columns << (@reply_column.to_i + count).to_s
-				count += 1
-			end
-			rows
-			columns
-			cells = rows.zip(columns)
-		else @reply_direction == :vertical
-			rows = []
-			columns = []
-			count = 0
-			ship_length.times do
-				rows << Board::ROW[(Board::ROW.index(@reply_row) + count)]
-				columns << @reply_column
-				count += 1
-			end
-			rows
-			columns
-			cells = rows.zip(columns)
-		end
-		# p "cells are #{cells}""
-		cells
-		if @player_board.place((Ship.new(ship)), cells) != "Invalid Coordinates"
-			@player_board.place((Ship.new(ship)), cells)
-			self.show_player_board
 		end
 	end
 
+
+
 	def place_opponent_ships
-		ships = Ship::SHIP_INFO.keys
-		
-		difficulty = @difficulty
-		@opponent_board = Board.new(difficulty)
+		# ships = Ship::SHIP_INFO.keys
+		ships = ships = [@opponent.destroyer, @opponent.submarine, @opponent.cruiser, @opponent.battleship]
+		# difficulty = @difficulty
+		# @opponent_board = Board.new(difficulty)
 		1.times do
-			ships.reverse.each do |type|
-				ship_length = Ship::SHIP_INFO[type]
-				# valid = false
-				# while valid == false do
+			ships.each do |ship|
+				ship_length = ship.length
 					orientation = [:horizontal, :vertical].sample
-					starting_coord = @opponent_board.coordinates.sample
-					# p "orientation is #{orientation} and starting_coord = #{starting_coord}"
+					starting_coord = @opponent.coordinates_to_play.sample
+					p "orientation is #{orientation} and starting_coord = #{starting_coord}"
 					if orientation == :horizontal
 						rows = []
 						columns = []
@@ -191,52 +180,49 @@ class Game
 					# p cells
 				end
 				cells
-				if @opponent_board.place((Ship.new(type)), cells) != "Invalid Placement"
+				if @opponent.board.place(ship, cells) != "Invalid Coordinates"
 				# valid = true
-					@opponent_board.place((Ship.new(type)), cells)
+					@opponent.board.place(ship, cells)
 				end
-				redo if @opponent_board.place((Ship.new(type)), cells) ==  "Invalid Placement"
+				redo if @opponent.board.place(ship, cells) ==  "Invalid Coordinates"
 			end
 		end
 	end
 
-
+# uncomment @opponent_board.no_show_ships and comment out @opponent_board.show_ships for real game play - this just allows me to see ships to debug
 # opponent's board console ready
-	def show_opponent_board
-		board_layout = @opponent_board.no_show_ships
-		# board_layout = @opponent_board.show_ships
-		row_label = @opponent_board.grid_column
-		column_label = @opponent_board.grid_row
-		puts
-		print "#{@opponent} Board:"
-		puts
-		puts
-		print "\t"
-		print row_label.join("\t")
-		puts
-		board_layout.each_with_index do |row, i|
-  			print " #{column_label[i]}"
- 			print "\t"
-  			print row.join("\t")
-  			puts
-  		end
-  		puts
-  		puts
-  	end
-
+	# def show_opponent_board
+	# 	# board_layout = @opponent_board.no_show_ships
+	# 	board_layout = @opponent_board.show_ships
+	# 	row_label = @opponent_board.grid_column
+	# 	column_label = @opponent_board.grid_row
+	# 	puts
+	# 	print "#{@opponent} Board:"
+	# 	puts
+	# 	puts
+	# 	print "\t"
+	# 	print row_label.join("\t")
+	# 	puts
+	# 	board_layout.each_with_index do |row, i|
+ #  			print " #{column_label[i]}"
+ # 			print "\t"
+ #  			print row.join("\t")
+ #  			puts
+ #  		end
+ #  		puts
+ #  		puts
+ #  	end
+# replace the system clear, keeping it commented out right now to see previous screen for debugging
   	def boards_set
-  		self.player1_add_ships(:destroyer)
-  		self.player1_add_ships(:submarine)
-  		self.player1_add_ships(:cruiser)
-  		self.player1_add_ships(:battleship)
+  		self.player1_add_ships
   		self.place_opponent_ships
-  		system('cls')
-  		print "Ships have been placed on both boards. Please choose a coordinate on your opponent's board to fire upon."
+  		# system('cls')
+  		print "Ships have been placed on both boards. To play, please choose a coordinate on your opponent's board to fire upon."
   		puts
-  		print "First player will be chosen at random.  Good luck!"
-  		puts
-  		self.show_player_board
-  		self.show_opponent_board
+  		print "To win, sink all of your opponent's ships.  First player will be chosen at random.  Good luck!"
+   		puts
+  		@player1.show_player_board
+  		@opponent.show_opponent_board
   	end
 end
 
@@ -245,17 +231,12 @@ end
 #!!!!!!!!!!!!!!!!!!!!!!!!!!  Player 1 Board is doing the same, but also allows for overlapping of boards.					
 
 game = Game.new()
-game.set_player
 game.set_difficulty
-game.set_player_board
 game.set_opponent
 game.setup_player1
-# game.player1_add_ships(:destroyer)
-# game.player1_add_ships(:submarine)
-# game.player1_add_ships(:cruiser)
-# game.player1_add_ships(:battleship)
+# game.player1_add_ships
 # system('cls')
-# game.show_player_board
+
 # game.place_opponent_ships
 # game.show_opponent_board
 game.boards_set
