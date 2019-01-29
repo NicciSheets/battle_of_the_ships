@@ -187,6 +187,8 @@ class Game
 	end
 
 	def show_boards
+		puts
+		puts
 		@player1.show_player_board
 		@opponent.show_opponent_board
 	end
@@ -196,7 +198,7 @@ class Game
   	def boards_set
   		self.player1_add_ships
   		self.place_opponent_ships
-  		# system('cls')
+  		system('cls')
   		print "Ships have been placed on both boards. To play, please choose a coordinate on your opponent's board to fire upon."
   		puts
   		print "To win, sink all of your opponent's ships.  Good luck, #{@player1}!"
@@ -209,12 +211,13 @@ def player_round
 		input = ""
 		while input.empty? do
 			print "Please choose a coordinate to fire upon: "
+
 			input = gets.chomp.strip.upcase
 			coordinates = coordinates2array(input)
 
 			redo if @opponent.board.grid_row.include?(coordinates[0]) == false
 			redo if @opponent.board.grid_column.include?(coordinates[1]) == false
-			
+			system('cls')
 			valid = true
 		end
 
@@ -223,38 +226,48 @@ def player_round
 
 		coordinates
 		if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "."
-			puts "\n\"MISS!\""
+			print "Miss!"
+			puts
 			@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).miss
 		else
 			if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :battleship
 				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
 				@opponent.battleship.hit
-				puts "\n\"HIT!\""
+				print "Hit!"
+				puts
 				if 	@opponent.battleship.sunk?
 					@opponent.ships_left -= 1
-					puts "Enemy Battleship Sunk! #{@opponent.ships_left} Enemy Ships Left"
+					print "Enemy Battleship Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					puts
 				end
 			elsif @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :cruiser
 				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
 				@opponent.cruiser.hit
-				puts "\n\"HIT!\""
+				print "Hit!"
+				puts
 				if @opponent.cruiser.sunk?
 					@opponent.ships_left -= 1
-					puts "Enemy Cruiser Sunk! #{@opponent.ships_left} Enemy Ships Left"
+					print "Enemy Cruiser Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					puts
 				end
 			elsif @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :submarine
 				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
 				@opponent.submarine.hit
-				puts "\n\"HIT!\""
+				print "Hit!"
+				puts
 				if @opponent.submarine.sunk?
-					puts "Enemy Submarine Sunk!"
+					@opponent.ships_left -= 1
+					print "Enemy Submarine Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					puts
 				end
 			else @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :destroyer
 				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
 				@opponent.destroyer.hit
-				puts "\n\"HIT!\"" 
+				print "Hit!"
 				if @opponent.destroyer.sunk?
-					puts "Enemy Destroyer Sunk!"
+					@opponent.ships_left -= 1
+					print "Enemy Destroyer Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					puts
 				end
 			end
 		end
@@ -298,13 +311,13 @@ def coordinates2array(coordinates)
 
 # alternates player1 and opponent turns
   	def play_rounds
+  		@player1.show_player_board
+		@opponent.show_opponent_board
   		game_over = false
   		while game_over == false do
-  			self.show_boards
   			player_round
-  			self.show_boards
+  			self.show_boards	
   			# game_over = true
-  			p @opponent.battleship.sunk?
   		end
 
   	end

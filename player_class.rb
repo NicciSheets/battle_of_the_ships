@@ -25,7 +25,7 @@ class Player
 		row_label = @board.grid_column
 		column_label = @board.grid_row
 		puts
-		print "#{@player}'s Board: "
+		print "#{@player}'s Board: #{@ships_left} Ships Remaining"
 		puts
 		puts
 		print "\t"
@@ -47,7 +47,7 @@ class Player
 		row_label = @board.grid_column
 		column_label = @board.grid_row
 		puts
-		print "#{@player} Board:"
+		print "#{@player} Board: #{@ships_left} Ships Remaining"
 		puts
 		puts
 		print "\t"
