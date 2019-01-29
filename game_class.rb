@@ -211,20 +211,52 @@ def player_round
 			print "Please choose a coordinate to fire upon: "
 			input = gets.chomp.strip.upcase
 			coordinates = coordinates2array(input)
+
 			redo if @opponent.board.grid_row.include?(coordinates[0]) == false
 			redo if @opponent.board.grid_column.include?(coordinates[1]) == false
 			
 			valid = true
 		end
+
 		redo if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "0"
 		redo if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "X"
+
 		coordinates
 		if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "."
 			puts "\n\"MISS!\""
 			@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).miss
 		else
-			puts "\n\"HIT!\""
-			@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
+			if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :battleship
+				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
+				@opponent.battleship.hit
+				puts "\n\"HIT!\""
+				if 	@opponent.battleship.sunk?
+					@opponent.ships_left -= 1
+					puts "Enemy Battleship Sunk! #{@opponent.ships_left} Enemy Ships Left"
+				end
+			elsif @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :cruiser
+				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
+				@opponent.cruiser.hit
+				puts "\n\"HIT!\""
+				if @opponent.cruiser.sunk?
+					@opponent.ships_left -= 1
+					puts "Enemy Cruiser Sunk! #{@opponent.ships_left} Enemy Ships Left"
+				end
+			elsif @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :submarine
+				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
+				@opponent.submarine.hit
+				puts "\n\"HIT!\""
+				if @opponent.submarine.sunk?
+					puts "Enemy Submarine Sunk!"
+				end
+			else @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :destroyer
+				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
+				@opponent.destroyer.hit
+				puts "\n\"HIT!\"" 
+				if @opponent.destroyer.sunk?
+					puts "Enemy Destroyer Sunk!"
+				end
+			end
 		end
 	end
 end
@@ -272,6 +304,7 @@ def coordinates2array(coordinates)
   			player_round
   			self.show_boards
   			# game_over = true
+  			p @opponent.battleship.sunk?
   		end
 
   	end

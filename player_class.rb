@@ -16,7 +16,9 @@ class Player
 		@ships_left = Board::SHIPS_LEFT
 	end
 
-	attr_reader :player, :board, :battleship, :cruiser, :submarine, :destroyer, :coordinates_to_play, :ships_left
+	attr_reader :player, :board, :battleship, :cruiser, :submarine, :destroyer, :coordinates_to_play
+
+	attr_accessor :ships_left
 
 	def show_player_board
 		board_layout = @board.show_ships
@@ -65,11 +67,13 @@ class Player
  		@player.capitalize
  	end
 
-
+ 	# def ships_left1
+ 	# 	@ships_left -= 1
+ 	# end
 end
 
 # nicci = Player.new("nicci", :beginner)
-# p nicci
+# p nicci.ships_left1
 # nicci.pretty_show
 # nicci.pretty_no_show
 # nicci.board.place(nicci.cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
