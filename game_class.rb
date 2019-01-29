@@ -162,7 +162,7 @@ class Game
 				# while valid == false do
 					orientation = [:horizontal, :vertical].sample
 					starting_coord = @opponent_board.coordinates.sample
-					p "orientation is #{orientation} and starting_coord = #{starting_coord}"
+					# p "orientation is #{orientation} and starting_coord = #{starting_coord}"
 					if orientation == :horizontal
 						rows = []
 						columns = []
@@ -175,7 +175,7 @@ class Game
 					rows
 					columns
 					cells = rows.zip(columns)
-					p cells
+					# p cells
 				else orientation == :vertical
 					rows = []
 					columns = []
@@ -188,7 +188,7 @@ class Game
 					rows
 					columns
 					cells = rows.zip(columns)
-					p cells
+					# p cells
 				end
 				cells
 				if @opponent_board.place((Ship.new(type)), cells) != "Invalid Placement"
@@ -203,8 +203,8 @@ class Game
 
 # opponent's board console ready
 	def show_opponent_board
-		# board_layout = @opponent_board.no_show_ships
-		board_layout = @opponent_board.show_ships
+		board_layout = @opponent_board.no_show_ships
+		# board_layout = @opponent_board.show_ships
 		row_label = @opponent_board.grid_column
 		column_label = @opponent_board.grid_row
 		puts
@@ -224,12 +224,25 @@ class Game
   		puts
   	end
 
-
+  	def boards_set
+  		self.player1_add_ships(:destroyer)
+  		self.player1_add_ships(:submarine)
+  		self.player1_add_ships(:cruiser)
+  		self.player1_add_ships(:battleship)
+  		self.place_opponent_ships
+  		system('cls')
+  		print "Ships have been placed on both boards. Please choose a coordinate on your opponent's board to fire upon."
+  		puts
+  		print "First player will be chosen at random.  Good luck!"
+  		puts
+  		self.show_player_board
+  		self.show_opponent_board
+  	end
 end
 
 			
-			
-					
+#!!!!!!!!!!!!!!!!!!!!!!!!!!  Enemy Board is not redoing the placing of a ship if cells are off the available grid
+#!!!!!!!!!!!!!!!!!!!!!!!!!!  Player 1 Board is doing the same, but also allows for overlapping of boards.					
 
 game = Game.new()
 game.set_player
@@ -241,8 +254,12 @@ game.setup_player1
 # game.player1_add_ships(:submarine)
 # game.player1_add_ships(:cruiser)
 # game.player1_add_ships(:battleship)
-game.place_opponent_ships
-game.show_opponent_board
+# system('cls')
+# game.show_player_board
+# game.place_opponent_ships
+# game.show_opponent_board
+game.boards_set
+
 
 
 
