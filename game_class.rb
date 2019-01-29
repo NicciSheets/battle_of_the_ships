@@ -101,7 +101,7 @@ class Game
 			reply_row = gets.chomp
 			if @player_board.grid_row.include?(reply_row.strip.upcase) == true
 				@reply_row = reply_row.strip.upcase
-			else
+			else				
 				reply_row = ""
 			end
 		end
@@ -155,49 +155,51 @@ class Game
 		
 		difficulty = @difficulty
 		@opponent_board = Board.new(difficulty)
-		ships.reverse.each do |type|
-			ship_length = Ship::SHIP_INFO[type]
-			# valid = false
-			# while valid == false do
-				orientation = [:horizontal, :vertical].sample
-				starting_coord = @opponent_board.coordinates.sample
-				p "orientation is #{orientation} and starting_coord = #{starting_coord}"
-				if orientation == :horizontal
+		1.times do
+			ships.reverse.each do |type|
+				ship_length = Ship::SHIP_INFO[type]
+				# valid = false
+				# while valid == false do
+					orientation = [:horizontal, :vertical].sample
+					starting_coord = @opponent_board.coordinates.sample
+					p "orientation is #{orientation} and starting_coord = #{starting_coord}"
+					if orientation == :horizontal
+						rows = []
+						columns = []
+						count = 0
+						ship_length.times do 
+						rows << starting_coord[0]
+						columns << (starting_coord[1].to_i + count).to_s
+						count += 1
+					end
+					rows
+					columns
+					cells = rows.zip(columns)
+					p cells
+				else orientation == :vertical
 					rows = []
 					columns = []
 					count = 0
-					ship_length.times do 
-					rows << starting_coord[0]
-					columns << (starting_coord[1].to_i + count).to_s
-					count += 1
+					ship_length.times do
+						rows << Board::ROW[(Board::ROW.index(starting_coord[0]) + count)]
+						columns << starting_coord[1]
+						count += 1
+					end
+					rows
+					columns
+					cells = rows.zip(columns)
+					p cells
 				end
-				rows
-				columns
-				cells = rows.zip(columns)
-				p cells
-			else orientation == :vertical
-				rows = []
-				columns = []
-				count = 0
-				ship_length.times do
-					rows << Board::ROW[(Board::ROW.index(starting_coord[0]) + count)]
-					columns << starting_coord[1]
-					count += 1
-				end
-				rows
-				columns
-				cells = rows.zip(columns)
-				p cells
-			end
-			cells
-			redo if @opponent_board.place((Ship.new(type)), cells) == "Invalid Placement"
-
-			if @opponent_board.place((Ship.new(type)), cells) != "Invalid Placement"
+				cells
+				if @opponent_board.place((Ship.new(type)), cells) != "Invalid Placement"
 				# valid = true
-				@opponent_board.place((Ship.new(type)), cells)
+					@opponent_board.place((Ship.new(type)), cells)
+				end
+				redo if @opponent_board.place((Ship.new(type)), cells) ==  "Invalid Placement"
 			end
 		end
 	end
+
 
 # opponent's board console ready
 	def show_opponent_board
@@ -206,7 +208,7 @@ class Game
 		row_label = @opponent_board.grid_column
 		column_label = @opponent_board.grid_row
 		puts
-		print "#{@opponent}'s Board:"
+		print "#{@opponent} Board:"
 		puts
 		puts
 		print "\t"
