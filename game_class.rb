@@ -266,7 +266,6 @@ def player_round
 				print "#{@player1} Hit an Enemy Ship!"
 				puts
 				puts
-				# self.show_boards
 				if 	@opponent.battleship.sunk?
 
 					@opponent.ships_left -= 1
@@ -282,7 +281,6 @@ def player_round
 				print "#{@player1} Hit an Enemy Ship!"
 				puts
 				puts
-				# self.show_boards
 				if @opponent.cruiser.sunk?
 					@opponent.ships_left -= 1
 					print "Enemy Cruiser Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
@@ -297,7 +295,6 @@ def player_round
 				print "#{@player1} Hit an Enemy Ship!"
 				puts
 				puts
-				# self.show_boards
 				if @opponent.submarine.sunk?
 					@opponent.ships_left -= 1
 					print "Enemy Submarine Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
@@ -312,7 +309,6 @@ def player_round
 				print "#{@player1} Hit an Enemy Ship!"
 				puts
 				puts
-				# self.show_boards
 				if @opponent.destroyer.sunk?
 					@opponent.ships_left -= 1
 					print "Enemy Destroyer Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
@@ -360,40 +356,42 @@ def coordinates2array(coordinates)
 	end
 
 	def opponent_round
-		print "********** Your Enemy's Turn **********"
-		# print "Your Enemy's Turn!"
-		puts
-		puts
-
-		target_coords = @targeting_queue.pop 
-
-		player1_coord = @player1.board.cell_coordinates(target_coords[0], target_coords[1])
-
-		print "Your enemy has chosen coordinates #{target_coords.join} to fire upon!"
-		puts
-		puts
-
-		if player1_coord.status == "."
-			player1_coord.miss
-			print "Miss!"
+		loop do
 			puts
-		else
-			print "Hit!"
-			if player1_coord.status.type == :battleship
-				player1_coord.hit
-				@player1.battleship.hit
-			elsif player1_coord.status.type == :cruiser
-				player1_coord.hit
-				@player1.cruiser.hit
-			elsif player1_coord.status.type == :submarine
-				player1_coord.hit
-				@player1.submarine.hit
-			else player1_coord.status.type == :destroyer
-				player1_coord.hit
-				@player1.destroyer.hit
+			print "********** Your Enemy's Turn **********"
+			puts
+			puts
+			
+			target_coords = @targeting_queue.pop 
+			player1_coord = @player1.board.cell_coordinates(target_coords[0], target_coords[1])
+
+			print "Your enemy has chosen coordinates #{target_coords.join} to fire upon!"
+			puts
+			puts
+			if player1_coord.status == "."
+				player1_coord.miss
+				print "Miss!"
+				puts
+				break
+			else
+				print "Hit!"
+				puts
+				if player1_coord.status.type == :battleship
+					player1_coord.hit
+					@player1.battleship.hit
+				elsif player1_coord.status.type == :cruiser
+					player1_coord.hit
+					@player1.cruiser.hit
+				elsif player1_coord.status.type == :submarine
+					player1_coord.hit
+					@player1.submarine.hit
+				else player1_coord.status.type == :destroyer
+					player1_coord.hit
+					@player1.destroyer.hit
+					valid = true
+				end
 			end
 		end
-		puts
 		puts
 		print "********************"
 	end
