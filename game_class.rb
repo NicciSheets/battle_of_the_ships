@@ -129,8 +129,6 @@ class Game
 
 				redo if @player1.board.valid_placement?(ship, cells) == false
 			
-				# valid = false
-			
 				status_arr = []
 				cells.each do |row, column|
 					status_arr << @player1.board.cell_coordinates(row, column).status
@@ -226,6 +224,7 @@ class Game
 
 # asks player1 for coordinates to fire upon and changes the status of that coordinate on enemy board with corresponding action and method
 def player_round
+	# system('cls')
 	valid = false
 	while valid == false do
 		input = ""
@@ -248,7 +247,7 @@ def player_round
 		redo if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "0"
 		redo if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "X"
 
-		system('cls')
+		# system('cls')
 
 		if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "."
 			print "Miss!"
@@ -334,14 +333,17 @@ def coordinates2array(coordinates)
 	end
 
 	def opponent_round
+		system('cls')
 		print "Your Enemy's Turn!"
 		puts
+		puts
+
 		target_coords = @targeting_queue.pop 
-		p target_coords
 
 		player1_coord = @player1.board.cell_coordinates(target_coords[0], target_coords[1])
 
 		print "Your enemy has chosen coordinates #{target_coords.join} to fire upon!"
+		puts
 		puts
 
 		if player1_coord.status == "."
@@ -357,21 +359,13 @@ def coordinates2array(coordinates)
 				player1_coord.hit
 				@player1.cruiser.hit
 			elsif player1_coord.status.type == :submarine
-				player_coord.hit
+				player1_coord.hit
 				@player1.submarine.hit
 			else player1_coord.status.type == :destroyer
-				player_coord.hit
+				player1_coord.hit
 				@player1.destroyer.hit
 			end
 		end
-		@player1.show_player_board
-
-
-
-
-
-
-
 	end
 		
 
@@ -381,14 +375,16 @@ def coordinates2array(coordinates)
 		# @opponent.show_opponent_board
   		game_over = false
   		while game_over == false do
+  			# system('cls')
   			player_round
-  			system('cls')
+  			# system('cls')
   			self.show_boards	
   			if @opponent.ships_left == 0 
   				winner = @player1
   				game_over = true
   				next
   			end
+  			# system('cls')
 
   			opponent_round
   			# system('cls')
@@ -398,7 +394,7 @@ def coordinates2array(coordinates)
   				game_over = true
   			end
   		end
-  		print "##{winner} Wins Battleship!!"
+  		print "#{winner} Wins Battleship!!"
   	end
 end
 
