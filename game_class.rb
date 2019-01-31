@@ -222,14 +222,14 @@ def player_round
 			redo if @opponent.board.grid_row.include?(coordinates[0]) == false
 			redo if @opponent.board.grid_column.include?(coordinates[1]) == false
 	
-			system('cls')
 			valid = true
 		end
-
+		coordinates
 		redo if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "0"
 		redo if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "X"
 
-		coordinates
+		system('cls')
+
 		if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "."
 			print "Miss!"
 			puts
