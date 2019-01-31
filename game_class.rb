@@ -418,20 +418,19 @@ def coordinates2array(coordinates)
   		end
   		print "#{winner} Wins Battleship!!"
   	end
+
+  	def play
+  		self.set_difficulty
+  		self.set_opponent
+  		self.setup_player1
+  		self.boards_set
+  		self.play_rounds
+  	end
 end
 
 
-			
-#!!!!!!!!!!!!!!!!!!!!!!!!!!  Enemy Board is not redoing the placing of a ship if cells are off the available grid
-
-game = Game.new()
-game.set_difficulty
-game.set_opponent
-game.setup_player1
-game.boards_set
-# game.show_boards
-game.play_rounds
-
+game = Game.new
+game.play
 
 
 

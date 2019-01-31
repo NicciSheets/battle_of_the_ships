@@ -40,10 +40,10 @@ class Player
   		puts
   		puts
 	end
-
+# to play game and see where opponent ships are for testing purposes, comment out the first line (44 - @board.no_show_ships) and comment in second line (45 - @board.show_ships)
 	def show_opponent_board
-		# board_layout = @board.no_show_ships
-		board_layout = @board.show_ships
+		board_layout = @board.no_show_ships
+		# board_layout = @board.show_ships
 		row_label = @board.grid_column
 		column_label = @board.grid_row
 		puts
@@ -67,16 +67,5 @@ class Player
  		@player.capitalize
  	end
 
- 	# def ships_left1
- 	# 	@ships_left -= 1
- 	# end
 end
 
-# nicci = Player.new("nicci", :beginner)
-# p nicci.ships_left1
-# nicci.pretty_show
-# nicci.pretty_no_show
-# nicci.board.place(nicci.cruiser, [["A", "1"], ["A", "2"], ["A", "3"]])
-# nicci.pretty_show
-# nicci.pretty_no_show
-# p nicci.to_s

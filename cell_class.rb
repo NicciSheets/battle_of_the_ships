@@ -70,12 +70,3 @@ class Cell
 end
 
 
-# cruiser = Ship.new(:cruiser)
-# cell = Cell.new("B", "4")
-# cell.place_ship(cruiser)
-# p cell.to_s
-# p cell.row
-# p cell.render_with_ships
-# p cell.render_without_ships
-# p cell.status
-# p cell.hit
