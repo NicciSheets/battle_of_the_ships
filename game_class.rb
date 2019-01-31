@@ -126,20 +126,39 @@ class Game
 				end
 				cells
 
-				redo if @player1.board.place(ship, cells) == "Invalid Coordinates" 
 				redo if @player1.board.valid_placement?(ship, cells) == false
-
-
+			
 				valid = false
-				if @player1.board.valid_placement?(ship, cells)
+			
+				status_arr = []
+				if cells.length == ship_length
+					cells.each do |row, column|
+						status_arr << @player1.board.cell_coordinates(row, column).status
+					end
+				end
+				status_arr
+			
+				redo if status_arr.uniq != ["."]
+			
+				if @player1.board.valid_placement?(ship, cells) && status_arr.uniq == ["."]
 					@player1.board.place(ship, cells)
 					@player1.show_player_board
 					valid = true
+					end
 				end
 			end
 		end
 	end
 
+	# def empty_cell?(ship, cell)
+	# 	ship
+	# 	status_arr = []
+	# 	cells.each do |row, column|
+	# 		status_arr << @player1.board.cell_coordinates(row, column).status
+	# 	end
+	# 	p status_arr.uniq == ["."]
+	# 	# status_arr.uniq.count == 1
+	# end
 
 
 	def place_opponent_ships
@@ -314,8 +333,8 @@ def coordinates2array(coordinates)
 		cell_coordinates << row << column
 	end
 
-	# def opponent_round
-
+	def opponent_round
+		
 
 # alternates player1 and opponent turns
   	def play_rounds
@@ -327,21 +346,20 @@ def coordinates2array(coordinates)
   			self.show_boards	
   			if @opponent.ships_left == 0 
   				winner = @player1
-  				# game_over = true
-  				# next
+  				game_over = true
+  				next
   			end
 
-  			# opponent_round
-  			# if @player1.ships_left == 0
-  			# 	winner = @opponent
-  			# 	game_over = true
-  			# end
+  			opponent_round
+  			if @player1.ships_left == 0
+  				winner = @opponent
+  				game_over = true
+  			end
   		end
-  		# print "##{winner} Wins Battleship!!"
+  		print "##{winner} Wins Battleship!!"
   	end
 end
 
-#  when just one coordinate is entered to fire upon, returns error
 
 			
 #!!!!!!!!!!!!!!!!!!!!!!!!!!  Enemy Board is not redoing the placing of a ship if cells are off the available grid
@@ -351,8 +369,9 @@ game = Game.new()
 game.set_difficulty
 game.set_opponent
 game.setup_player1
-game.boards_set
-game.play_rounds
+game.player1_add_ships
+# game.boards_set
+# game.play_rounds
 
 
 
