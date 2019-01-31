@@ -4,7 +4,7 @@ require_relative "player_class.rb"
 
 class Game
 
-	attr_reader :player, :opponent
+	attr_reader :player, :opponent, :targeting_queue
 
 # asks player to choose difficulty of beginner, intermediate or advanced
 	def set_player
@@ -45,6 +45,7 @@ class Game
 	def set_opponent
 		difficulty = @difficulty
 		@opponent = Player.new("Enemy", difficulty)
+		@targeting_queue = @opponent.coordinates_to_play.shuffle
 		print "Begin Game: #{@player1} VS #{@opponent}, #{difficulty.capitalize} Level."
 		puts
 		puts
@@ -66,7 +67,7 @@ class Game
 				ship_length = ship.length
 				reply_direction = ""
 				while reply_direction.empty? do
-					print "Would you like to place your #{ship.type} ship [h]Horizontally or [v]Vertically? "
+					print "Would you like to place your #{ship.type.capitalize} ship [h]Horizontally or [v]Vertically? "
 					reply_direction = gets.chomp
 					if reply_direction.strip.downcase == "h" || reply_direction.strip.downcase == "horizontally" || reply_direction.strip.downcase == "horizontal"
 						reply_direction = :horizontal
@@ -79,7 +80,7 @@ class Game
 				reply_direction
 				reply_row = ""
 				while reply_row.empty? do
-					print "What Row would you like to place your #{ship.type} ship? " 
+					print "What Row would you like to place your #{ship.type.capitalize} ship? " 
 					reply_row = gets.chomp
 					if @player1.board.grid_row.include?(reply_row.strip.upcase) == true
 						reply_row = reply_row.strip.upcase
@@ -90,7 +91,7 @@ class Game
 				reply_row
 				reply_column = ""
 				while reply_column.empty? do
-					print "What Column would you like to place your #{ship.type} ship? " 
+					print "What Column would you like to place your #{ship.type.capitalize} ship? " 
 					reply_column = gets.chomp
 					if @player1.board.grid_column.include?(reply_column.strip) == true
 						reply_column = reply_column.strip
@@ -128,13 +129,11 @@ class Game
 
 				redo if @player1.board.valid_placement?(ship, cells) == false
 			
-				valid = false
+				# valid = false
 			
 				status_arr = []
-				if cells.length == ship_length
-					cells.each do |row, column|
-						status_arr << @player1.board.cell_coordinates(row, column).status
-					end
+				cells.each do |row, column|
+					status_arr << @player1.board.cell_coordinates(row, column).status
 				end
 				status_arr
 			
@@ -144,26 +143,16 @@ class Game
 					@player1.board.place(ship, cells)
 					@player1.show_player_board
 					valid = true
-					end
 				end
 			end
 		end
 	end
 
-	# def empty_cell?(ship, cell)
-	# 	ship
-	# 	status_arr = []
-	# 	cells.each do |row, column|
-	# 		status_arr << @player1.board.cell_coordinates(row, column).status
-	# 	end
-	# 	p status_arr.uniq == ["."]
-	# 	# status_arr.uniq.count == 1
-	# end
-
-
 	def place_opponent_ships
 		ships = ships = [@opponent.destroyer, @opponent.submarine, @opponent.cruiser, @opponent.battleship]
-		1.times do
+		# 1.times do
+		valid = false
+		while valid == false do
 			ships.each do |ship|
 				ship_length = ship.length
 					orientation = [:horizontal, :vertical].sample
@@ -197,21 +186,32 @@ class Game
 					# p cells
 				end
 				cells
-				if @opponent.board.place(ship, cells) != "Invalid Coordinates"
-					@opponent.board.place(ship, cells)
+
+				redo if @opponent.board.valid_placement?(ship, cells) ==  false
+
+				status_arr = []
+				cells.each do |row, column|
+					status_arr << @opponent.board.cell_coordinates(row, column).status
 				end
-				redo if @opponent.board.place(ship, cells) ==  "Invalid Coordinates"
+				status_arr
+
+				redo if status_arr.uniq != ["."]
+
+				if @opponent.board.valid_placement?(ship, cells) && status_arr.uniq	== ["."]
+					@opponent.board.place(ship, cells)
+					valid = true
+				end
 			end
 		end
 	end
 
+# shows the player1 and opponent board for game play
 	def show_boards
 		puts
 		puts
 		@player1.show_player_board
 		@opponent.show_opponent_board
 	end
-
 
 # replace the system clear, keeping it commented out right now to see previous screen for debugging
   	def boards_set
@@ -224,6 +224,7 @@ class Game
    		puts
   	end
 
+# asks player1 for coordinates to fire upon and changes the status of that coordinate on enemy board with corresponding action and method
 def player_round
 	valid = false
 	while valid == false do
@@ -298,7 +299,7 @@ def player_round
 	end
 end
 	
-
+# changes the easily entered coordinate of A1 into "A, 1" for the program to read
 def coordinates2array(coordinates)
 		row = ""
 		column = ""
@@ -315,8 +316,7 @@ def coordinates2array(coordinates)
 				if coordinates[0] == coordinates[1]
 					row << coordinates[0] << coordinates[1]
 					column << coordinates[2]
-				else
-					coordinates[1] == coordinates[2]
+				else coordinates[1] == coordinates[2]
 					row << coordinates[0] 
 					column << coordinates[1] << coordinates[2]
 				end
@@ -334,15 +334,55 @@ def coordinates2array(coordinates)
 	end
 
 	def opponent_round
+		print "Your Enemy's Turn!"
+		puts
+		target_coords = @targeting_queue.pop 
+		p target_coords
+
+		player1_coord = @player1.board.cell_coordinates(target_coords[0], target_coords[1])
+
+		print "Your enemy has chosen coordinates #{target_coords.join} to fire upon!"
+		puts
+
+		if player1_coord.status == "."
+			player1_coord.miss
+			print "Miss!"
+			puts
+		else
+			print "Hit!"
+			if player1_coord.status.type == :battleship
+				player1_coord.hit
+				@player1.battleship.hit
+			elsif player1_coord.status.type == :cruiser
+				player1_coord.hit
+				@player1.cruiser.hit
+			elsif player1_coord.status.type == :submarine
+				player_coord.hit
+				@player1.submarine.hit
+			else player1_coord.status.type == :destroyer
+				player_coord.hit
+				@player1.destroyer.hit
+			end
+		end
+		@player1.show_player_board
+
+
+
+
+
+
+
+	end
 		
 
 # alternates player1 and opponent turns
   	def play_rounds
-  		@player1.show_player_board
-		@opponent.show_opponent_board
+  		# @player1.show_player_board
+		# @opponent.show_opponent_board
   		game_over = false
   		while game_over == false do
   			player_round
+  			system('cls')
   			self.show_boards	
   			if @opponent.ships_left == 0 
   				winner = @player1
@@ -351,6 +391,8 @@ def coordinates2array(coordinates)
   			end
 
   			opponent_round
+  			# system('cls')
+  			self.show_boards
   			if @player1.ships_left == 0
   				winner = @opponent
   				game_over = true
@@ -363,15 +405,14 @@ end
 
 			
 #!!!!!!!!!!!!!!!!!!!!!!!!!!  Enemy Board is not redoing the placing of a ship if cells are off the available grid
-#!!!!!!!!!!!!!!!!!!!!!!!!!!  Player 1 Board is doing the same, but also allows for overlapping of boards.	This only happens if the ship you're trying to place is completely contained in another ship on grid				
 
 game = Game.new()
 game.set_difficulty
 game.set_opponent
 game.setup_player1
-game.player1_add_ships
-# game.boards_set
-# game.play_rounds
+game.boards_set
+game.show_boards
+game.play_rounds
 
 
 
