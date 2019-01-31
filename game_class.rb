@@ -212,11 +212,16 @@ def player_round
 		while input.empty? do
 			print "Please choose a coordinate to fire upon: "
 
-			input = gets.chomp.strip.upcase
+			input = gets.chomp.gsub(/\s+/, "").upcase
+		
+			redo if input == "" 
+			redo if input.length == 1
+
 			coordinates = coordinates2array(input)
 
 			redo if @opponent.board.grid_row.include?(coordinates[0]) == false
 			redo if @opponent.board.grid_column.include?(coordinates[1]) == false
+	
 			system('cls')
 			valid = true
 		end
@@ -309,6 +314,9 @@ def coordinates2array(coordinates)
 		cell_coordinates << row << column
 	end
 
+	# def opponent_round
+
+
 # alternates player1 and opponent turns
   	def play_rounds
   		@player1.show_player_board
@@ -317,11 +325,23 @@ def coordinates2array(coordinates)
   		while game_over == false do
   			player_round
   			self.show_boards	
-  			# game_over = true
-  		end
+  			if @opponent.ships_left == 0 
+  				winner = @player1
+  				# game_over = true
+  				# next
+  			end
 
+  			# opponent_round
+  			# if @player1.ships_left == 0
+  			# 	winner = @opponent
+  			# 	game_over = true
+  			# end
+  		end
+  		# print "##{winner} Wins Battleship!!"
   	end
 end
+
+#  when just one coordinate is entered to fire upon, returns error
 
 			
 #!!!!!!!!!!!!!!!!!!!!!!!!!!  Enemy Board is not redoing the placing of a ship if cells are off the available grid
