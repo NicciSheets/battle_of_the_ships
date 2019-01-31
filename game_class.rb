@@ -257,6 +257,7 @@ def player_round
 			puts
 			@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).miss
 		else
+			valid = false
 			if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :battleship
 				system('cls')
 				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
@@ -265,12 +266,14 @@ def player_round
 				print "#{@player1} Hit an Enemy Ship!"
 				puts
 				puts
+				# self.show_boards
 				if 	@opponent.battleship.sunk?
 
 					@opponent.ships_left -= 1
 					print "Enemy Battleship Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
 					puts
 				end
+				self.show_boards
 			elsif @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :cruiser
 				system('cls')
 				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit				
@@ -279,11 +282,13 @@ def player_round
 				print "#{@player1} Hit an Enemy Ship!"
 				puts
 				puts
+				# self.show_boards
 				if @opponent.cruiser.sunk?
 					@opponent.ships_left -= 1
 					print "Enemy Cruiser Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
 					puts
 				end
+				self.show_boards
 			elsif @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :submarine
 				system('cls')
 				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
@@ -292,11 +297,13 @@ def player_round
 				print "#{@player1} Hit an Enemy Ship!"
 				puts
 				puts
+				# self.show_boards
 				if @opponent.submarine.sunk?
 					@opponent.ships_left -= 1
 					print "Enemy Submarine Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
 					puts
 				end
+				self.show_boards
 			else @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :destroyer
 				system('cls')
 				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
@@ -305,11 +312,14 @@ def player_round
 				print "#{@player1} Hit an Enemy Ship!"
 				puts
 				puts
+				# self.show_boards
 				if @opponent.destroyer.sunk?
 					@opponent.ships_left -= 1
 					print "Enemy Destroyer Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
 					puts
 				end
+				self.show_boards
+				valid = true
 			end
 		end
 	end
@@ -391,6 +401,7 @@ def coordinates2array(coordinates)
 
 # alternates player1 and opponent turns
   	def play_rounds
+  		self.show_boards
   		game_over = false
   		while game_over == false do
   			player_round
@@ -420,7 +431,7 @@ game.set_difficulty
 game.set_opponent
 game.setup_player1
 game.boards_set
-game.show_boards
+# game.show_boards
 game.play_rounds
 
 
