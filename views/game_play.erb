@@ -1,13 +1,64 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="css/battle_of_the_ships.css">
+	  <link rel="stylesheet" type="text/css" href="/css/styles.css">
+
 </head>
     
 <body>
 <form method="post" action="game_play">
-		
-		<%= @player1 %>
-		<%= @opponent %>
+		<div class="player1">
+			<%= @player1 %>
+
+			<% board_layout = @player1.board.show_ships %>
+			<% row_label = @player1.board.grid_column %>
+			<% column_label = @player1.board.grid_row %>
+
+		    <table id="mytable">
+                <tr>
+                <th> </th>
+                <% row_label.each do |v|%>
+                <th><%= v %></th>
+                <% end %>
+                </tr>
+           
+                <% board_layout.each_with_index do |v, i| %>
+                    <tr>
+                    <th><%= "#{column_label[i]}" %></th>
+                        <% v.each_with_index do |k, o| %>
+                            <th><%= k %></th>
+                        <% end %>
+                    </tr>
+                <% end %>  
+            </table>            
+         </div>
+
+         
+		<div class="opponent">
+			<%= @opponent %>
+			<% @targeting_queue = @opponent.coordinates_to_play.shuffle %>
+
+			<% board_layout = @opponent.board.show_ships %>
+			<% row_label = @opponent.board.grid_column %>
+			<% column_label = @opponent.board.grid_row %>
+
+		    <table id="mytable">
+                <tr>
+                <th> </th>
+                <% row_label.each do |v|%>
+                <th><%= v      %></th>
+                <% end %>
+                </tr>
+           
+                <% board_layout.each_with_index do |v, i| %>
+                    <tr>
+                    <th><%= "#{column_label[i]} " %></th>
+                        <% v.each_with_index do |k, o| %>
+                            <th><%= k %></th>
+                        <% end %>
+                    </tr>
+                <% end %>  
+            </table>            
+         </div>
 
 
 </form>
