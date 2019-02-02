@@ -20,7 +20,7 @@ class Board
 # initializes the Board class with grid size attribute(how many cells in each row/column) and based on the difficulty attribute chosen
 	def initialize(difficulty)
 		@difficulty = difficulty
-		@grid_size = GRID_SIZE[@difficulty]
+		@grid_size = GRID_SIZE[difficulty]
 		@grid_row = ROW.take(@grid_size)
 		@grid_column = COLUMN.take(@grid_size)	
 		grid = []

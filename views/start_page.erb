@@ -5,16 +5,25 @@
     
 <body>
 <form method="post" action="start_page">
+<div class="player_name">
+	<div class="selection">
+		<h3> Player One, please enter your name: </h3>
+	</div>
+	<div class="name_input">
+		<input type="text" placeholder="Player One Name" name="player1" required>
+	</div>
+</div>
+
 <div class="choose_difficulty">
 	<div class="selection">
 		<h3> Please select a difficulty level for your game: </h3>
 	</div>
 	<div class="difficulty_radio">
-		<input type="radio" name="difficulty" id="beginner" value="Beginner" required>
+		<input type="radio" name="difficulty" id="beginner" value="beginner" required>
 			<label for="beginner"> Beginner (Grid Size = 12x12) </label><br>
- 		<input type="radio" name="difficulty" id="intermediate" value="Intermediate">
+ 		<input type="radio" name="difficulty" id="intermediate" value="intermediate">
 			<label for="intermediate"> Intermediate (Grid Size = 24x24) </label><br>
-	 	<input type="radio" name="difficulty" id="advanced" value="Advanced">
+	 	<input type="radio" name="difficulty" id="advanced" value="advanced">
 			<label for="advanced"> Advanced (Grid Size = 36x36) </label><br>
 	</div>
 	<div class="start_page_button">
