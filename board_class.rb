@@ -165,14 +165,3 @@ class Board
 end
 
 
-# board = Board.new(:beginner)
-# p board.grid
-# cells = []
-# board.grid.each_with_index do |row, i|
-# 	row
-# 	# row.each_with_index do |cell, i|
-# 	# 	p row.index(cell)
-# 	# end
-# end
-# # p cells
-# p row

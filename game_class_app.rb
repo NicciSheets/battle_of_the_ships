@@ -432,7 +432,7 @@ end
 
 
 game = Game.new
-game.play
+# game.play
 
 
 

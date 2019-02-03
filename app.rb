@@ -20,11 +20,10 @@ end
 get '/game_play' do
 	difficulty = params[:difficulty].to_sym
 	player = params[:player]
-	col = params[:col]
 	@player1 = Player.new(player, difficulty)
 	@opponent = Player.new("Enemy", difficulty)
 	
-	erb :game_play, locals: {difficulty: difficulty, player: player, player1: @player1, opponent: @opponent, col: col}
+	erb :game_play, locals: {difficulty: difficulty, player: player, player1: @player1, opponent: @opponent}
 end
 
 post '/game_play' do
