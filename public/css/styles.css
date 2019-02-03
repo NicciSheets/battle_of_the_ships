@@ -19,6 +19,11 @@ table, th, td
    border: 1px solid black;
 }
 
+th, td
+{
+  padding: 8px;
+}
+
 .btn {
   background-color: #4CAF50;
   border: none;
