@@ -20,22 +20,18 @@ end
 get '/game_play' do
 	difficulty = params[:difficulty].to_sym
 	player = params[:player]
-
-	# game = Game.new
-
+	col = params[:col]
 	@player1 = Player.new(player, difficulty)
 	@opponent = Player.new("Enemy", difficulty)
-
-	erb :game_play, locals: {difficulty: difficulty, player: player, player1: @player1, opponent: @opponent}
+	
+	erb :game_play, locals: {difficulty: difficulty, player: player, player1: @player1, opponent: @opponent, col: col}
 end
 
 post '/game_play' do
 	p "params in game play are #{params}"
 	difficulty = params[:difficulty]
-	# player1 = params[:player1]
-	# opponent = params[:opponent]
 	@player1 = @player1 || ""
 	@opponent = @opponent || ""
 
-	redirect '/game_play?player1=' + @player1 + '&difficulty=' + difficulty + '&opponent=' + @opponent
+	redirect '/game_play?player1=' + @player1 + '&difficulty=' + difficulty + '&opponent=' + @opponent 
 end

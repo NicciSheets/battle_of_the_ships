@@ -1,19 +1,56 @@
 <html>
 <head>
-	  <link rel="stylesheet" type="text/css" href="/css/styles.css">
-
+	<link rel="stylesheet" type="text/css" href="/css/styles.css">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+	$('td').mouseover(function(){
+     col = $(this).parent().children().index($(this));
+     row = $(this).parent().parent().children().index($(this).parent());
+	 });
+	</script>
 </head>
     
 <body>
 <form method="post" action="game_play">
-		<div class="player1">
+		<h3><div class="player1"></div>
 			<%= @player1 %>
 
-			<% board_layout = @player1.board.show_ships %>
+			<% board_layout = @player1.board.grid %>
 			<% row_label = @player1.board.grid_column %>
 			<% column_label = @player1.board.grid_row %>
 
-		    <table id="mytable">
+		    <table id="player1_table">
+                <tr>
+                <th> </th>
+                <% row_label.each do |v|%>
+         			<th><%= v %></th>
+                <% end %>
+                </tr>
+           		
+          
+               	<% board_layout.each_with_index do |v, i| %>
+                	<tr>
+                   	<th><%= "#{column_label[i]}" %></th>
+                    <% v.each do |v| %>
+                    	<% v %>
+						<td name="<%= v  %>"><%= v.render_with_ships %></td>                    	
+					<% end %>
+					</tr> 
+                <% end %>    
+            </table>            
+         </div>
+
+         
+		<h3><div class="opponent"></div>
+			<%= @opponent %>
+			<% @targeting_queue = @opponent.coordinates_to_play.shuffle %>
+
+			<% board_layout = @opponent.board.grid %>
+			<% row_label = @opponent.board.grid_column %>
+			<% column_label = @opponent.board.grid_row %>
+
+		    <table id="opponent_table">
                 <tr>
                 <th> </th>
                 <% row_label.each do |v|%>
@@ -23,37 +60,10 @@
            
                 <% board_layout.each_with_index do |v, i| %>
                     <tr>
-                    <th><%= "#{column_label[i]}" %></th>
-                        <% v.each_with_index do |k, o| %>
-                            <th><%= k %></th>
-                        <% end %>
-                    </tr>
-                <% end %>  
-            </table>            
-         </div>
-
-         
-		<div class="opponent">
-			<%= @opponent %>
-			<% @targeting_queue = @opponent.coordinates_to_play.shuffle %>
-
-			<% board_layout = @opponent.board.show_ships %>
-			<% row_label = @opponent.board.grid_column %>
-			<% column_label = @opponent.board.grid_row %>
-
-		    <table id="mytable">
-                <tr>
-                <th> </th>
-                <% row_label.each do |v|%>
-                <th><%= v      %></th>
-                <% end %>
-                </tr>
-           
-                <% board_layout.each_with_index do |v, i| %>
-                    <tr>
                     <th><%= "#{column_label[i]} " %></th>
-                        <% v.each_with_index do |k, o| %>
-                            <th><%= k %></th>
+                        <% v.each_with_index do |v| %>
+                        	<% v %>
+                            <td name="<%= v %>"><%= v.render_without_ships %></tc>
                         <% end %>
                     </tr>
                 <% end %>  
@@ -62,5 +72,11 @@
 
 
 </form>
+<script>
+	$('td').mouseover(function(){
+     col = $(this).parent().children().index($(this));
+     row = $(this).parent().parent().children().index($(this).parent());
+ });
+</script>
 </body>
 </html>
