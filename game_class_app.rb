@@ -6,59 +6,17 @@ class Game
 
 	attr_reader :player, :opponent, :targeting_queue
 
-# asks player to choose difficulty of beginner, intermediate or advanced
-	# def set_player
-	# 	player = ""
-	# 	while player.empty? do
-	# 		print "Player 1: Please enter your name: "
-	# 		player = gets.chomp
-	# 		player = player.strip.capitalize
-	# 		if player == ""
-	# 			player = ""
-	# 		end
-	# 	end
-	# 	player
-	# end
 
-	def set_difficulty
-		# player = set_player
-		# difficulty = @difficulty
-		# player
-		# while difficulty.empty? do 
-		# 	print "Welcome to Battleship Console, #{player}! Please choose a difficulty level: [b]Beginner; [i]Intermediate; [a]Advanced: "
-		# 	difficulty = gets.chomp
-		# 	if difficulty.strip.downcase == "b" || difficulty.strip.downcase == "beginner"
-		# 		@difficulty = :beginner
-		# 	elsif difficulty.strip.downcase == "i" || difficulty.strip.downcase == "intermediate"
-		# 		@difficulty = :intermediate
-		# 	elsif difficulty.strip.downcase == "a" || difficulty.strip.downcase == "advanced"
-		# 		@difficulty = :advanced
-		# 	else
-		# 		difficulty = ""
-		# 	end
-		# end
-		# @difficulty
-		# difficulty = @difficulty
-		# puts
-		# @player1 = Player.new(player, difficulty)
+	def player1(player, difficulty)
+		difficulty
+		player
+		Player.new(player, difficulty)
 	end
 
-	def set_opponent
-		# difficulty = @difficulty
-		# difficulty
-		# @opponent = Player.new("Enemy", difficulty)
-		@targeting_queue = @opponent.coordinates_to_play.shuffle
-		# print "Begin Game: #{@player1} VS #{@opponent}, #{difficulty.capitalize} Level."
-		# puts
-		# puts
-	end
-
-	def setup_player1
-		print "Each board will be set up like the following:"
-		puts
-		@player1.show_player_board
-		print "Four ships (Destroyer, Submarine, Cruiser and Battleship) will be placed on the board.  Ships may only be placed horizontally or vertically, never diagonally, and ships may not overlap board coordinates with one another."
-		puts
+	def opponent(player, difficulty)
+		difficulty 
+		player = "Enemy"
+		Player.new(player, difficulty)
 	end
 
 	def player1_add_ships
@@ -148,9 +106,10 @@ class Game
 		end
 	end
 
-	def place_opponent_ships
+	def place_opponent_ships(player, difficulty)
+
+		@opponent = self.opponent(player, difficulty)
 		ships = ships = [@opponent.destroyer, @opponent.submarine, @opponent.cruiser, @opponent.battleship]
-		# 1.times do
 		valid = false
 		while valid == false do
 			ships.each do |ship|
@@ -203,6 +162,7 @@ class Game
 				end
 			end
 		end
+		@opponent.board.grid
 	end
 
 # shows the player1 and opponent board for game play
@@ -358,6 +318,8 @@ def coordinates2array(coordinates)
 	end
 
 	def opponent_round
+		@targeting_queue = @opponent.coordinates_to_play.shuffle
+
 		loop do
 			puts
 			print "********** Your Enemy's Turn **********"
@@ -431,8 +393,70 @@ def coordinates2array(coordinates)
 end
 
 
-game = Game.new
-# game.play
+# game = Game.new
+# player = "Nicci"
+#  game.player1(player, :beginner)
+# enemy = game.opponent("Enemy", :beginner)
+# p enemy.battleship
 
 
 
+
+
+
+
+
+# asks player to choose difficulty of beginner, intermediate or advanced
+	# def set_player
+	# 	player = ""
+	# 	while player.empty? do
+	# 		print "Player 1: Please enter your name: "
+	# 		player = gets.chomp
+	# 		player = player.strip.capitalize
+	# 		if player == ""
+	# 			player = ""
+	# 		end
+	# 	end
+	# 	player
+	# end
+
+	# def set_difficulty
+		# player = set_player
+		# difficulty = @difficulty
+		# player
+		# while difficulty.empty? do 
+		# 	print "Welcome to Battleship Console, #{player}! Please choose a difficulty level: [b]Beginner; [i]Intermediate; [a]Advanced: "
+		# 	difficulty = gets.chomp
+		# 	if difficulty.strip.downcase == "b" || difficulty.strip.downcase == "beginner"
+		# 		@difficulty = :beginner
+		# 	elsif difficulty.strip.downcase == "i" || difficulty.strip.downcase == "intermediate"
+		# 		@difficulty = :intermediate
+		# 	elsif difficulty.strip.downcase == "a" || difficulty.strip.downcase == "advanced"
+		# 		@difficulty = :advanced
+		# 	else
+		# 		difficulty = ""
+		# 	end
+		# end
+		# @difficulty
+		# difficulty = @difficulty
+		# puts
+		# @player1 = Player.new(player, difficulty)
+	# end
+
+	# def set_opponent
+	# 	# difficulty = @difficulty
+	# 	# difficulty
+	# 	# @opponent = Player.new("Enemy", difficulty)
+		# @targeting_queue = @opponent.coordinates_to_play.shuffle
+	# 	# print "Begin Game: #{@player1} VS #{@opponent}, #{difficulty.capitalize} Level."
+	# 	# puts
+	# 	# puts
+	# end
+
+	# def setup_player1
+	# 	print "Each board will be set up like the following:"
+	# 	puts
+	# 	@player1.show_player_board
+	# 	print "Four ships (Destroyer, Submarine, Cruiser and Battleship) will be placed on the board.  Ships may only be placed horizontally or vertically, never diagonally, and ships may not overlap board coordinates with one another."
+	# 	puts
+	# end

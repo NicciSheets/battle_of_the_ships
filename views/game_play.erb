@@ -9,8 +9,9 @@
 <body>
 <form method="post" action="game_play">
 		<h3><div class="player1"></div>
+			<!-- <%= @player1 %> -->
+			<% @player1 = @game.player1(player, difficulty) %>
 			<%= @player1 %>
-
 			<% board_layout = @player1.board.grid %>
 			<% row_label = @player1.board.grid_column %>
 			<% column_label = @player1.board.grid_row %>
@@ -38,13 +39,14 @@
 
          
 		<h3><div class="opponent"></div>
+			<% @opponent = @game.opponent(player, difficulty) %>
 			<%= @opponent %>
 			<% @targeting_queue = @opponent.coordinates_to_play.shuffle %>
 
-			<% board_layout = @opponent.board.grid %>
 			<% row_label = @opponent.board.grid_column %>
 			<% column_label = @opponent.board.grid_row %>
 
+			<% board_layout = @game.place_opponent_ships(player, difficulty) %>
 		    <table id="opponent_table">
                 <tr>
                 <th> </th>
@@ -58,7 +60,7 @@
                     <th><%= "#{column_label[i]} " %></th>
                         <% v.each_with_index do |v| %>
                         	<% v %>
-                            <td name="['<%= v.row %>', '<%= v.column %>']" id="<%= v %>"><%= v.render_without_ships %></td>
+                            <td name="['<%= v.row %>', '<%= v.column %>']" id="<%= v %>"><%= v.render_with_ships %></td>
                         <% end %>
                     </tr>
                 <% end %>  
