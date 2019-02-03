@@ -3,12 +3,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/styles.css">
 	<script src="jquery-3.3.1.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script>
-	$('td').mouseover(function(){
-     col = $(this).parent().children().index($(this));
-     row = $(this).parent().parent().children().index($(this).parent());
-	 });
-	</script>
+	
 </head>
     
 <body>
@@ -63,7 +58,7 @@
                     <th><%= "#{column_label[i]} " %></th>
                         <% v.each_with_index do |v| %>
                         	<% v %>
-                            <td name="<%= v %>"><%= v.render_without_ships %></tc>
+                            <td name="<%= v %>" title="<%= v %>"><%= v.render_without_ships %></td>
                         <% end %>
                     </tr>
                 <% end %>  
@@ -73,10 +68,15 @@
 
 </form>
 <script>
-	$('td').mouseover(function(){
-     col = $(this).parent().children().index($(this));
-     row = $(this).parent().parent().children().index($(this).parent());
- });
+// 	$(document).ready(function () {
+//     $(document).on('mouseover', 'th,td', function () {
+//         var offset = $(this).offset();
+//         var html = '<div class="popup">' + $(this).text() + '</div>';
+//         $('.popup').remove();
+//         $(html).insertBefore('table');
+//         $('.popup').css({ 'top': offset.top, 'left': offset.left }).fadeIn();
+//     });
+// });
 </script>
 </body>
 </html>

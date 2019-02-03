@@ -52,12 +52,11 @@ table, th, td
   font-size: 1.1rem;
 }
 
-table.player1
+.popup
 {
-  float: left;
-}
-
-table.opponent
-{
-  float: right;
+  display:none;
+  position:absolute;
+  background:#ccc;
+  border-radius:6px;
+  padding:6px;
 }
