@@ -7,10 +7,8 @@
 </head>
     
 <body>
-<form method="post" action="game_play">
-		<h3><div class="player1"></div>
-			<!-- <%= @player1 %> -->
-			<% @player1 = @game.player1(player, difficulty) %>
+<form method="post" action="board">
+		<h3><div class="player1"></div></h3>
 			<%= @player1 %>
 			<% board_layout = @player1.board.grid %>
 			<% row_label = @player1.board.grid_column %>
@@ -37,9 +35,8 @@
             </table>            
          </div>
 
-         
-		<h3><div class="opponent"></div>
-			<% @opponent = @game.opponent(player, difficulty) %>
+
+        <h3><div class="opponent"></div></h3>
 			<%= @opponent %>
 			<% @targeting_queue = @opponent.coordinates_to_play.shuffle %>
 
@@ -60,12 +57,16 @@
                     <th><%= "#{column_label[i]} " %></th>
                         <% v.each_with_index do |v| %>
                         	<% v %>
-                            <td name="['<%= v.row %>', '<%= v.column %>']" id="<%= v %>"><%= v.render_with_ships %></td>
+                            <td name="['<%= v.row %>', '<%= v.column %>']" id="<%= v %>" class="<%= v.status %>"><%= v.render_without_ships %></td>
                         <% end %>
                     </tr>
                 <% end %>  
             </table>            
          </div>
+         
+		<div class="start_page_button">
+			<button class="button">Submit</button>
+		</div>
 
 
 </form>

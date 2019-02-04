@@ -19,7 +19,66 @@ class Game
 		Player.new(player, difficulty)
 	end
 
-	def player1_add_ships
+	def place_opponent_ships(player, difficulty)
+		@opponent = self.opponent(player, difficulty)
+		ships = ships = [@opponent.destroyer, @opponent.submarine, @opponent.cruiser, @opponent.battleship]
+		valid = false
+		while valid == false do
+			ships.each do |ship|
+				ship_length = ship.length
+					orientation = [:horizontal, :vertical].sample
+					starting_coord = @opponent.coordinates_to_play.sample
+					# p "orientation is #{orientation} and starting_coord = #{starting_coord}"
+					if orientation == :horizontal
+						rows = []
+						columns = []
+						count = 0
+						ship_length.times do 
+						rows << starting_coord[0]
+						columns << (starting_coord[1].to_i + count).to_s
+						count += 1
+					end
+					rows
+					columns
+					cells = rows.zip(columns)
+					# p cells
+				else orientation == :vertical
+					rows = []
+					columns = []
+					count = 0
+					ship_length.times do
+						rows << Board::ROW[(Board::ROW.index(starting_coord[0]) + count)]
+						columns << starting_coord[1]
+						count += 1
+					end
+					rows
+					columns
+					cells = rows.zip(columns)
+					# p cells
+				end
+				cells
+
+				redo if @opponent.board.valid_placement?(ship, cells) ==  false
+
+				status_arr = []
+				cells.each do |row, column|
+					status_arr << @opponent.board.cell_coordinates(row, column).status
+				end
+				status_arr
+
+				redo if status_arr.uniq != ["."]
+
+				if @opponent.board.valid_placement?(ship, cells) && status_arr.uniq	== ["."]
+					@opponent.board.place(ship, cells)
+					valid = true
+				end
+			end
+		end
+		@opponent.board.grid
+	end
+
+	def player1_add_ships(player, difficulty)
+		@player1 = self.player1(player, difficulty)
 		valid = false
 		while valid == false do
 			ships = [@player1.destroyer, @player1.submarine, @player1.cruiser, @player1.battleship]
@@ -106,84 +165,7 @@ class Game
 		end
 	end
 
-	def place_opponent_ships(player, difficulty)
-
-		@opponent = self.opponent(player, difficulty)
-		ships = ships = [@opponent.destroyer, @opponent.submarine, @opponent.cruiser, @opponent.battleship]
-		valid = false
-		while valid == false do
-			ships.each do |ship|
-				ship_length = ship.length
-					orientation = [:horizontal, :vertical].sample
-					starting_coord = @opponent.coordinates_to_play.sample
-					# p "orientation is #{orientation} and starting_coord = #{starting_coord}"
-					if orientation == :horizontal
-						rows = []
-						columns = []
-						count = 0
-						ship_length.times do 
-						rows << starting_coord[0]
-						columns << (starting_coord[1].to_i + count).to_s
-						count += 1
-					end
-					rows
-					columns
-					cells = rows.zip(columns)
-					# p cells
-				else orientation == :vertical
-					rows = []
-					columns = []
-					count = 0
-					ship_length.times do
-						rows << Board::ROW[(Board::ROW.index(starting_coord[0]) + count)]
-						columns << starting_coord[1]
-						count += 1
-					end
-					rows
-					columns
-					cells = rows.zip(columns)
-					# p cells
-				end
-				cells
-
-				redo if @opponent.board.valid_placement?(ship, cells) ==  false
-
-				status_arr = []
-				cells.each do |row, column|
-					status_arr << @opponent.board.cell_coordinates(row, column).status
-				end
-				status_arr
-
-				redo if status_arr.uniq != ["."]
-
-				if @opponent.board.valid_placement?(ship, cells) && status_arr.uniq	== ["."]
-					@opponent.board.place(ship, cells)
-					valid = true
-				end
-			end
-		end
-		@opponent.board.grid
-	end
-
-# shows the player1 and opponent board for game play
-	def show_boards
-		puts
-		puts
-		@player1.show_player_board
-		@opponent.show_opponent_board
-	end
-
-# replace the system clear, keeping it commented out right now to see previous screen for debugging
-  	def boards_set
-  		self.player1_add_ships
-  		self.place_opponent_ships
-  		system('cls')
-  		print "Ships have been placed on both boards. To play, please choose a coordinate on your opponent's board to fire upon."
-  		puts
-  		print "To win, sink all of your opponent's ships.  Good luck, #{@player1}!"
-   		puts
-  	end
-
+	
 # asks player1 for coordinates to fire upon and changes the status of that coordinate on enemy board with corresponding action and method
 def player_round
 	print "********** Your Turn! **********"
@@ -395,7 +377,7 @@ end
 
 # game = Game.new
 # player = "Nicci"
-#  game.player1(player, :beginner)
+# p game.player1(player, :beginner)
 # enemy = game.opponent("Enemy", :beginner)
 # p enemy.battleship
 
