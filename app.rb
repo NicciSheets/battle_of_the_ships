@@ -23,9 +23,7 @@ get '/board_setup' do
 	@game = Game.new()
 	@player1 = @game.player1(player, difficulty)
 	@opponent = @game.opponent(player, difficulty)
-	# @player1 = Player.new(player, difficulty)
-	# @opponent = @opponent || ""
-	# @player1 = @player1 || ""
+	
 	p "#{params} in board_setup"
 	erb :board_setup, locals: {difficulty: difficulty, player: player}
 end
