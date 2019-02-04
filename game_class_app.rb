@@ -84,86 +84,85 @@ class Game
 			ships = [@player1.destroyer, @player1.submarine, @player1.cruiser, @player1.battleship]
 			ships.each do |ship|
 				ship_length = ship.length
-				reply_direction = ""
-				while reply_direction.empty? do
-					print "Would you like to place your #{ship.type.capitalize} ship [h]Horizontally or [v]Vertically? "
-					reply_direction = gets.chomp
-					if reply_direction.strip.downcase == "h" || reply_direction.strip.downcase == "horizontally" || reply_direction.strip.downcase == "horizontal"
-						reply_direction = :horizontal
-					elsif reply_direction.strip.downcase == "v" || reply_direction.strip.downcase == "vertically" || reply_direction.strip.downcase == "vertical"
-						reply_direction = :vertical
-					else
-						reply_direction = ""
-					end
+				orientation = orientation
+				app_orientation = ""
+				if orientation == "horizontal"
+					app_orientation = :horizontal
+				else 
+					app_orientation = :vertical
 				end
-				reply_direction
-				reply_row = ""
-				while reply_row.empty? do
-					print "What Row would you like to place your #{ship.type.capitalize} ship? " 
-					reply_row = gets.chomp
-					if @player1.board.grid_row.include?(reply_row.strip.upcase) == true
-						reply_row = reply_row.strip.upcase
-					else				
-						reply_row = ""
-					end
-				end
-				reply_row
-				reply_column = ""
-				while reply_column.empty? do
-					print "What Column would you like to place your #{ship.type.capitalize} ship? " 
-					reply_column = gets.chomp
-					if @player1.board.grid_column.include?(reply_column.strip) == true
-						reply_column = reply_column.strip
-					else
-						reply_column = ""
-					end
-				end
-				reply_column
-				if reply_direction == :horizontal
-					rows = []
-					columns = []
-					count = 0
-					ship_length.times do 
-						rows << reply_row
-						columns << (reply_column.to_i + count).to_s
-						count += 1
-					end
-					rows
-					columns
-					cells = rows.zip(columns)
-				else reply_direction == :vertical
-					rows = []
-					columns = []
-					count = 0
-					ship_length.times do
-						rows << Board::ROW[(Board::ROW.index(reply_row) + count)]
-						columns << reply_column
-						count += 1
-					end
-					rows
-					columns
-					cells = rows.zip(columns)
-				end
-				cells
+				app_orientation
 
-				redo if @player1.board.valid_placement?(ship, cells) == false
-			
-				status_arr = []
-				cells.each do |row, column|
-					status_arr << @player1.board.cell_coordinates(row, column).status
-				end
-				status_arr
-			
-				redo if status_arr.uniq != ["."]
-			
-				if @player1.board.valid_placement?(ship, cells) && status_arr.uniq == ["."]
-					@player1.board.place(ship, cells)
-					@player1.show_player_board
-					valid = true
-				end
 			end
 		end
 	end
+	# 			reply_row = ""
+	# 			while reply_row.empty? do
+	# 				print "What Row would you like to place your #{ship.type.capitalize} ship? " 
+	# 				reply_row = gets.chomp
+	# 				if @player1.board.grid_row.include?(reply_row.strip.upcase) == true
+	# 					reply_row = reply_row.strip.upcase
+	# 				else				
+	# 					reply_row = ""
+	# 				end
+	# 			end
+	# 			reply_row
+	# 			reply_column = ""
+	# 			while reply_column.empty? do
+	# 				print "What Column would you like to place your #{ship.type.capitalize} ship? " 
+	# 				reply_column = gets.chomp
+	# 				if @player1.board.grid_column.include?(reply_column.strip) == true
+	# 					reply_column = reply_column.strip
+	# 				else
+	# 					reply_column = ""
+	# 				end
+	# 			end
+	# 			reply_column
+	# 			if reply_direction == :horizontal
+	# 				rows = []
+	# 				columns = []
+	# 				count = 0
+	# 				ship_length.times do 
+	# 					rows << reply_row
+	# 					columns << (reply_column.to_i + count).to_s
+	# 					count += 1
+	# 				end
+	# 				rows
+	# 				columns
+	# 				cells = rows.zip(columns)
+	# 			else reply_direction == :vertical
+	# 				rows = []
+	# 				columns = []
+	# 				count = 0
+	# 				ship_length.times do
+	# 					rows << Board::ROW[(Board::ROW.index(reply_row) + count)]
+	# 					columns << reply_column
+	# 					count += 1
+	# 				end
+	# 				rows
+	# 				columns
+	# 				cells = rows.zip(columns)
+	# 			end
+	# 			cells
+
+	# 			redo if @player1.board.valid_placement?(ship, cells) == false
+			
+	# 			status_arr = []
+	# 			cells.each do |row, column|
+	# 				status_arr << @player1.board.cell_coordinates(row, column).status
+	# 			end
+	# 			status_arr
+			
+	# 			redo if status_arr.uniq != ["."]
+			
+	# 			if @player1.board.valid_placement?(ship, cells) && status_arr.uniq == ["."]
+	# 				@player1.board.place(ship, cells)
+	# 				@player1.show_player_board
+	# 				valid = true
+	# 			end
+	# 		end
+	# 	end
+	# end
 
 	
 # asks player1 for coordinates to fire upon and changes the status of that coordinate on enemy board with corresponding action and method

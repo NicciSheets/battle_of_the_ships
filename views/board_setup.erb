@@ -8,6 +8,16 @@
     
 <body>
 <form method="post" action="board">
+	<h3> It's time to place your ships! </h3>
+	<p> You may only place a ship horizontally or vertically, never diagonally, and you cannot overlap ships. </p>
+	<% ships = [@player1.destroyer, @player1.submarine, @player1.cruiser, @player1.battleship] %>
+	<% ships.each do |ship| %>
+		<p> Where would you like to place your <%= ship.type.capitalize %> Ship (Length = <%= ship.length %>)? </p>
+		<p><input type="input" name="coordinates" placeholder="Starting Coordinate">
+		<input type="radio" name="orientation" value="horizontal" id="horizontal" checked>Horizontal
+  		<input type="radio" name="orientation" value="vertical" id="vertical">Vertical
+  		<button class="button" value="<%= ship.type %>">Submit</button></p>
+	<% end %>
 		<h3><div class="player1"></div></h3>
 			<%= @player1 %>
 			<% board_layout = @player1.board.grid %>
