@@ -28,7 +28,7 @@
                    	<th><%= "#{column_label[i]}" %></th>
                     <% v.each do |v| %>
                     	<% v %>
-						<td name="['<%= v.row %>', '<%= v.column %>']" id="<%= v.coordinates %>"><%= v.render_without_ships %></td>                    	
+						<td name="['<%= v.row %>', '<%= v.column %>']" id="<%= v.coordinates %>"><%= v.render_with_ships %></td>                    	
 					<% end %>
 					</tr> 
                 <% end %>    
@@ -57,7 +57,7 @@
                     <th><%= "#{column_label[i]} " %></th>
                         <% v.each_with_index do |v| %>
                         	<% v %>
-                            <td name="['<%= v.row %>', '<%= v.column %>']" id="<%= v %>" class="<%= v.status %>"><%= v.render_without_ships %></td>
+                            <td name="['<%= v.row %>', '<%= v.column %>']" id="<%= v %>" class="<%= v.status %>"><%= v.render_with_ships %></td>
                         <% end %>
                     </tr>
                 <% end %>  
