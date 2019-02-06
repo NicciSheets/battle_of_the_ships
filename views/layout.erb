@@ -7,8 +7,19 @@
   <body>
     <center>
       <div class="title">Battleship!!</div><br>
-      <%= yield %>
+    
+    <section class="row-14-20">
 
+      <section class="col-6-20">
+        <%= yield %>
+      </section>
+
+     
+      <section class="col-7-20">
+        <%= erb :player_board %>
+      </section>
+
+    </section>
       <br><p id="error_out" class="errormsg"></p>
     </center>
   </body>

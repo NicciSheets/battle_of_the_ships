@@ -2,21 +2,25 @@ require_relative 'player_class.rb'
 
 class Game
 
-	attr_accessor :ships, :new_player
+	attr_accessor :player1_ships, :new_player, :opponent, :opponent_ships
 
 	def initialize
-		@ships = []
+		@player1_ships = []
+		@opponent_ships = []
 	# 	@players = []
 	end
 
 
 	def add_player(player, difficulty)
 		@new_player = Player.new(player, difficulty)	
-		@ships << @new_player.battleship << @new_player.cruiser << @new_player.submarine << @new_player.destroyer
+		@player1_ships << @new_player.destroyer << @new_player.submarine << @new_player.cruiser << @new_player.battleship
 		@new_player
-		# @new_player.board
-		# @new_player.player
-		
+	end
+
+	def add_opponent(player, difficulty)
+		@opponent = Player.new("Enemy", difficulty)
+		@opponent_ships << @opponent.battleship << @opponent.cruiser << @opponent.submarine << @opponent.destroyer
+		@opponent
 	end
 
 	def player1_name
@@ -24,37 +28,20 @@ class Game
 	end
 
 	def ship_to_place
-		ships.first
+		player1_ships.first
+	end
+
+	def opponent_name
+		opponent.player
 	end
 	
-	# def ship_empty?
-	# 	ship_to_place.empty?
-	# end
-
 	def place_ship(start_cell, orientation)
 		row = start_cell[0]
 		column = start_cell[1]
 		ship = ship_to_place
 		valid = false
 		while valid == false do
-		# ships.each do |ship|
-		ship_length = ship.length
-			# row = ""
-			# while row.empty? do
-			# if @new_player.board.grid_row.include?(row.strip.upcase) == true
-			# 	row = reply_row.strip.upcase
-			# else				
-			# 	"Invalid Coordinate"
-			# end
-			# row
-			# 	# column = ""
-			# 	# while column.empty? do
-			# if @new_player.board.grid_column.include?(column.strip) == true
-			# 	column = column.strip
-			# 	else
-			# 		"Invalid Coordinate"
-			# end
-			# column
+			ship_length = ship.length
 			if orientation == "horizontal"
 				rows = []
 				columns = []
@@ -100,20 +87,15 @@ class Game
 		end
 	end
 
-		
-
 	def remove_placed_ship
-		ships.shift
+		player1_ships.shift
 	end
 
-	
-	def add_opponent(player, difficulty)
-		opponent = Player.new("Enemy", difficulty)
-		@players << opponent
-		opponent.board
-		opponent.player
-		@ships << opponent.battleship << opponent.cruiser << opponent.submarine << opponent.destroyer
+	def show_player1_board
+		new_player.board.grid
 	end
+	
+	
 
 
 	
@@ -125,7 +107,7 @@ end
  # game.add_player("Nicci", :beginner)
  # game.new_player
 # p game.player1_name
-# p game.ships
+# p game.player1_ships
 # game.add_opponent("Enemy", :beginner)
 # p game.ship_to_place
 # p game.remove_placed_ship

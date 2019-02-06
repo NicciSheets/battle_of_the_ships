@@ -9,14 +9,22 @@ enable :sessions
 game = Game.new
 
 get '/' do
-	session[:grid_display], session[:placing_ships] = false
+	session[:placing_ships] = false
 	erb :register
+end
+
+get'/new_game' do
+	game.player1_ships.clear
+	game.opponent_ships.clear
+	game.opponent.clear
+	game.new_player.clear	
+	redirect '/'
 end
 
 post '/register' do
 	p "params in register post are #{params}"
 	session[:difficulty] =  params[:difficulty]
-	# game.add_opponent("Enemy", params[:difficulty].to_sym)
+	game.add_opponent("Enemy", params[:difficulty].to_sym)
 	game.add_player(params[:player], session[:difficulty].to_sym)
 	redirect '/place_ship'
 end
@@ -24,8 +32,12 @@ end
 get '/place_ship' do
 	session[:placing_ships] = true
 	@player1_name = game.player1_name
-	@player1_grid_size = game.new_player.board.grid_size		
-    if game.ships.empty?
+	@player1_grid_size = game.new_player.board.grid_size
+	@player1_grid = game.new_player.board.grid
+	@player1_grid_rows = game.new_player.board.grid_row
+	@player1_grid_columns = game.new_player.board.grid_column
+		
+    if game.player1_ships.empty?
     	p "place_ship get params are #{params}"
     	erb :all_ships_placed
     else
@@ -39,13 +51,14 @@ end
 
 post '/place_ship' do
 	p "params in place ship post are #{params}"
-	start_cell.to_a = "#{params[:row]}, #{params[:column]}"
-    orientation = params[:orientation]
+	start_cell = []
+	start_cell << params[:row] << params[:column]
+	orientation = params[:orientation]
     begin
     	game.place_ship(start_cell, orientation)
     	game.remove_placed_ship
-    rescue => error
-   		flash[:notice] = error.to_s
+    # rescue => error
+   	# 	flash[:notice] = error.to_s
     end
     redirect '/place_ship'
 end
