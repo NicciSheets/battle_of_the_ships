@@ -57,11 +57,13 @@ th, td
   font-size: 1.1rem;
 }
 
-.popup
-{
-  display:none;
-  position:absolute;
-  background:#ccc;
-  border-radius:6px;
-  padding:6px;
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
 }
+
+.grid-item1 {
+  grid-row: 1 / 2;
+}
+
