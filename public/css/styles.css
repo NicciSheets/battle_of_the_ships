@@ -1,6 +1,6 @@
 body
 {
-  background-color: darkslategrey;
+  background-color: #598c8c;
   font-family: 'Quicksand', sans-serif;
   font-size: 1.2rem;
 }
@@ -40,8 +40,9 @@ th, td
 
 .title
 {
-  font-family: 'Anton', sans-serif;
-  color: darkkhaki;
+  font-family: 'Quicksand', sans-serif;
+  color: black;
+  font-weight: bold;
   font-size: 3rem;
 }
 
