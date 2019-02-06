@@ -5,7 +5,7 @@ require_relative 'board_class.rb'
 require_relative 'game_class_app.rb'
 enable :sessions
 
-@@game = Game.new
+
 
 get '/' do
   erb :start_page
@@ -22,13 +22,28 @@ end
 get '/board_setup' do
 	difficulty = params[:difficulty].to_sym
 	player = params[:player]
-	@game = @@game
-	@player1 = @game.player1(player, difficulty)
-	@opponent = @game.opponent(player, difficulty)
+	@game = Game.new()
+	
+	cell_coordinates = params[:cell_coordinates] || ""
+	row = params[:row] || ""
+	column = params[:column] || ""
+	orientation = params[:orientation] || ""
 
-	orientation = params[:orientation]
-
+	
 	p "#{params} in board_setup"
-	erb :board_setup, locals: {difficulty: difficulty, player: player, orientation: orientation}
+	erb :board_setup, locals: {difficulty: difficulty, player: player, orientation: orientation, cell_coordinates: cell_coordinates, row: row, column: column}
 end
 
+post '/board_setup' do
+	p "params in post board setup is #{params}"
+
+	difficulty = params[:difficulty].to_sym || ""
+	player = params[:player] || ""
+
+	cell_coordinates = params[:cell_coordinates]
+	row = params[:row] || ""
+	column = params[:column] || ""
+	orientation = params[:orientation] || ""
+
+	redirect '/board_setup?difficulty=' + difficulty + '&player=' + player + '&cell_coordinates=' + cell_coordinates + '&row=' + row + '&column=' + column + '&orientation=' + orientation
+end

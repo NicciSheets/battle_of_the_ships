@@ -63,9 +63,9 @@ class Player
   		puts
   	end
 
- 	def to_s
- 		@player.capitalize
- 	end
+ 	# def to_s
+ 	# 	@player.capitalize
+ 	# end
 
 end
 

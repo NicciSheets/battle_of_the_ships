@@ -164,4 +164,7 @@ class Board
 
 end
 
+# p Board.new(:advanced)
 
+# alphabet = "abcdefghijklmnopqrstuvwxyz".scan /\w/
+# p alphabet
