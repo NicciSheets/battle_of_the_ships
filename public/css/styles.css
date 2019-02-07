@@ -61,11 +61,20 @@ th, td
 .grid-container {
   display: grid;
   grid-template-columns: auto auto auto;
-  padding: 10px;
+  padding: 2px;
 }
 
 .grid-item1 {
   grid-column: 1 / 2;
 }
+
+.grid-item2 {
+  grid-column: 2 / 3;
+}
+
+.grid-item3 {
+  grid-column: 3 / 4;
+}
+
 
 

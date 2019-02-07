@@ -4,17 +4,17 @@
 
 <p>Start Point:</p>
 <p><select name="row" form="place_ship_coordinates">
-  <% if @player1_grid_size == 12 %>
+  <% if @grid_size == 12 %>
       <% [*"A".."L"].each do |row| %>
         <option value=<%= row %>><%= row %></option>
       <% end %>
   <% end %>
-  <% if @player1_grid_size == 24 %>
+  <% if @grid_size == 24 %>
       <% [*"A".."X"].each do |row| %>
         <option value=<%= row %>><%= row %></option>
       <% end %>
   <% end %>
-  <% if @player1_grid_size == 36 %>
+  <% if @grid_size == 36 %>
       <% alphabet = "abcdefghijklmnopqrstuvwxyz".upcase.scan(/\w/) %>
       <% alphabet << "AA" << "BB" << "CC" << "DD" << "EE" << "FF" << "GG" << "HH" << "II" << "JJ" %>
       <% [*alphabet].each do |row| %>
@@ -24,17 +24,17 @@
 </select>
 
 <select name="column" form="place_ship_coordinates">
-  <% if @player1_grid_size == 12 %>
+  <% if @grid_size == 12 %>
     <% [*1..12].each do |column| %>
       <option value=<%= column %>><%= column %></option>
     <% end %>
   <% end %>
-  <% if @player1_grid_size == 24 %>
+  <% if @grid_size == 24 %>
     <% [*1..24].each do |column| %>
       <option value=<%= column %>><%= column %></option>
     <% end %>
   <% end %>
-  <% if @player1_grid_size == 36 %>
+  <% if @grid_size == 36 %>
     <% [*1..36].each do |column| %>
       <option value=<%= column %>><%= column %></option>  
     <% end %>
