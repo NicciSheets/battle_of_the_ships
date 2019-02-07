@@ -2,7 +2,7 @@ require 'sinatra'
 require_relative 'board_class.rb'
 require_relative 'player_class.rb'
 require_relative 'board_class.rb'
-require_relative 'game_class_app.rb'
+require_relative 'junk_game_class_app.rb'
 enable :sessions
 
 

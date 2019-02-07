@@ -1,6 +1,6 @@
 
 <h2>Placing Ships for <%= @player1_name %></h2>
-<p>Please Enter Coordinates for Your <%=@ship_type%> Ship (Length = <%=@ship_size%>)</p>
+<h3>Please Enter Coordinates for Your <%=@ship_type%> Ship (Length = <%=@ship_size%>)</h3>
 
 <p>Start Point:</p>
 <p><select name="row" form="place_ship_coordinates">
@@ -41,10 +41,19 @@
   <% end %>
 </select></p>
 
-<form action='/place_ship' method="post" id="place_ship_coordinates">
-  <p>Orientation:</p>
 
-  <p><input type="radio" name="orientation" value="horizontal" id="horizontal" checked> Horizontal</p>
+
+
+
+
+
+<form method="post" action='/place_ship' id="place_ship_coordinates">
+
+
+
+<p>Orientation:</p>
+
+  <p><input type="radio" name="orientation" value="horizontal" id="horizontal" checked required> Horizontal</p>
   <p><input type="radio" name="orientation" value="vertical" id="vertical"> Vertical</p>
   <input type="submit" value=<%="Submit"%> />
 </form>

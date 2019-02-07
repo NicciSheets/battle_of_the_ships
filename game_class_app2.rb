@@ -2,12 +2,11 @@ require_relative 'player_class.rb'
 
 class Game
 
-	attr_accessor :player1_ships, :new_player, :opponent, :opponent_ships
+	attr_accessor :player1_ships, :new_player, :opponent, :opponent_ships, :opp_start_cell, :opp_orientation
 
 	def initialize
 		@player1_ships = []
 		@opponent_ships = []
-	# 	@players = []
 	end
 
 
@@ -19,7 +18,7 @@ class Game
 
 	def add_opponent(player, difficulty)
 		@opponent = Player.new("Enemy", difficulty)
-		@opponent_ships << @opponent.battleship << @opponent.cruiser << @opponent.submarine << @opponent.destroyer
+		@opponent_ships << @opponent.destroyer << @opponent.submarine << @opponent.cruiser << @opponent.battleship
 		@opponent
 	end
 
@@ -95,7 +94,75 @@ class Game
 		new_player.board.grid
 	end
 	
-	
+	def opponent_ships2place
+		opponent_ships.first
+	end
+
+	def remove_opponent_ships
+		opponent_ships.shift
+	end
+
+	def place_opponent_ships
+		# ship = opponent_ships2place
+		ships = @opponent_ships
+		# opp_row2 = opp_start_cell2[0]
+		# opp_column2 = opp_start_cell2[1]
+		# p "ship in opponent is #{ship} and length is #{ship.length}"
+		valid = false
+		while valid == false do
+			ships.each do |ship|
+				ship_length = ship.length
+				opp_orientation = [:horizontal, :vertical].sample
+				opp_start_cell2 = @opponent.coordinates_to_play.sample
+				# p "orientation is #{orientation} and starting_coord = #{starting_coord}"
+				if opp_orientation == "horizontal"
+					opp_rows2 = []
+					opp_columns2 = []
+					count = 0
+					ship_length.times do 
+						opp_rows2 << opp_start_cell2[0]
+						opp_columns2 << (opp_start_cell2[1].to_i + count).to_s
+						count += 1
+					end
+					opp_rows2
+					opp_columns2
+					cells = opp_rows2.zip(opp_columns2)
+					p cells
+				else opp_orientation == "vertical"
+					opp_rows2 = []
+					opp_columns2 = []
+					count = 0
+					ship_length.times do
+						opp_rows2 << Board::ROW[(Board::ROW.index(opp_start_cell2[0]) + count)]
+						opp_columns2 << opp_start_cell2[1]
+						count += 1
+					end
+					opp_rows2
+					opp_columns2
+					cells = opp_rows2.zip(opp_columns2)
+					p cells
+				end
+				cells
+
+				redo if @opponent.board.valid_placement?(ship, cells) ==  false
+
+				status_arr = []
+				cells.each do |row, column|
+					status_arr << @opponent.board.cell_coordinates(row, column).status
+				end
+				status_arr
+
+				redo if status_arr.uniq != ["."]
+
+				if @opponent.board.valid_placement?(ship, cells) && status_arr.uniq	== ["."]
+					@opponent.board.place(ship, cells)
+					@opponent.board.grid
+				valid =  true
+				end
+			end
+		end
+	end
+
 
 
 	

@@ -1,12 +1,13 @@
 <h2>Player Registration</h2>
-<form action='/register' method="post">
-  <p>Player One, Please Enter Your Name: </p>
+<form method="post" action='/register'>
+<div class="enter_name">
+    <h3>Player One, Please Enter Your Name: </h3>
   		<input type="text" placeholder="Player One Name" name="player" autofocus required>
-	
+</div>	
 
 
-	
-		<h3> Please select a difficulty level for your game: </h3>
+<div class ="enter_difficulty">	
+	<h3> Please select a difficulty level for your game: </h3>
 	
 		<input type="radio" name="difficulty" id="beginner" value="beginner" required checked>
 			<label for="beginner"> Beginner (Grid Size = 12x12) </label><br>
@@ -15,7 +16,7 @@
 	 	<input type="radio" name="difficulty" id="advanced" value="advanced">
 			<label for="advanced"> Advanced (Grid Size = 36x36) </label><br>
 		<button class="button">Submit</button>
-	
+</div>
 
 
  
