@@ -35,11 +35,7 @@ get '/place_ship' do
 	@player1_grid = game.new_player.board.grid
 	@grid_rows = game.new_player.board.grid_row
 	@grid_columns = game.new_player.board.grid_column
-	# @opponent_name = game.opponent_name
-	# @opponent_grid_size = game.opponent.board.grid_size
-	# @opponent_grid = game.opponent.board.grid
-	# @opp_start_cell = game.opponent.coordinates_to_play.sample
-
+	
     if game.player1_ships.empty?
 	    	erb :all_ships_placed
     else
@@ -55,10 +51,6 @@ post '/place_ship' do
 	start_cell = []
 	start_cell << params[:row] << params[:column]
 	orientation = params[:orientation]
-	# opp_orientation = params[:opp_orientation]
-	# opp_start_cell2 = []
-	# opp_start_cell2 << params[:opp_row] << params[:opp_column]
-	# game.place_opponent_ships(opp_start_cell2, opp_orientation)
 
  	begin  
     	game.place_ship(start_cell, orientation)

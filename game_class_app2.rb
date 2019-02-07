@@ -9,7 +9,6 @@ class Game
 		@opponent_ships = []
 	end
 
-
 	def add_player(player, difficulty)
 		@new_player = Player.new(player, difficulty)	
 		@player1_ships << @new_player.destroyer << @new_player.submarine << @new_player.cruiser << @new_player.battleship
@@ -88,26 +87,10 @@ class Game
 
 	def remove_placed_ship
 		player1_ships.shift
-	end
-
-	def show_player1_board
-		new_player.board.grid
-	end
+	end	
 	
-	def opponent_ships2place
-		opponent_ships.first
-	end
-
-	def remove_opponent_ships
-		opponent_ships.shift
-	end
-
 	def place_opponent_ships
-		# ship = opponent_ships2place
 		ships = @opponent_ships
-		# opp_row2 = opp_start_cell2[0]
-		# opp_column2 = opp_start_cell2[1]
-		# p "ship in opponent is #{ship} and length is #{ship.length}"
 		valid = false
 		while valid == false do
 			ships.each do |ship|
