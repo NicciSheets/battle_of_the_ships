@@ -1,7 +1,7 @@
 <form method="post" action="/ready_play">
 
-<p> <%= @player1_name %>, Please Choose Which Coordinates You'd Like to Fire Upon: </p>
-<p>Start Point:</p>
+<h3> <%= @player1_name %>, Please Choose Which Coordinates You Would Like to Fire Upon: </h3>
+<p>Enemy Board Coordinates:</p>
 <p><select name="row" form="place_ship_coordinates">
   <% if @grid_size == 12 %>
       <% [*"A".."L"].each do |row| %>
@@ -43,5 +43,5 @@
 
 
 
-<input type="submit" value=<%="Submit"%> />
+<input type="submit" value=<%="Fire!"%> />
 </form>

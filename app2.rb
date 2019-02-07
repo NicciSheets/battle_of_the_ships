@@ -86,19 +86,9 @@ post '/ready_play' do
 end
 
 get '/boards' do
-	# session[:placing_ships] =  true
-	# session[:opponent_board_display] = true
-	# @player1_name = game.player1_name
-	# @player1_grid_size = game.new_player.board.grid_size
-	# @player1_grid = game.new_player.board.grid
-	# @player1_grid_rows = game.new_player.board.grid_row
-	# @player1_grid_columns = game.new_player.board.grid_column
-	# @opponent_name = game.opponent_name
-	# @opponent_grid_size = game.opponent.board.grid_size
-	# @opponent_grid = game.opponent.board.grid
-	# @opponent_grid_rows = game.opponent.board.grid_row
-	# @opponent_grid_columns = game.opponent.board.grid_column
-	# erb :boards
+	session[:opponent_board_display] =  false
+
+	erb :boards
 end
 
 
