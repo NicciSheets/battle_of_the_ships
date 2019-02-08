@@ -17,7 +17,8 @@ get'/new_game' do
 	game.player1_ships.clear
 	game.opponent_ships.clear
 	game.opponent.clear
-	game.new_player.clear	
+	game.new_player.clear
+	game.players.clear	
 	redirect '/'
 end
 
@@ -36,6 +37,8 @@ get '/place_ship' do
 	@grid_rows = game.new_player.board.grid_row
 	@grid_columns = game.new_player.board.grid_column
 	
+	@current_player = game.current_player
+	p "@current_player in place ship is #{@current_player}"
     if game.player1_ships.empty?
 	    	erb :all_ships_placed
     else
@@ -60,27 +63,26 @@ post '/place_ship' do
     redirect '/place_ship'
 end
 
-get '/ready_play' do
+get '/fire_shot' do
 	session[:placing_ships] = false
-	session[:opponent_board_display] =  true
+	session[:opponent_board_display] = true
 	@opponent_name = game.opponent_name
 	@grid_size = game.opponent.board.grid_size
 	@opponent_grid = game.opponent.board.grid
 	@grid_rows = game.opponent.board.grid_row
 	@grid_columns = game.opponent.board.grid_column
 	game.place_opponent_ships
+
 	@player1_name = game.player1_name
-	erb :ready_play
+
+	@current_player = game.current_player
+	erb :fire_shot
 end
 
-post '/ready_play' do
-	redirect '/boards'
-end
+post '/shot_result' do
+	session[:opponent_board_display] = true
 
-get '/boards' do
-	session[:opponent_board_display] =  false
-
-	erb :boards
+	erb :shot_result
 end
 
 
