@@ -81,6 +81,21 @@ end
 
 post '/shot_result' do
 	session[:opponent_board_display] = true
+	coordinates = []
+	coordinates << params[:row] << params[:column]
+	
+
+	@opponent_name = game.opponent_name
+	@grid_size = game.opponent.board.grid_size
+	@opponent_grid = game.opponent.board.grid
+	@grid_rows = game.opponent.board.grid_row
+	@grid_columns = game.opponent.board.grid_column
+
+	begin
+		shot_result = game.player_round(coordinates)
+		@shot_result1 = shot_result[0]
+		@player1_shots_fired = shot_result[1]
+	end
 
 	erb :shot_result
 end

@@ -1,6 +1,6 @@
 <h3> <%= @player1_name %>, Please Choose Which Coordinates You Would Like to Fire Upon: </h3>
 <p>Enemy Board Coordinates:</p>
-<p><select name="row" form="place_ship_coordinates">
+<p><select name="row" form="target_coordinates">
   <% if @grid_size == 12 %>
       <% [*"A".."L"].each do |row| %>
         <option value=<%= row %>><%= row %></option>
@@ -20,7 +20,7 @@
   <% end %>
 </select>
 
-<select name="column" form="place_ship_coordinates">
+<select name="column" form="target_coordinates">
   <% if @grid_size == 12 %>
     <% [*1..12].each do |column| %>
       <option value=<%= column %>><%= column %></option>

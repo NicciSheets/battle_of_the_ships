@@ -163,7 +163,57 @@ class Game
 		end
 	end
 
-	
+	def player_round(coordinates)
+		available_coordinates = @opponent.coordinates_to_play
+
+		shot_result = []
+		if available_coordinates.include?(coordinates)
+			if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status == "."
+				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).miss
+				shot_result << "Miss!"
+			else
+				if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :battleship
+					@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
+					@opponent.battleship.hit
+					shot_result << "Hit!"
+					if 	@opponent.battleship.sunk?
+						@opponent.ships_left -= 1
+						shot_result << "Enemy Battleship Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					end
+				elsif @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :cruiser
+					@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit				
+					@opponent.cruiser.hit
+					shot_result << "Hit!"
+					if @opponent.cruiser.sunk?
+						@opponent.ships_left -= 1
+						shot_result << "Enemy Cruiser Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					end
+				elsif @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :submarine
+				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
+					@opponent.submarine.hit
+					shot_result << "Hit!"
+					if @opponent.submarine.sunk?
+						@opponent.ships_left -= 1
+						shot_result << "Enemy Submarine Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					end
+				else @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :destroyer
+					@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
+					@opponent.destroyer.hit
+					shot_result << "Hit!"
+					if @opponent.destroyer.sunk?
+						@opponent.ships_left -= 1
+						shot_result << "Enemy Destroyer Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					end
+				end
+			end
+		end
+		@new_player.shots_fired += 1
+		@opponent.coordinates_to_play.delete(coordinates)
+		shot_result << @new_player.shots_fired
+		shot_result
+	end
+
+
 end
 
 # need to add opponent AFTER putting player1 ships on board, so don't have to do much to the @ships code work

@@ -14,11 +14,14 @@ class Player
 		@destroyer = Ship.new(:destroyer)
 		@coordinates_to_play = Board.new(difficulty).coordinates
 		@ships_left = Board::SHIPS_LEFT
+		@shots_fired = Player::SHOTS_FIRED
 	end
 
 	attr_reader :player, :board, :battleship, :cruiser, :submarine, :destroyer, :coordinates_to_play
 
-	attr_accessor :ships_left
+	attr_accessor :ships_left, :shots_fired
+
+	SHOTS_FIRED = 0
 
 	def show_player_board
 		board_layout = @board.show_ships
@@ -69,3 +72,4 @@ class Player
 
 end
 
+# p Player.new("player", :beginner)
