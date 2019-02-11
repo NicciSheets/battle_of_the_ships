@@ -1,6 +1,15 @@
 <form method="post" action="/shot_result">
-
+		<%= @player1_shots_fired %>
   <h2><%= @shot_result1 %></h2>
-  <%= @shot_result2 %>
-  <p><a href='/next_player_turn'>Next Player Turn</a></p>
+  <% if @shot_result1 == "Miss!" %>
+  		<a href='/next_player_turn'>Next Player's Turn</a>
+  <% elsif @shot_result1 == "Invalid Coordinate" %>
+  		<a href='/fire_shot'>Try Again, Invalid Coordinate</a>
+  <% else %>
+  		<% if @opponent_ships_left == 0 %>
+  			<a href='/winner'>We Have A Winner!</a>  
+  		<% else %>
+	  		<a href='fire_shot'>You Get Another Turn</a>
+  		<% end %>
+  <% end %>
 </form>

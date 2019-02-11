@@ -26,6 +26,12 @@ post '/register' do
 	p "params in register post are #{params}"
 	game.add_opponent("Enemy", params[:difficulty].to_sym)
 	game.add_player(params[:player], params[:difficulty].to_sym)
+	@opponent_name = game.opponent_name
+	@grid_size = game.opponent.board.grid_size
+	@opponent_grid = game.opponent.board.grid
+	@grid_rows = game.opponent.board.grid_row
+	@grid_columns = game.opponent.board.grid_column
+	game.place_opponent_ships
 	redirect '/place_ship'
 end
 
@@ -37,8 +43,6 @@ get '/place_ship' do
 	@grid_rows = game.new_player.board.grid_row
 	@grid_columns = game.new_player.board.grid_column
 	
-	@current_player = game.current_player
-	p "@current_player in place ship is #{@current_player}"
     if game.player1_ships.empty?
 	    	erb :all_ships_placed
     else
@@ -66,16 +70,14 @@ end
 get '/fire_shot' do
 	session[:placing_ships] = false
 	session[:opponent_board_display] = true
+	
 	@opponent_name = game.opponent_name
 	@grid_size = game.opponent.board.grid_size
 	@opponent_grid = game.opponent.board.grid
 	@grid_rows = game.opponent.board.grid_row
 	@grid_columns = game.opponent.board.grid_column
-	game.place_opponent_ships
 
 	@player1_name = game.player1_name
-
-	@current_player = game.current_player
 	erb :fire_shot
 end
 
@@ -95,10 +97,57 @@ post '/shot_result' do
 		shot_result = game.player_round(coordinates)
 		@shot_result1 = shot_result[0]
 		@player1_shots_fired = shot_result[1]
+		@opponent_ships_left = shot_result.last
 	end
 
 	erb :shot_result
 end
+
+get '/next_player_turn' do
+	
+	session[:opponent_board_display] =  false
+	session[:placing_ships] =  true
+
+	@player1_name = game.player1_name
+	@grid_size = game.new_player.board.grid_size
+	@player1_grid = game.new_player.board.grid
+	@grid_rows = game.new_player.board.grid_row
+	@grid_columns = game.new_player.board.grid_column
+
+	@opponent_name = game.opponent_name
+	erb :next_player_turn
+end
+
+post '/opponent_result' do
+	session[:opponent_board_display] =  false
+	session[:placing_ships] =  true
+
+	@player1_name = game.player1_name
+	@grid_size = game.new_player.board.grid_size
+	@player1_grid = game.new_player.board.grid
+	@grid_rows = game.new_player.board.grid_row
+	@grid_columns = game.new_player.board.grid_column
+
+	@opponent_name = game.opponent_name
+
+	begin
+		shot_result = game.opponent_turn
+		@coordinates_fired_upon = shot_result[2]
+		@opponent_shot_result = shot_result[0]
+		@opponent_shots_fired = shot_result[1]
+		@player1_ships_left = shot_result[3]
+	end
+	erb :opponent_result
+end
+
+get '/winner' do
+	session[:opponent_board_display] =  false
+	session[:placing_ships] =  false
+
+	@winner = game.winner
+	erb :winner
+end
+
 
 
 

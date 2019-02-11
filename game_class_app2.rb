@@ -175,42 +175,114 @@ class Game
 				if @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :battleship
 					@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
 					@opponent.battleship.hit
-					shot_result << "Hit!"
 					if 	@opponent.battleship.sunk?
 						@opponent.ships_left -= 1
 						shot_result << "Enemy Battleship Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					else
+						shot_result << "Hit!"
 					end
 				elsif @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :cruiser
 					@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit				
 					@opponent.cruiser.hit
-					shot_result << "Hit!"
 					if @opponent.cruiser.sunk?
 						@opponent.ships_left -= 1
 						shot_result << "Enemy Cruiser Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					else
+						shot_result << "Hit!"
 					end
 				elsif @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :submarine
 				@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
 					@opponent.submarine.hit
-					shot_result << "Hit!"
 					if @opponent.submarine.sunk?
 						@opponent.ships_left -= 1
 						shot_result << "Enemy Submarine Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					else
+						shot_result << "Hit!"
 					end
 				else @opponent.board.cell_coordinates(coordinates[0], coordinates[1]).status.type == :destroyer
 					@opponent.board.cell_coordinates(coordinates[0], coordinates[1]).hit
 					@opponent.destroyer.hit
-					shot_result << "Hit!"
 					if @opponent.destroyer.sunk?
 						@opponent.ships_left -= 1
 						shot_result << "Enemy Destroyer Sunk! #{@opponent.ships_left} Enemy Ships Remaining!"
+					else
+						shot_result << "Hit!"
 					end
 				end
 			end
+		else
+			shot_result << "Invalid Coordinates"
 		end
+		@opponent.ships_left
 		@new_player.shots_fired += 1
 		@opponent.coordinates_to_play.delete(coordinates)
-		shot_result << @new_player.shots_fired
+		shot_result << @new_player.shots_fired << @opponent.ships_left
+		p shot_result
+	end
+
+	def opponent_turn
+		shot_result = []
+
+		target_coords = @new_player.coordinates_to_play.shuffle.pop 
+
+		player1_coord = @new_player.board.cell_coordinates(target_coords[0], target_coords[1])
+
+		if player1_coord.status == "."
+				player1_coord.miss
+				shot_result << "Miss!"
+		else
+			if player1_coord.status.type == :battleship
+				player1_coord.hit
+				@new_player.battleship.hit
+				if @new_player.battleship.sunk?
+					@new_player.ships_left -= 1
+					shot_result << "Your Battleship Has Been Sunk! You Have #{@new_player.ships_left} Ships Remaining!"
+				else
+					shot_result << "Hit!"
+				end
+			elsif player1_coord.status.type == :cruiser
+				player1_coord.hit
+				@new_player.cruiser.hit
+				if @new_player.cruiser.sunk?
+					@new_player.ships_left -= 1
+					shot_result << "Your Cruiser Has Been Sunk! You Have #{@new_player.ships_left} Ships Remaining!"
+				else
+					shot_result << "Hit!"
+				end
+			elsif player1_coord.status.type == :submarine
+				player1_coord.hit
+				@new_player.submarine.hit
+				if @new_player.submarine.sunk?
+					@new_player.ships_left -= 1
+					shot_result << "Your Submarine Has Been Sunk! You Have #{@new_player.ships_left} Ships Remaining!"
+				else
+					shot_result << "Hit!"
+				end
+			else player1_coord.status.type == :destroyer
+				player1_coord.hit
+				@new_player.destroyer.hit
+				if @new_player.destroyer.sunk?
+					@new_player.ships_left -= 1
+					shot_result << "Your Destroyer Has Been Sunk! You Have #{@new_player.ships_left} Ships Remaining!"
+				else
+					shot_result << "Hit!"
+				end
+			end
+		end
+		@new_player.ships_left
+		@opponent.shots_fired += 1
+		shot_result << @opponent.shots_fired << player1_coord << @new_player.ships_left
 		shot_result
+	end
+
+	def winner
+		winner = ""
+		if @opponent.ships_left == 0
+			winner = "Congratulations! #{@new_player.player} is the Winner!"
+		else @new_player.ships_left == 0
+			winner = "Your Enemy Wins! Better Luck Next Time, #{@new_player.player}!"
+		end
+		winner
 	end
 
 

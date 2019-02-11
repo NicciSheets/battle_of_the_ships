@@ -1,0 +1,16 @@
+<form action='/opponent_result' method="post">
+  <%= @opponent_shots_fired %>
+
+<h2> Your enemy has chosen coordinates <%= @coordinates_fired_upon %> to fire upon!  </h2>
+<h3><%= @opponent_shot_result %></h3>
+ 
+<% if @opponent_shot_result == "Miss!" %>
+  <a href='/fire_shot'>Next Player's Turn</a>
+<% else %>
+	<% if @opponent_ships_left == 0 %>
+		<a href='/winner'>We Have A Winner!</a>
+	<% else %>
+ 		<a href='/next_player_turn'>Enemy's Turn Again</a>
+ 	<% end %>
+<% end %>
+</form>
