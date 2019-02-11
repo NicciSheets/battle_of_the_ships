@@ -7,7 +7,7 @@
 <% if @opponent_shot_result == "Miss!" %>
   <a href='/fire_shot'>Next Player's Turn</a>
 <% else %>
-	<% if @opponent_ships_left == 0 %>
+	<% if @player1_ships_left == 0 %>
 		<a href='/winner'>We Have A Winner!</a>
 	<% else %>
  		<a href='/next_player_turn'>Enemy's Turn Again</a>
