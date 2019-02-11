@@ -1,7 +1,7 @@
 <% if session[:placing_ships] %>
 
 <h3><div class="player1"></div></h3>
-  <div class="<%= @player1_name %>"><%= @player1_name %></div>
+  <div class="<%= @player1_name %>"><%= @player1_name %>: <%= @player1_ships_left %> Ships Remaining </div>
   
   <% board_layout = @player1_grid %>
   <% row_label = @grid_columns %>

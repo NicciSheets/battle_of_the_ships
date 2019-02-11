@@ -1,7 +1,7 @@
 <% if session[:opponent_board_display] %>
 
 <h3><div class="opponent"></div></h3>
-  <div class="<%= @opponent_name %>"><%= @opponent_name %></div>
+  <div class="<%= @opponent_name %>"><%= @opponent_name %>: <%= @opponent_ships_left %> Ships Remaining </div>
   
   <% board_layout = @opponent_grid %>
   <% row_label = @grid_columns %>

@@ -77,6 +77,7 @@ get '/fire_shot' do
 	@opponent_grid = game.opponent.board.grid
 	@grid_rows = game.opponent.board.grid_row
 	@grid_columns = game.opponent.board.grid_column
+	@opponent_ships_left = game.opponent.ships_left
 
 	@player1_name = game.player1_name
 	erb :fire_shot
@@ -93,6 +94,7 @@ post '/shot_result' do
 	@opponent_grid = game.opponent.board.grid
 	@grid_rows = game.opponent.board.grid_row
 	@grid_columns = game.opponent.board.grid_column
+	@opponent_ships_left = game.opponent.ships_left
 
 	begin
 		shot_result = game.player_round(coordinates)
@@ -114,6 +116,7 @@ get '/next_player_turn' do
 	@player1_grid = game.new_player.board.grid
 	@grid_rows = game.new_player.board.grid_row
 	@grid_columns = game.new_player.board.grid_column
+	@player1_ships_left = game.new_player.ships_left
 
 	@opponent_name = game.opponent_name
 	erb :next_player_turn
@@ -128,6 +131,7 @@ post '/opponent_result' do
 	@player1_grid = game.new_player.board.grid
 	@grid_rows = game.new_player.board.grid_row
 	@grid_columns = game.new_player.board.grid_column
+	@player1_ships_left = game.new_player.ships_left
 
 	@opponent_name = game.opponent_name
 
@@ -154,7 +158,6 @@ get '/winner' do
 	@winner_name = winner[4]
 	erb :winner
 end
-
 
 
 
