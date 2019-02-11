@@ -14,11 +14,7 @@ get '/' do
 end
 
 get'/new_game' do
-	game.player1_ships.clear
-	game.opponent_ships.clear
-	game.opponent.clear
-	game.new_player.clear
-	game.players.clear	
+	session.clear
 	redirect '/'
 end
 

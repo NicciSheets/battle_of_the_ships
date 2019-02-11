@@ -98,7 +98,7 @@ class Game
 		while valid == false do
 			ships.each do |ship|
 				ship_length = ship.length
-				opp_orientation = [:horizontal, :vertical].sample
+				opp_orientation = ["horizontal", "vertical"].sample
 				opp_start_cell2 = @opponent.coordinates_to_play.sample
 				# p "orientation is #{orientation} and starting_coord = #{starting_coord}"
 				if opp_orientation == "horizontal"
