@@ -267,7 +267,7 @@ class Game
 		if @opponent.ships_left == 0
 			winner << "Congratulations! #{@new_player.player} is the Winner!" << @new_player.shots_fired << @opponent.shots_fired << @opponent.player << @new_player.player
 		else @new_player.ships_left == 0
-			winner << "Your Enemy Wins! Better Luck Next Time, #{@new_player.player}!" << @opponent.shots_fired << @new_player.shots_fired << @new_player.player << @opponent.player
+			winner << "Enemy Wins! Better Luck Next Time, #{@new_player.player}!" << @opponent.shots_fired << @new_player.shots_fired << @new_player.player << @opponent.player
 		end
 		winner
 	end
