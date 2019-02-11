@@ -63,6 +63,7 @@ post '/place_ship' do
  	begin  
     	game.place_ship(start_cell, orientation)
     	game.remove_placed_ship
+    	rescue
     end
 
     redirect '/place_ship'
