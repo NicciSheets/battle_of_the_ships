@@ -61,14 +61,12 @@ post '/place_ship' do
 	orientation = params[:orientation]
 
  	begin  
-    	# game.place_ship(start_cell, orientation)
     	if game.place_ship(start_cell, orientation) == "Invalid Coordinates"
     		redirect '/place_ship'
     	else
     		game.place_ship(start_cell, orientation)
     	end
     	game.remove_placed_ship
-    	# rescue
     end
 
     redirect '/place_ship'
