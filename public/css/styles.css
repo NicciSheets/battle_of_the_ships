@@ -15,7 +15,7 @@ footer
 table
 {
   width: 8rem;
-  font-size: 1.5rem;
+  font-size: -0.5rem;
   font-weight: bold;
   text-align: center;
   border-collapse: collapse;
@@ -67,7 +67,7 @@ th, td
 
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto ;
   padding: 2px;
 }
 
@@ -79,9 +79,8 @@ th, td
   grid-column: 2 / 3;
 }
 
-.grid-item3 {
-  grid-column: 3 / 4;
+.key {
+  font-size: 0.2rem;
 }
-
 
 

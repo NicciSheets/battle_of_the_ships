@@ -28,12 +28,12 @@ class Game
 		@new_player.player
 	end
 
-	def ship_to_place
-		player1_ships.first
-	end
-
 	def opponent_name
 		@opponent.player
+	end
+
+	def ship_to_place
+		player1_ships.first
 	end
 	
 	def place_ship(start_cell, orientation)
@@ -148,20 +148,6 @@ class Game
 			end
 		end
 	end
-# the ( ||= ) behaves like ( a || a = b ) ..... sets the value of turn as player1
-	def turn
-		@turn ||= @players.last.player
-	end
-# alias is working as a method that is giving the above method :turn another way to be called, which is as :current_player ..... 
-	alias :current_player :turn
-# says if the current turn is by the first player (player1), then when you call switch_turns, it gives Enemy player the turn, otherwise, it's player1's turn (because turn != player1, but is instead enemy's turn)
-	def switch_turns
-		if turn == players.last.player
-			turn = players.first.player
-		else
-			turn = players.last.player
-		end
-	end
 
 	def player_round(coordinates)
 		available_coordinates = @opponent.coordinates_to_play
@@ -217,7 +203,7 @@ class Game
 		@new_player.shots_fired += 1
 		@opponent.coordinates_to_play.delete(coordinates)
 		shot_result << @new_player.shots_fired << @opponent.ships_left
-		p shot_result
+		shot_result
 	end
 
 	def opponent_turn
@@ -284,29 +270,7 @@ class Game
 		end
 		winner
 	end
-
-
 end
 
-# need to add opponent AFTER putting player1 ships on board, so don't have to do much to the @ships code work
-# game = Game.new
- # game.add_player("Nicci", :beginner)
- # game.add_opponent("Enemy", :beginner)
- # game.new_player
- # game.both_players_array
-# p game.both_players_array.first.player
-# p game.player1_name
-# p game.opponent_name
-# p game.player1_ships
-# p game.ship_to_place
-# p game.remove_placed_ship
-# p game.ship_to_place
-# p game.players[0].player
-# p game.players.
-# p game.new_player
-# p game.turn
-# p game.current_player
-# p game.switch_turns
-# p game.turn
 
 
