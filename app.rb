@@ -25,7 +25,8 @@ end
 post '/register' do
 	p "params in register post are #{params}"
 	game.add_opponent("Enemy", params[:difficulty].to_sym)
-	game.add_player(params[:player], params[:difficulty].to_sym)
+	player = params[:player].strip.capitalize
+	game.add_player(player, params[:difficulty].to_sym)
 	@opponent_name = game.opponent_name
 	@grid_size = game.opponent.board.grid_size
 	@opponent_grid = game.opponent.board.grid
