@@ -10,6 +10,7 @@ game = Game.new
 
 get '/' do
 	session[:opponent_board_display], session[:placing_ships] = false
+	session[:logo] = true
 	erb :register
 end
 
@@ -36,6 +37,7 @@ end
 
 get '/place_ship' do
 	session[:placing_ships] = true
+	session[:logo] =  false
 	@player1_name = game.player1_name
 	@grid_size = game.new_player.board.grid_size
 	@player1_grid = game.new_player.board.grid
@@ -142,6 +144,7 @@ end
 get '/winner' do
 	session[:opponent_board_display] =  false
 	session[:placing_ships] =  false
+	session[:logo] =  true
 
 	winner = game.winner
 	@winner = winner[0]
