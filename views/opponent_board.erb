@@ -21,7 +21,7 @@
                 <th><%= "#{column_label[i]}" %></th>
                 <% v.each do |v| %>
                   <% v %>
-        <td name="cell_coordinates" class="['<%= v.row %>', '<%= v.column %>']" id="<%= v.status %>"><%= v.render_with_ships %></td>                     
+        <td name="cell_coordinates" class="['<%= v.row %>', '<%= v.column %>']" id="<%= v.status %>"><%= v.render_without_ships %></td>                     
       <% end %>
       </tr> 
     <% end %>    

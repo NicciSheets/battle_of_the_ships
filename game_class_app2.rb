@@ -209,7 +209,7 @@ class Game
 	def opponent_turn
 		shot_result = []
 
-		target_coords = @new_player.coordinates_to_play.reverse.pop 
+		target_coords = @new_player.coordinates_to_play.shuffle.pop 
 
 		player1_coord = @new_player.board.cell_coordinates(target_coords[0], target_coords[1])
 
