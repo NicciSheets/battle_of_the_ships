@@ -61,9 +61,14 @@ post '/place_ship' do
 	orientation = params[:orientation]
 
  	begin  
-    	game.place_ship(start_cell, orientation)
+    	# game.place_ship(start_cell, orientation)
+    	if game.place_ship(start_cell, orientation) == "Invalid Coordinates"
+    		redirect '/place_ship'
+    	else
+    		game.place_ship(start_cell, orientation)
+    	end
     	game.remove_placed_ship
-    	rescue
+    	# rescue
     end
 
     redirect '/place_ship'
@@ -102,6 +107,7 @@ post '/shot_result' do
 		@shot_result1 = shot_result[0]
 		@player1_shots_fired = shot_result[1]
 		@opponent_ships_left = shot_result.last
+
 	end
 
 	erb :shot_result

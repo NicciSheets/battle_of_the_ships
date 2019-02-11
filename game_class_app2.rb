@@ -40,53 +40,56 @@ class Game
 		row = start_cell[0]
 		column = start_cell[1]
 		ship = ship_to_place
-		valid = false
-		while valid == false do
-			ship_length = ship.length
-			if orientation == "horizontal"
-				rows = []
-				columns = []
-				count = 0
-				ship_length.times do 
-					rows << row
-					columns << (column.to_i + count).to_s
-					count += 1
-				end
-				rows
-				columns
-				cells = rows.zip(columns)
-			else orientation == "vertical"
-				rows = []
-				columns = []
-				count = 0
-				ship_length.times do
-					rows << Board::ROW[(Board::ROW.index(row) + count)]
-					columns << column
-					count += 1
-				end
-				rows
-				columns
-				cells = rows.zip(columns)
+		ship_length = ship.length
+		if orientation == "horizontal"
+			rows = []
+			columns = []
+			count = 0
+			ship_length.times do 
+				rows << row
+				columns << (column.to_i + count).to_s
+				count += 1
 			end
+			rows
+			columns
+			cells = rows.zip(columns)
+		else orientation == "vertical"
+			rows = []
+			columns = []
+			count = 0
+			ship_length.times do
+				rows << Board::ROW[(Board::ROW.index(row) + count)]
+				columns << column
+				count += 1
+			end
+			rows
+			columns
+			cells = rows.zip(columns)
+		end
+		cells
+		
+		status_arr = []
+		if @new_player.board.valid_placement?(ship, cells) == false
+			"Invalid Coordinates"
+		else
 			cells
-
-			redo if @new_player.board.valid_placement?(ship, cells) == false
-			
-			status_arr = []
+			p "cells are #{cells}"
 			cells.each do |row, column|
 				status_arr << @new_player.board.cell_coordinates(row, column).status
 			end
 			status_arr
-			
-			redo if status_arr.uniq != ["."]
-			
-			if @new_player.board.valid_placement?(ship, cells) && status_arr.uniq == ["."]
+			p "status_arr is #{status_arr}"
+			if status_arr.uniq != ["."]
+				"Invalid Coordinates"
+			else
 				@new_player.board.place(ship, cells)
-				@new_player.board.grid
-				valid = true
 			end
 		end
 	end
+
+			
+				
+
 
 	def remove_placed_ship
 		player1_ships.shift
