@@ -143,7 +143,12 @@ get '/winner' do
 	session[:opponent_board_display] =  false
 	session[:placing_ships] =  false
 
-	@winner = game.winner
+	winner = game.winner
+	@winner = winner[0]
+	@winner_shots_fired = winner[1]
+	@loser_shots_fired = winner[2]
+	@loser_name = winner[3]
+	@winner_name = winner[4]
 	erb :winner
 end
 

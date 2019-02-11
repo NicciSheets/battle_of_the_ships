@@ -1,7 +1,7 @@
 <form action='/opponent_result' method="post">
-  <%= @opponent_shots_fired %>
+  <% @opponent_shots_fired %>
 
-<h2> Your enemy has chosen coordinates <%= @coordinates_fired_upon %> to fire upon!  </h2>
+<h2> Your Enemy has Chosen Coordinates <%= @coordinates_fired_upon %> to Fire Upon!  </h2>
 <h3><%= @opponent_shot_result %></h3>
  
 <% if @opponent_shot_result == "Miss!" %>

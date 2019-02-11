@@ -1,5 +1,5 @@
 <form method="post" action="/shot_result">
-		<%= @player1_shots_fired %>
+		<% @player1_shots_fired %>
   <h2><%= @shot_result1 %></h2>
   <% if @shot_result1 == "Miss!" %>
   		<a href='/next_player_turn'>Next Player's Turn</a>
