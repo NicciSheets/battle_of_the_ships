@@ -2,25 +2,22 @@ require_relative 'player_class.rb'
 
 class Game
 
-	attr_accessor :player1_ships, :new_player, :opponent, :opponent_ships, :players
+	attr_accessor :player1_ships, :new_player, :opponent, :opponent_ships
 
 	def initialize
 		@player1_ships = []
 		@opponent_ships = []
-		@players = []
 	end
 
 	def add_player(player, difficulty)
 		@new_player = Player.new(player, difficulty)	
 		@player1_ships << @new_player.destroyer << @new_player.submarine << @new_player.cruiser << @new_player.battleship
-		@players << @new_player
 		@new_player
 	end
 
 	def add_opponent(player, difficulty)
 		@opponent = Player.new("Enemy", difficulty)
 		@opponent_ships << @opponent.destroyer << @opponent.submarine << @opponent.cruiser << @opponent.battleship
-		@players << @opponent
 		@opponent
 	end
 
@@ -50,8 +47,6 @@ class Game
 				columns << (column.to_i + count).to_s
 				count += 1
 			end
-			rows
-			columns
 			cells = rows.zip(columns)
 		else orientation == "vertical"
 			rows = []
@@ -62,8 +57,6 @@ class Game
 				columns << column
 				count += 1
 			end
-			rows
-			columns
 			cells = rows.zip(columns)
 		end
 		cells
@@ -72,13 +65,10 @@ class Game
 		if @new_player.board.valid_placement?(ship, cells) == false
 			"Invalid Coordinates"
 		else
-			cells
-			p "cells are #{cells}"
 			cells.each do |row, column|
 				status_arr << @new_player.board.cell_coordinates(row, column).status
 			end
 			status_arr
-			p "status_arr is #{status_arr}"
 			if status_arr.uniq != ["."]
 				"Invalid Coordinates"
 			else
@@ -86,10 +76,6 @@ class Game
 			end
 		end
 	end
-
-			
-				
-
 
 	def remove_placed_ship
 		player1_ships.shift
@@ -103,7 +89,6 @@ class Game
 				ship_length = ship.length
 				opp_orientation = ["horizontal", "vertical"].sample
 				opp_start_cell2 = @opponent.coordinates_to_play.sample
-				# p "orientation is #{orientation} and starting_coord = #{starting_coord}"
 				if opp_orientation == "horizontal"
 					opp_rows2 = []
 					opp_columns2 = []
@@ -113,10 +98,7 @@ class Game
 						opp_columns2 << (opp_start_cell2[1].to_i + count).to_s
 						count += 1
 					end
-					opp_rows2
-					opp_columns2
 					cells = opp_rows2.zip(opp_columns2)
-					p cells
 				else opp_orientation == "vertical"
 					opp_rows2 = []
 					opp_columns2 = []
@@ -126,10 +108,7 @@ class Game
 						opp_columns2 << opp_start_cell2[1]
 						count += 1
 					end
-					opp_rows2
-					opp_columns2
 					cells = opp_rows2.zip(opp_columns2)
-					p cells
 				end
 				cells
 

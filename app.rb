@@ -108,12 +108,10 @@ post '/shot_result' do
 		@opponent_ships_left = shot_result.last
 
 	end
-
 	erb :shot_result
 end
 
 get '/next_player_turn' do
-	
 	session[:opponent_board_display] =  false
 	session[:placing_ships] =  true
 
