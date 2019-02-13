@@ -253,6 +253,32 @@ class Game
 		end
 		winner
 	end
+
+
 end
 
 
+cell = ["B", "1"]
+public
+def vertical_neighbors(cell)
+	x = cell[0]
+	y = cell[1].to_i
+	neighbor = ""
+	[-1, 1].permutation(2).map do |dx, dy|
+		neighbor = [x, y + dy]
+	end
+end
+
+def vertical_valid?(cell)
+	neighbors = vertical_neighbors(cell)
+	neighbors.each do |x, y|
+		if Board::COLUMN.include?(y.to_s)
+			[x, y]
+		else
+			neighbors.delete([x, y])
+		end
+	end
+end
+
+# p vertical_neighbors(cell)
+p vertical_valid?(cell)
