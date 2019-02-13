@@ -258,21 +258,20 @@ class Game
 end
 
 
-cell = ["B", "1"]
+cell = ["A", "36"]
 public
 def vertical_neighbors(cell)
 	x = cell[0]
 	y = cell[1].to_i
-	neighbor = ""
 	[-1, 1].permutation(2).map do |dx, dy|
-		neighbor = [x, y + dy]
+		[x, (y + dy).to_s]
 	end
 end
 
 def vertical_valid?(cell)
 	neighbors = vertical_neighbors(cell)
 	neighbors.each do |x, y|
-		if Board::COLUMN.include?(y.to_s)
+		if Board::COLUMN.include?(y)
 			[x, y]
 		else
 			neighbors.delete([x, y])
@@ -280,5 +279,37 @@ def vertical_valid?(cell)
 	end
 end
 
+def horizontal_neighbors(cell)
+	x = cell[0]
+	y = cell[1]
+	neighbors = []
+	[-1, 1].permutation(2).map do |dx, dy|
+		xx = Board::ROW.index(cell[0])
+		neighbors << [Board::ROW[xx + dx], y]
+	end
+	if x == Board::ROW.first
+		neighbors.delete_at(0)
+	elsif x == Board::ROW.last
+		neighbors.delete_at(1)
+	else
+		neighbors
+	end
+	neighbors
+end
+
+# def horizontal_valid?(cell)
+# 	neighbors = horizontal_neighbors(cell)
+# 	p neighbors
+# 	neighbors.each do |x, y|
+# 		if x == ""
+# 			[x,y]
+# 		else
+# 			neighbors.delete([x,y])
+# 		end
+# 	end
+# end
+
 # p vertical_neighbors(cell)
 p vertical_valid?(cell)
+p horizontal_neighbors(cell)
+# p horizontal_valid?(cell)
