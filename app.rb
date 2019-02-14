@@ -18,7 +18,6 @@ get'/new_game' do
 	session.clear
 	game.player1_ships.clear
 	game.opponent_ships.clear
-	game.players.clear
 	redirect '/'
 end
 
@@ -147,6 +146,44 @@ post '/opponent_result' do
 		@player1_ships_left = shot_result[3]
 	end
 	erb :opponent_result
+end
+
+get '/smart_opponent_fire' do
+	session[:opponent_board_display] =  false
+	session[:placing_ships] =  true
+
+	@player1_name = game.player1_name
+	@grid_size = game.new_player.board.grid_size
+	@player1_grid = game.new_player.board.grid
+	@grid_rows = game.new_player.board.grid_row
+	@grid_columns = game.new_player.board.grid_column
+	@player1_ships_left = game.new_player.ships_left
+
+	@opponent_name = game.opponent_name
+	erb :smart_opponent_fire
+end
+
+post '/smart_opponent_result' do
+	session[:opponent_board_display] =  false
+	session[:placing_ships] =  true
+
+	@player1_name = game.player1_name
+	@grid_size = game.new_player.board.grid_size
+	@player1_grid = game.new_player.board.grid
+	@grid_rows = game.new_player.board.grid_row
+	@grid_columns = game.new_player.board.grid_column
+	@player1_ships_left = game.new_player.ships_left
+
+	@opponent_name = game.opponent_name
+
+	begin
+		shot_result = game.opponent_turn_hit
+		@coordinates_fired_upon = shot_result[2]
+		@opponent_shot_result = shot_result[0]
+		@opponent_shots_fired = shot_result[1]
+		@player1_ships_left = shot_result[3]
+	end
+	erb :smart_opponent_result
 end
 
 get '/winner' do

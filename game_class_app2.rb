@@ -187,11 +187,7 @@ class Game
 		shot_result << @new_player.shots_fired << @opponent.ships_left
 		shot_result
 	end
-
-	def opponent_first_shot
-		@new_player.coordinates_to_play.shuffle.pop
-	end
-
+# gives me the coordinate of the cell that opponent hit to pass onto next method for semi-smart ai
 	def hit_coordinates
 		@coordinates
 	end
@@ -253,7 +249,7 @@ class Game
 		shot_result << @opponent.shots_fired << @coordinates << @new_player.ships_left
 		shot_result
 	end
-
+# this is my first attempt at making the ai smart on my own, it takes the valid adjacent coordinates from a hit coordinate and chooses its next fire coordinate from that array
 	def opponent_turn_hit
 		shot_result = []
 		@coordinates = hit_coordinates
@@ -264,7 +260,7 @@ class Game
 		coordinates = neighbor_cells.pop
 		p "coodinates from neighbor cells are #{coordinates}"
 		player1_coord = @new_player.board.cell_coordinates(coordinates[0], coordinates[1])
-		# p "player1_coord in opp turn hit is #{player1_coord}"
+		p "player1_coord in opp turn hit is #{player1_coord}"
 
 		if player1_coord.status == "."
 				player1_coord.miss
@@ -316,7 +312,6 @@ class Game
 		shot_result
 	end
 
-
 	def winner
 		winner = []
 		if @opponent.ships_left == 0
@@ -343,17 +338,6 @@ class Game
 		end
 	end
 
-	# def vertical_valid?(cell)
-	# 	neighbors = vertical_neighbors(cell)
-	# 	neighbors.each do |x, y|
-	# 		if Board::COLUMN.include?(y)
-	# 			[x, y]
-	# 		else		
-	# 			neighbors.delete([x, y])
-	# 		end
-	# 	end
-	# end
-
 	def horizontal_neighbors(cell)
 		x = cell[0]
 		y = cell[1]
@@ -372,21 +356,14 @@ class Game
 		neighbors
 	end
 
-def hit_turn
-	if @coordinates
-		opponent_turn_hit
-	else
-		opponent_turn
-	end
-end
 end
 
-game = Game.new
-player1 = game.add_player("Nicci", :beginner)
-opponent = game.add_opponent("Opponent", :beginner)
+# game = Game.new
+# player1 = game.add_player("Nicci", :beginner)
+# opponent = game.add_opponent("Opponent", :beginner)
 
-p game.hit_turn
-p game.hit_turn
+# p game.hit_turn
+# p game.hit_turn
 # p game.hit_coordinates
 # p game.opponent_turn
 # p game.hit_turn
