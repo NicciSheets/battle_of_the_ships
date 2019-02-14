@@ -253,7 +253,6 @@ class Game
 	def opponent_turn_hit
 		shot_result = []
 		@coordinates = hit_coordinates
-		# p "@coordinates are #{@coordinates} in opp turn hit"
 		
 		neighbor_cells = vertical_neighbors(@coordinates)+horizontal_neighbors(@coordinates)
 		p "neighbor_cells are #{neighbor_cells}"
@@ -263,9 +262,8 @@ class Game
 				neighbor_cells2 << cell
 			end
 		end
-			
 		neighbor_cells2
-		p "neighbor_cells that omits coordinates that have been played are #{neighbor_cells}"
+		p "neighbor_cells that omits coordinates that have been played are #{neighbor_cells2}"
 		coordinates = neighbor_cells2.pop
 		p "coodinates from neighbor cells are #{coordinates}"
 		player1_coord = @new_player.board.cell_coordinates(coordinates[0], coordinates[1])
@@ -315,8 +313,6 @@ class Game
 		end
 		@new_player.coordinates_to_play.delete(coordinates)
 		@coordinates = coordinates
-		# @coordinates.delete(player1_coord)
-		# @neighbor_cells = neighbor_cells
 		@new_player.ships_left
 		@opponent.shots_fired += 1
 		shot_result << @opponent.shots_fired << @coordinates << @new_player.ships_left
