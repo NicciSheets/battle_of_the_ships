@@ -255,12 +255,15 @@ class Game
 	end
 
 	def opponent_turn_hit
+		shot_result = []
 		@coordinates = hit_coordinates
 		# p "@coordinates are #{@coordinates} in opp turn hit"
 		
 		neighbor_cells = vertical_neighbors(@coordinates)+horizontal_neighbors(@coordinates)
 		p "neighbor_cells are #{neighbor_cells}"
-		player1_coord = @new_player.board.cell_coordinates(@coordinates[0], @coordinates[1])
+		coordinates = neighbor_cells.pop
+		p "coodinates from neighbor cells are #{coordinates}"
+		player1_coord = @new_player.board.cell_coordinates(coordinates[0], coordinates[1])
 		# p "player1_coord in opp turn hit is #{player1_coord}"
 
 		if player1_coord.status == "."
@@ -305,7 +308,8 @@ class Game
 				end
 			end
 		end
-		@new_player.coordinates_to_play.delete(@coordinates)
+		@new_player.coordinates_to_play.delete(coordinates)
+		@coordinates = coordinates
 		@new_player.ships_left
 		@opponent.shots_fired += 1
 		shot_result << @opponent.shots_fired << @coordinates << @new_player.ships_left
@@ -371,6 +375,8 @@ class Game
 def hit_turn
 	if @coordinates
 		opponent_turn_hit
+	else
+		opponent_turn
 	end
 end
 end
@@ -380,10 +386,11 @@ player1 = game.add_player("Nicci", :beginner)
 opponent = game.add_opponent("Opponent", :beginner)
 
 p game.hit_turn
-p game.hit_coordinates
-p game.opponent_turn
 p game.hit_turn
-p game.hit_coordinates
+# p game.hit_coordinates
+# p game.opponent_turn
+# p game.hit_turn
+# p game.hit_coordinates
 
 # cell = ["B", "1"]
 # p game.vertical_neighbors(cell)
