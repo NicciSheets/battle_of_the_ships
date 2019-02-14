@@ -257,7 +257,16 @@ class Game
 		
 		neighbor_cells = vertical_neighbors(@coordinates)+horizontal_neighbors(@coordinates)
 		p "neighbor_cells are #{neighbor_cells}"
-		coordinates = neighbor_cells.pop
+		neighbor_cells2 = []
+		neighbor_cells.each do |cell|
+			if @new_player.coordinates_to_play.include?(cell)
+				neighbor_cells2 << cell
+			end
+		end
+			
+		neighbor_cells2
+		p "neighbor_cells that omits coordinates that have been played are #{neighbor_cells}"
+		coordinates = neighbor_cells2.pop
 		p "coodinates from neighbor cells are #{coordinates}"
 		player1_coord = @new_player.board.cell_coordinates(coordinates[0], coordinates[1])
 		p "player1_coord in opp turn hit is #{player1_coord}"
@@ -306,6 +315,8 @@ class Game
 		end
 		@new_player.coordinates_to_play.delete(coordinates)
 		@coordinates = coordinates
+		# @coordinates.delete(player1_coord)
+		# @neighbor_cells = neighbor_cells
 		@new_player.ships_left
 		@opponent.shots_fired += 1
 		shot_result << @opponent.shots_fired << @coordinates << @new_player.ships_left
