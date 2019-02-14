@@ -2,7 +2,7 @@ require_relative 'player_class.rb'
 
 class Game
 
-	attr_accessor :player1_ships, :new_player, :opponent, :opponent_ships
+	attr_accessor :player1_ships, :new_player, :opponent, :opponent_ships, :coordinates
 
 	def initialize
 		@player1_ships = []
@@ -188,12 +188,20 @@ class Game
 		shot_result
 	end
 
+	def opponent_first_shot
+		@new_player.coordinates_to_play.shuffle.pop
+	end
+
+	def hit_coordinates
+		@coordinates
+	end
+
 	def opponent_turn
 		shot_result = []
 
-		target_coords = @new_player.coordinates_to_play.shuffle.pop 
-
-		player1_coord = @new_player.board.cell_coordinates(target_coords[0], target_coords[1])
+		coordinates = @new_player.coordinates_to_play.shuffle.pop 
+		p "coordinates in opponent first turn is #{coordinates}"
+		player1_coord = @new_player.board.cell_coordinates(coordinates[0], coordinates[1])
 
 		if player1_coord.status == "."
 				player1_coord.miss
@@ -237,12 +245,73 @@ class Game
 				end
 			end
 		end
-		@new_player.coordinates_to_play.delete(target_coords)
+		@new_player.coordinates_to_play.delete(coordinates)
+		@coordinates = coordinates
+		p "@coordinates are #{@coordinates}"
 		@new_player.ships_left
 		@opponent.shots_fired += 1
-		shot_result << @opponent.shots_fired << player1_coord << @new_player.ships_left
+		shot_result << @opponent.shots_fired << @coordinates << @new_player.ships_left
 		shot_result
 	end
+
+	def opponent_turn_hit
+		@coordinates = hit_coordinates
+		# p "@coordinates are #{@coordinates} in opp turn hit"
+		
+		neighbor_cells = vertical_neighbors(@coordinates)+horizontal_neighbors(@coordinates)
+		p "neighbor_cells are #{neighbor_cells}"
+		player1_coord = @new_player.board.cell_coordinates(@coordinates[0], @coordinates[1])
+		# p "player1_coord in opp turn hit is #{player1_coord}"
+
+		if player1_coord.status == "."
+				player1_coord.miss
+				shot_result << "Miss!"
+		else
+			if player1_coord.status.type == :battleship
+				player1_coord.hit
+				@new_player.battleship.hit
+				if @new_player.battleship.sunk?
+					@new_player.ships_left -= 1
+					shot_result << "Your Battleship Has Been Sunk! You Have #{@new_player.ships_left} Ships Remaining!"
+				else
+					shot_result << "Hit!"
+				end
+			elsif player1_coord.status.type == :cruiser
+				player1_coord.hit
+				@new_player.cruiser.hit
+				if @new_player.cruiser.sunk?
+					@new_player.ships_left -= 1
+					shot_result << "Your Cruiser Has Been Sunk! You Have #{@new_player.ships_left} Ships Remaining!"
+				else
+					shot_result << "Hit!"
+				end
+			elsif player1_coord.status.type == :submarine
+				player1_coord.hit
+				@new_player.submarine.hit
+				if @new_player.submarine.sunk?
+					@new_player.ships_left -= 1
+					shot_result << "Your Submarine Has Been Sunk! You Have #{@new_player.ships_left} Ships Remaining!"
+				else
+					shot_result << "Hit!"
+				end
+			else player1_coord.status.type == :destroyer
+				player1_coord.hit
+				@new_player.destroyer.hit
+				if @new_player.destroyer.sunk?
+					@new_player.ships_left -= 1
+					shot_result << "Your Destroyer Has Been Sunk! You Have #{@new_player.ships_left} Ships Remaining!"
+				else
+					shot_result << "Hit!"
+				end
+			end
+		end
+		@new_player.coordinates_to_play.delete(@coordinates)
+		@new_player.ships_left
+		@opponent.shots_fired += 1
+		shot_result << @opponent.shots_fired << @coordinates << @new_player.ships_left
+		shot_result
+	end
+
 
 	def winner
 		winner = []
@@ -253,63 +322,70 @@ class Game
 		end
 		winner
 	end
-
-
-end
-
-
-cell = ["A", "36"]
-public
-def vertical_neighbors(cell)
-	x = cell[0]
-	y = cell[1].to_i
-	[-1, 1].permutation(2).map do |dx, dy|
-		[x, (y + dy).to_s]
-	end
-end
-
-def vertical_valid?(cell)
-	neighbors = vertical_neighbors(cell)
-	neighbors.each do |x, y|
-		if Board::COLUMN.include?(y)
-			[x, y]
-		else
-			neighbors.delete([x, y])
+# these methods are to use for opponent firing, once opponent hits a ship, that coordinate will be passed on for smart firing of next shot, these methods gather a pool of all available cells adjacent to the good shot coordinate for the computer to pick from on next turn.  Only gathers the coordinates that are actually on the board, so if good shot was ["A", "2"], it does not give the coordinate to the left of that cell, only the right and the ones above and below it.  
+	def vertical_neighbors(cell)				
+		x = cell[0]
+		y = cell[1].to_i
+		neighbors = []
+		[-1, 1].permutation(2).map do |dx, dy|
+				neighbors << [x, (y + dy).to_s]
+		end
+		neighbors.each do |x, y|
+			if Board::COLUMN.include?(y)
+				[x, y]
+			else		
+				neighbors.delete([x, y])
+			end
 		end
 	end
-end
 
-def horizontal_neighbors(cell)
-	x = cell[0]
-	y = cell[1]
-	neighbors = []
-	[-1, 1].permutation(2).map do |dx, dy|
-		xx = Board::ROW.index(cell[0])
-		neighbors << [Board::ROW[xx + dx], y]
-	end
-	if x == Board::ROW.first
-		neighbors.delete_at(0)
-	elsif x == Board::ROW.last
-		neighbors.delete_at(1)
-	else
+	# def vertical_valid?(cell)
+	# 	neighbors = vertical_neighbors(cell)
+	# 	neighbors.each do |x, y|
+	# 		if Board::COLUMN.include?(y)
+	# 			[x, y]
+	# 		else		
+	# 			neighbors.delete([x, y])
+	# 		end
+	# 	end
+	# end
+
+	def horizontal_neighbors(cell)
+		x = cell[0]
+		y = cell[1]
+		neighbors = []
+		[-1, 1].permutation(2).map do |dx, dy|
+			xx = Board::ROW.index(cell[0])
+			neighbors << [Board::ROW[xx + dx], y]
+		end
+		if x == Board::ROW.first
+			neighbors.delete_at(0)
+		elsif x == Board::ROW.last
+			neighbors.delete_at(1)
+		else
+			neighbors
+		end
 		neighbors
 	end
-	neighbors
+
+def hit_turn
+	if @coordinates
+		opponent_turn_hit
+	end
+end
 end
 
-# def horizontal_valid?(cell)
-# 	neighbors = horizontal_neighbors(cell)
-# 	p neighbors
-# 	neighbors.each do |x, y|
-# 		if x == ""
-# 			[x,y]
-# 		else
-# 			neighbors.delete([x,y])
-# 		end
-# 	end
-# end
+game = Game.new
+player1 = game.add_player("Nicci", :beginner)
+opponent = game.add_opponent("Opponent", :beginner)
 
-# p vertical_neighbors(cell)
-p vertical_valid?(cell)
-p horizontal_neighbors(cell)
-# p horizontal_valid?(cell)
+p game.hit_turn
+p game.hit_coordinates
+p game.opponent_turn
+p game.hit_turn
+p game.hit_coordinates
+
+# cell = ["B", "1"]
+# p game.vertical_neighbors(cell)
+# p game.horizontal_neighbors(cell)
+
