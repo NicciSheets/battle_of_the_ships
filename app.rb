@@ -36,14 +36,15 @@ post '/register' do
 end
 
 get '/place_ship' do
-	session[:placing_ships] = true
+	session[:placing_ships] = false
 	session[:logo] =  false
 	@player1_name = game.player1_name
 	@grid_size = game.new_player.board.grid_size
 	@player1_grid = game.new_player.board.grid
 	@grid_rows = game.new_player.board.grid_row
 	@grid_columns = game.new_player.board.grid_column
-	
+	@grid_coordinates = game.new_player.coordinates_to_play
+
     if game.player1_ships.empty?
 	    	erb :all_ships_placed
     else

@@ -1,52 +1,104 @@
+<head>
+    <script type="text/javascript" src="/js/scripts.js"></script>
+</head>
+<body>
+  <script>
+    $(function () {
+    var board = "";
+    for (var i = 0; i < 1296; i++) {
+        board += "<div class='seaBox' id='<%=@grid_coordinates[0]%>'" + i + "'></div>";
+    }
+    $(".board").append(board);
+    
+    $('.ship').draggable({
+      addClasses: false,
+      containment: '.board',
+      snap: ".seaBox",
+      grid: [30, 30],
+      revert: "invalid"
+
+    });
+
+    // on drop append ship
+    $('.seaBox').droppable({
+      hoverClass: "red",
+      drop: function (event, ui) {
+        console.log("droppable " + $(this).attr("id"));
+      },
+    });
+    
+    // change orientation
+    $(".ship").dblclick(function () {
+
+      var ship_id = $(this).attr("id");
+      var height = $(this).css("height");
+      var width = $(this).css("width");
+
+      ship_id = ship_id.charAt(ship_id.length - 1 ) == 'V' ? ship_id.slice(0, -1) : ship_id + "V";
+
+      $(this).css("height", width);
+      $(this).css("width", height);
+      $(this).attr("id", ship_id);
+
+    });
+    
+    //example of setting ship 
+    /* $('#pos11').append($('#cruiser')) */
+</script>
 
 <h1>Welcome to the Game, <%= @player1_name %>!</h1>
 <h2>Let's Begin by Placing Your Ships.</h2>
-<h3>Please Enter Coordinates for Your <%=@ship_type%> (Length = <%=@ship_size%> Cells):</h3>
 
-<p>Start Point:</p>
-<p><select name="row" form="place_ship_coordinates">
-  <% if @grid_size == 12 %>
-      <% [*"A".."L"].each do |row| %>
-        <option value=<%= row %>><%= row %></option>
+
+<h3><div class="player1"></div></h3>
+  
+  <% board_layout = @player1_grid %>
+  <% row_label = @grid_columns %>
+  <% column_label = @grid_rows %>
+ 
+    <div id="shipSelection">
+      <div id="shipYard">
+        Destroyer (5 Cells)<div class="ship" id="destroyer"></div>
+        <div class="spacer"> </div>
+        Battleship (2 Cells)<div class="ship" id="battleship"></div>
+        <div class="spacer"> </div>
+        Cruiser (3 Cells)<div class="ship" id="cruiser"></div>
+        <div class="spacer"> </div>
+        Submarine (4 Cells)<div class="ship" id="submarine"></div>
+      </div>
+    </div>
+
+
+ 
+    <table class="board">
+            <tr>
+            <th> </th>
+            <% row_label.each do |v|%>
+          <th><%= v %></th>
+            <% end %>
+            </tr>
+          
+      
+            <% board_layout.each_with_index do |v, i| %>
+              <tr>
+                <th><%= "#{column_label[i]}" %></th>
+                <% v.each do |v| %>
+                  <% v %>
+        <td name="cell_coordinates" id="['<%= v.row %>', '<%= v.column %>']"><%= v.render_with_ships %></td>                     
       <% end %>
-  <% end %>
-  <% if @grid_size == 24 %>
-      <% [*"A".."X"].each do |row| %>
-        <option value=<%= row %>><%= row %></option>
-      <% end %>
-  <% end %>
-  <% if @grid_size == 36 %>
-      <% alphabet = "abcdefghijklmnopqrstuvwxyz".upcase.scan(/\w/) %>
-      <% alphabet << "AA" << "BB" << "CC" << "DD" << "EE" << "FF" << "GG" << "HH" << "II" << "JJ" %>
-      <% [*alphabet].each do |row| %>
-        <option value=<%= row %>><%= row %></option>
-      <% end %>
-  <% end %>
-</select>
-
-<select name="column" form="place_ship_coordinates">
-  <% if @grid_size == 12 %>
-    <% [*1..12].each do |column| %>
-      <option value=<%= column %>><%= column %></option>
-    <% end %>
-  <% end %>
-  <% if @grid_size == 24 %>
-    <% [*1..24].each do |column| %>
-      <option value=<%= column %>><%= column %></option>
-    <% end %>
-  <% end %>
-  <% if @grid_size == 36 %>
-    <% [*1..36].each do |column| %>
-      <option value=<%= column %>><%= column %></option>  
-    <% end %>
-  <% end %>
-</select></p>
+      </tr> 
+    <% end %>    
+        </table>  
+  </div>   
+ </div>
 
 
-<form method="post" action='/place_ship' id="place_ship_coordinates">
-<p>Orientation:</p>
-
-  <p><input type="radio" name="orientation" value="horizontal" id="horizontal" checked required> Horizontal</p>
-  <p><input type="radio" name="orientation" value="vertical" id="vertical"> Vertical</p>
-  <button class="button">Submit</button>
+ <form method="post" action='/place_ship'>       
+ <button class="button">Submit</button>
 </form>
+
+
+
+</body>
+<footer>
+</footer>

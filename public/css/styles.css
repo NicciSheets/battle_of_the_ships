@@ -12,14 +12,15 @@ footer
   height: 60px;
   width: 100%;
 }
-table
+/*table
 {
   width: 8rem;
   font-size: -0.5rem;
   font-weight: bold;
   text-align: center;
   border-collapse: collapse;
-}
+
+}*/
 
 table, th, td
 {
@@ -83,4 +84,124 @@ th, td
   font-size: 0.9rem;
 }
 
+.board {
+  float:left;
+  font-weight: bold;
+  z-index: -50;
+  width: 442px;
+  height: 442px;
+  margin: 8px;
+  text-align: center;
+  border-collapse: collapse;
+ }
 
+.red {
+  background-color: red;
+}
+
+.seaBox {
+  float: left;
+  width: 30px;
+  height: 30px;
+  border: .3px solid black;
+}
+
+#shipSelection {
+  margin-top: 7px;
+  width: 272px;
+  float: left;
+}
+
+#shipYard {
+  height: 353px;
+  padding: 35px;
+  border: solid 1px gray;
+  border-radius: 6px;
+}
+
+#draggable {
+  float: left;
+  width: 20px;
+  height: 20px;
+  background-color: black;
+}
+
+#destroyer {
+  width: 170px;
+  background: url('/img/destroyer_horizontal.png');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+}
+
+#destroyerV {
+  background-size: contain;
+  background: url('/img/destroyer_vertical.png');
+  background-repeat: no-repeat;
+  background-position: 0;
+}
+
+/** 3 cells **/
+
+#cruiser {
+  width: 102px;
+  background: url('/img/cruiser_horizontal.png');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+}
+#cruiserV {
+  background-size: contain;
+  background: url('/img/cruiser_vertical.png');
+  background-repeat: no-repeat;
+  background-position: 0;
+}
+
+/** 2 cells **/
+
+#battleship {
+  width: 68px;
+  background: url('/img/battleship_horizontal.png');
+  background-repeat: no-repeat;
+  background-position: 0;
+  background-size:contain
+}
+
+#battleshipV {
+  background-size: contain;
+  background: url('/img/battleship_vertical.png');
+  background-repeat: no-repeat;
+  background-position: 0;
+}
+
+#submarine {
+  width: 136px;
+  background: url('/img/submarine_horizontal.png');
+  background-repeat: no-repeat;
+  background-position: 0;
+  background-size:contain
+}
+
+#submarineV{
+  background-size: contain;
+  background: url('/img/submarine_vertical.png');
+  background-repeat: no-repeat;
+  background-position: 0;
+}
+
+.ship {
+  position:absolute;
+  height: 30px;
+  padding: 0;
+  background-color: black;
+  opacity: 0.7;
+
+}
+
+/** clear **/
+
+.spacer{
+  display: block;
+  clear:both;
+  height: 60px;
+}
