@@ -37,7 +37,7 @@ class Cell
 		@status = ship
 	end
 
-# does not show the ships status symbol, but instead "hides" it under the empty status "." - if there is a hit or a miss, it shows it, however
+# does not show the ships status symbol, but instead "hides" it under the empty status " . " - if there is a hit or a miss, it shows it, however
 	def render_without_ships
 		if @status == "."
 			"."
