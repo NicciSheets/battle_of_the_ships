@@ -69,7 +69,7 @@ th, td
 .grid-container {
   display: grid;
   grid-template-columns: auto auto ;
-  padding: 2px;
+  padding: 5px;
 }
 
 .grid-item1 {
@@ -82,6 +82,19 @@ th, td
 
 .key {
   font-size: 0.9rem;
+}
+
+table {
+   float:left;
+  font-weight: bold;
+  z-index: -50;
+  width: 442px;
+  height: 442px;
+  margin: 8px;
+  text-align: center;
+  border-collapse: collapse;
+ }
+
 }
 
 .board {
@@ -99,20 +112,20 @@ th, td
   background-color: red;
 }
 
-.seaBox {
+.sea_box {
   float: left;
   width: 30px;
   height: 30px;
   border: .3px solid black;
 }
 
-#shipSelection {
+#ship_selection {
   margin-top: 7px;
   width: 272px;
   float: left;
 }
 
-#shipYard {
+#shipyard {
   height: 353px;
   padding: 35px;
   border: solid 1px gray;
@@ -127,8 +140,8 @@ th, td
 }
 
 #destroyer {
-  width: 170px;
-  background: url('/img/destroyer_horizontal.png');
+  width: 150px;
+  /*background: url('/img/destroyer_horizontal.png');*/
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: cover;
@@ -144,8 +157,8 @@ th, td
 /** 3 cells **/
 
 #cruiser {
-  width: 102px;
-  background: url('/img/cruiser_horizontal.png');
+  width: 86px;
+  /*background: url('/img/cruiser_horizontal.png');*/
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: cover;
@@ -160,8 +173,8 @@ th, td
 /** 2 cells **/
 
 #battleship {
-  width: 68px;
-  background: url('/img/battleship_horizontal.png');
+  width: 56px;
+  /*background: url('/img/battleship_horizontal.png');*/
   background-repeat: no-repeat;
   background-position: 0;
   background-size:contain
@@ -175,8 +188,8 @@ th, td
 }
 
 #submarine {
-  width: 136px;
-  background: url('/img/submarine_horizontal.png');
+  width: 118px;
+  /*background: url('/img/submarine_horizontal.png');*/
   background-repeat: no-repeat;
   background-position: 0;
   background-size:contain

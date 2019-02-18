@@ -1,26 +1,80 @@
+<!doctype html>
 <head>
-    <script type="text/javascript" src="/js/scripts.js"></script>
 </head>
 <body>
-  <script>
+  <form method="post" action='/place_ship'>  
+
+<h1>Welcome to the Game, <%= @player1_name %>!</h1>
+<h2>Let's Begin by Placing Your Ships.</h2>
+
+
+<h3><div class="player1"></div></h3>
+  
+  <% board_layout = @player1_grid %>
+  <% row_label = @grid_columns %>
+  <% column_label = @grid_rows %>
+ 
+    <div id="ship_selection">
+      <div id="shipyard">
+        Destroyer (5 Cells)<div class="ship" id="destroyer" draggable="true"></div>
+        <div class="spacer"> </div>
+        Battleship (2 Cells)<div class="ship" id="battleship" draggable="true"></div>
+        <div class="spacer"> </div>
+        Cruiser (3 Cells)<div class="ship" id="cruiser" draggable="true"></div>
+        <div class="spacer"> </div>
+        Submarine (4 Cells)<div class="ship" id="submarine" draggable="true"></div>
+      </div>
+    </div>
+
+    <div class="board">
+      <table>
+            <tr>
+            <th> </th>
+            <% row_label.each do |v|%>
+          <th><%= v %></th>
+            <% end %>
+            </tr>
+          
+      
+            <% board_layout.each_with_index do |v, i| %>
+              <tr>
+                <th><%= "#{column_label[i]}" %></th>
+                <% v.each do |v| %>
+                  <% v %>
+        <td name="cell_coordinates" id="['<%= v.row %>', '<%= v.column %>']"><%= v.render_with_ships %></td>                     
+      <% end %>
+      </tr> 
+    <% end %>    
+        </table>  
+      </div>
+  </div>   
+ </div>
+
+
+
+     
+ <button class="button">Submit</button>
+</form>
+
+ <script>
     $(function () {
     var board = "";
     for (var i = 0; i < 1296; i++) {
-        board += "<div class='seaBox' id='<%=@grid_coordinates[0]%>'" + i + "'></div>";
+        board += "<div class='sea_box' id="i"></div>";
     }
     $(".board").append(board);
     
     $('.ship').draggable({
       addClasses: false,
       containment: '.board',
-      snap: ".seaBox",
+      snap: ".sea_box",
       grid: [30, 30],
       revert: "invalid"
 
     });
 
     // on drop append ship
-    $('.seaBox').droppable({
+    $('.sea_box').droppable({
       hoverClass: "red",
       drop: function (event, ui) {
         console.log("droppable " + $(this).attr("id"));
@@ -46,59 +100,7 @@
     /* $('#pos11').append($('#cruiser')) */
 </script>
 
-<h1>Welcome to the Game, <%= @player1_name %>!</h1>
-<h2>Let's Begin by Placing Your Ships.</h2>
-
-
-<h3><div class="player1"></div></h3>
-  
-  <% board_layout = @player1_grid %>
-  <% row_label = @grid_columns %>
-  <% column_label = @grid_rows %>
- 
-    <div id="shipSelection">
-      <div id="shipYard">
-        Destroyer (5 Cells)<div class="ship" id="destroyer"></div>
-        <div class="spacer"> </div>
-        Battleship (2 Cells)<div class="ship" id="battleship"></div>
-        <div class="spacer"> </div>
-        Cruiser (3 Cells)<div class="ship" id="cruiser"></div>
-        <div class="spacer"> </div>
-        Submarine (4 Cells)<div class="ship" id="submarine"></div>
-      </div>
-    </div>
-
-
- 
-    <table class="board">
-            <tr>
-            <th> </th>
-            <% row_label.each do |v|%>
-          <th><%= v %></th>
-            <% end %>
-            </tr>
-          
-      
-            <% board_layout.each_with_index do |v, i| %>
-              <tr>
-                <th><%= "#{column_label[i]}" %></th>
-                <% v.each do |v| %>
-                  <% v %>
-        <td name="cell_coordinates" id="['<%= v.row %>', '<%= v.column %>']"><%= v.render_with_ships %></td>                     
-      <% end %>
-      </tr> 
-    <% end %>    
-        </table>  
-  </div>   
- </div>
-
-
- <form method="post" action='/place_ship'>       
- <button class="button">Submit</button>
-</form>
-
-
-
 </body>
 <footer>
+  
 </footer>
