@@ -1,8 +1,9 @@
 <!doctype html>
 <head>
+
 </head>
 <body>
-  <form method="post" action='/place_ship'>  
+    
 
 <h1>Welcome to the Game, <%= @player1_name %>!</h1>
 <h2>Let's Begin by Placing Your Ships.</h2>
@@ -26,7 +27,7 @@
       </div>
     </div>
 
-    <div class="board">
+    <div >
       <table>
             <tr>
             <th> </th>
@@ -41,7 +42,7 @@
                 <th><%= "#{column_label[i]}" %></th>
                 <% v.each do |v| %>
                   <% v %>
-        <td name="cell_coordinates" id="['<%= v.row %>', '<%= v.column %>']"><%= v.render_with_ships %></td>                     
+        <td class="board" name="cell_coordinates" id="['<%= v.row %>', '<%= v.column %>']"><%= v.render_with_ships %></td>                     
       <% end %>
       </tr> 
     <% end %>    
@@ -49,32 +50,31 @@
       </div>
   </div>   
  </div>
-
-
+   
 
      
- <button class="button">Submit</button>
-</form>
 
- <script>
-    $(function () {
-    var board = "";
-    for (var i = 0; i < 1296; i++) {
-        board += "<div class='sea_box' id="i"></div>";
-    }
-    $(".board").append(board);
-    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+  <script>
+   $(function () {
+   //  var board = "";
+   //  for (var i = 0; i < 100; i++) {
+   //   board += "<div class='sea_box' id='pos" + i + "'></div>";
+   //   }
+   //  $(".board").append(board);
+
     $('.ship').draggable({
       addClasses: false,
       containment: '.board',
-      snap: ".sea_box",
+      // snap: ".sea_box",
       grid: [30, 30],
       revert: "invalid"
 
     });
 
     // on drop append ship
-    $('.sea_box').droppable({
+    $('.board').droppable({
       hoverClass: "red",
       drop: function (event, ui) {
         console.log("droppable " + $(this).attr("id"));
@@ -95,12 +95,20 @@
       $(this).attr("id", ship_id);
 
     });
-    
+     })     
     //example of setting ship 
-    /* $('#pos11').append($('#cruiser')) */
+     // $('#pos11').append($('#cruiser')) 
 </script>
-
+<form method="post" action='/place_ship'>
+ <button class="button">Submit</button>
+</form>
+ 
 </body>
 <footer>
-  
+  <!-- <script src="jquery-3.3.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+ -->
+
+
 </footer>
