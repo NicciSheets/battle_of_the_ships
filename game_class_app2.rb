@@ -379,4 +379,3 @@ end
 # cell = ["B", "1"]
 # p game.vertical_neighbors(cell)
 # p game.horizontal_neighbors(cell)
-

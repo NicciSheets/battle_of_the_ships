@@ -45,6 +45,7 @@ get '/place_ship' do
 	@grid_rows = game.new_player.board.grid_row
 	@grid_columns = game.new_player.board.grid_column
 	@grid_coordinates = game.new_player.coordinates_to_play
+	p "params in place ship get are #{params}"
 
     if game.player1_ships.empty?
 	    	erb :all_ships_placed
@@ -55,7 +56,7 @@ get '/place_ship' do
    	 	erb :place_ship
     end
 end
-
+# !!!!!!!!!!!!!! on each valid drop of each ship, need to somehow grab the entire array of cells that make up each ship and make a big hash out of it for ending run of place_ship function, would not need to know the orientation for this version of function, just the ship type and cells, as in my console method !!!!!!!! Also need to somehow 'light up' the cells with white upon drop, not just the one cell that is targeted by my curser, so each cell information will be passed into this hash
 post '/place_ship' do
 	p "params in place ship post are #{params}"
 	start_cell = []
@@ -201,6 +202,5 @@ get '/winner' do
 	@winner_name = winner[4]
 	erb :winner
 end
-
 
 
