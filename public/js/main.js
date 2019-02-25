@@ -1,6 +1,6 @@
 
 const dragStart = (event) => {
-  event.dataTransfer.setData("text/plain", event.target.id);
+  event.dataTransfer.setData("text/html", event.target.id);
 }
 
 const allowDrop = (event) => {
@@ -10,7 +10,7 @@ const allowDrop = (event) => {
 
 const drop = (event) => {
   event.preventDefault();
-  const data = event.dataTransfer.getData("text/plain");
+  const data = event.dataTransfer.getData("text/html");
   const element = document.querySelector(`#${data}`);
   event.currentTarget.style.background = 'white'
   try {

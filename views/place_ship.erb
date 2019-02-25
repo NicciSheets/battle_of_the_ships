@@ -1,69 +1,37 @@
 <!doctype html>
 <head>
-  <script src="/js/main.js"></script>
+  <!-- <script src="/js/main.js"></script> -->
 
 </head>
 <body>
-    <h2>Welcome to the Game, <%= @player1_name %>!</h2>
-<h3>Let's Begin by Placing Your Ships.</h3>
-
-<h3><div class="player1"></div></h3>
-  
-  <% board_layout = @player1_grid %>
-  <% row_label = @grid_columns %>
-  <% column_label = @grid_rows %>
- 
-    <div id="ship_selection">
-      <div id="shipyard">
-        Destroyer<div name="destroyer" class="ship" id="destroyer" draggable="true" ondragstart="dragStart(event)"></div>
-        <div class="spacer"> </div>
-        Battleship<div name="battleship" class="ship" id="battleship" draggable="true" ondragstart="dragStart(event)"></div>
-        <div class="spacer"> </div>
-        Cruiser<div name="cruiser" class="ship" id="cruiser" draggable="true" ondragstart="dragStart(event)"></div>
-        <div class="spacer"> </div>
-       Submarine <div name="submarine" class="ship" id="submarine" draggable="true" ondragstart="dragStart(event)"></div>
-      </div>
-    </div>
-<form method="post" action="/all_ships_placed.erb">
-    <div >
-      <table class="board">
-            <tr>
-            <th> </th>
-            <% row_label.each do |v|%>
-          <th><%= v %></th>
-            <% end %>
-            </tr>
-          
-      
-            <% board_layout.each_with_index do |v, i| %>
-              <tr>
-                <th><%= "#{column_label[i]}" %></th>
-                <% v.each do |v| %>
-                  <% v %>
-        <td class="droppable" ondragover="allowDrop(event)" ondrop="drop(event)" name="cell_coordinates" id="['<%= v.row %>', '<%= v.column %>']"><%= v.render_with_ships %></td>                     
-      <% end %>
-      </tr> 
-    <% end %>    
-        </table>  
-      </div>
-  </div>   
- </div>
-   
-
-     
-
-
-
- <button>Submit</button>
-</form>
- 
-</body>
-<footer>
- 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
- // change orientation
+   $(function () {
+   //  var board = "";
+   //  for (var i = 0; i < 100; i++) {
+   //   board += "<div class='sea_box' id='pos" + i + "'></div>";
+   //   }
+   //  $(".board").append(board);
+
+    $('.ship').draggable({
+      addClasses: false,
+      containment: '.table',
+      snap: ".board",
+      grid: [30, 30],
+      revert: "invalid"
+
+    });
+
+    // on drop append ship
+    $('.board').droppable({
+      hoverClass: "red",
+      drop: function (event, ui) {
+        console.log("droppable " + $(this).attr("id"));
+      },
+    });
+    
+    // change orientation
     $('.ship').dblclick(function () {
 
       var ship_id = $(this).attr("id");
@@ -77,6 +45,68 @@
       $(this).attr("id", ship_id);
 
     });
-  </script>
+     $('#["A", "1"]').append($('#cruiser')) 
+    
+     })     
+    //example of setting ship 
+
+</script>
+
+<h2>Welcome to the Game, <%= @player1_name %>!</h2>
+<h3>Let's Begin by Placing Your Ships.</h3>
+
+<h3><div class="player1"></div></h3>
+  
+  <% board_layout = @player1_grid %>
+  <% row_label = @grid_columns %>
+  <% column_label = @grid_rows %>
+ 
+    
+
+    <div>
+      <table class="table">
+            <tr>
+            <th> </th>
+            <% row_label.each do |v|%>
+          <th><%= v %></th>
+            <% end %>
+            </tr>
+          
+      
+            <% board_layout.each_with_index do |v, i| %>
+              <tr>
+                <th><%= "#{column_label[i]}" %></th>
+                <% v.each do |v| %>
+                  <% v %>
+        <td class="board" name="cell_coordinates" id="['<%= v.row %>', '<%= v.column %>']"><%= v.render_with_ships %></td>                     
+      <% end %>
+      </tr> 
+    <% end %>    
+        </table>  
+      </div>
+  </div>   
+ </div>
+   <div id="ship_selection">
+      <div id="shipyard">
+        Destroyer<div name="destroyer" class="ship" id="destroyer"  ><div>
+        <div class="spacer"> </div>
+        Battleship<div name="battleship" class="ship" id="battleship" ></div>
+        <div class="spacer"> </div>
+        Cruiser<div name="cruiser" class="ship" id="cruiser" ></div>
+        <div class="spacer"> </div>
+       Submarine <div name="submarine" class="ship" id="submarine" ></div>
+      </div>
+    </div>
+
+     
+
+
+<form method="post" action="/all_ships_placed">
+ <button>Submit</button>
+</form>
+ 
+</body>
+<footer>
+ 
 
 </footer>

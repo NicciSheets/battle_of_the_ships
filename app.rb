@@ -47,33 +47,42 @@ get '/place_ship' do
 	@grid_coordinates = game.new_player.coordinates_to_play
 	p "params in place ship get are #{params}"
 
-    if game.player1_ships.empty?
-	    	erb :all_ships_placed
-    else
-        @ship = game.ship_to_place
-        @ship_type = @ship.type.to_s.capitalize
-        @ship_size = @ship.length
-   	 	erb :place_ship
-    end
+    # if game.player1_ships.empty?
+	   #  	erb :all_ships_placed
+    # else
+    #     @ship = game.ship_to_place
+    #     @ship_type = @ship.type.to_s.capitalize
+    #     @ship_size = @ship.length
+   	#  	erb :place_ship
+    # end
+    erb :place_ship
+end
+
+
+post '/all_ships_placed' do
+	ship = params[:ship]
+	cell_coordinates = params[:cell_coordinates]
+	p "ship is #{ship}"
+	erb :all_ships_placed
 end
 # !!!!!!!!!!!!!! on each valid drop of each ship, need to somehow grab the entire array of cells that make up each ship and make a big hash out of it for ending run of place_ship function, would not need to know the orientation for this version of function, just the ship type and cells, as in my console method !!!!!!!! Also need to somehow 'light up' the cells with white upon drop, not just the one cell that is targeted by my curser, so each cell information will be passed into this hash
-post '/place_ship' do
-	p "params in place ship post are #{params}"
-	start_cell = []
-	start_cell << params[:row] << params[:column]
-	orientation = params[:orientation]
+# post '/place_ship' do
+# 	p "params in place ship post are #{params}"
+# 	start_cell = []
+# 	start_cell << params[:row] << params[:column]
+# 	orientation = params[:orientation]
 
- 	begin  
-    	if game.place_ship(start_cell, orientation) == "Invalid Coordinates"
-    		redirect '/place_ship'
-    	else
-    		game.place_ship(start_cell, orientation)
-    	end
-    	game.remove_placed_ship
-    end
+#  	begin  
+#     	if game.place_ship(start_cell, orientation) == "Invalid Coordinates"
+#     		redirect '/place_ship'
+#     	else
+#     		game.place_ship(start_cell, orientation)
+#     	end
+#     	game.remove_placed_ship
+#     end
 
-    redirect '/place_ship'
-end
+#     redirect '/place_ship'
+# end
 
 get '/fire_shot' do
 	session[:placing_ships] = false

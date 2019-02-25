@@ -99,7 +99,7 @@ table {
 }
 
 .board {
-  float:left;
+  /*float:left;*/
   font-weight: bold;
   z-index: -50;
   width: 442px;
