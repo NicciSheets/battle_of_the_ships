@@ -45,8 +45,7 @@ get '/place_ship' do
 	@grid_rows = game.new_player.board.grid_row
 	@grid_columns = game.new_player.board.grid_column
 	@grid_coordinates = game.new_player.coordinates_to_play
-	p "params in place ship get are #{params}"
-
+	ship = params[:ship]
     # if game.player1_ships.empty?
 	   #  	erb :all_ships_placed
     # else
@@ -55,11 +54,14 @@ get '/place_ship' do
     #     @ship_size = @ship.length
    	#  	erb :place_ship
     # end
+    p "params in place ship get are #{params}"
+
     erb :place_ship
 end
 
 
 post '/all_ships_placed' do
+	p "params in all_ships_placed post are #{params}"
 	ship = params[:ship]
 	cell_coordinates = params[:cell_coordinates]
 	p "ship is #{ship}"

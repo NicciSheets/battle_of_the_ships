@@ -45,7 +45,7 @@
       $(this).attr("id", ship_id);
 
     });
-     $('#["A", "1"]').append($('#cruiser')) 
+     // $('#["A", "1"]').append($('#cruiser')) 
 
      })     
     //example of setting ship 
@@ -88,14 +88,14 @@
                 <th><%= "#{column_label[i]}" %></th>
                 <% v.each do |v| %>
                   <% v %>
-        <td class="board" name="cell_coordinates" id="['<%= v.row %>', '<%= v.column %>']"><%= v.render_with_ships %></td>                     
+        <td class="board" name="cell_coordinates" id="['<%= v.row %>', '<%= v.column %>']" value="['<%= v.row %>', '<%= v.column %>']" form="cell_coordinates"><%= v.render_with_ships %></td>                     
       <% end %>
       </tr> 
     <% end %>    
         </table>  
   </div>
   <!-- </div>    -->
-<form method="post" action="/all_ships_placed">
+<form method="post" action="/all_ships_placed" id="cell_coordinates">
  <button>Submit</button>
 </form>
    
