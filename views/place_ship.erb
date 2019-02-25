@@ -8,16 +8,10 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
    $(function () {
-   //  var board = "";
-   //  for (var i = 0; i < 100; i++) {
-   //   board += "<div class='sea_box' id='pos" + i + "'></div>";
-   //   }
-   //  $(".board").append(board);
-
     $('.ship').draggable({
       addClasses: false,
       containment: '.table',
-      snap: ".board",
+      snap: '.board',
       grid: [30, 30],
       revert: "invalid"
 
@@ -45,17 +39,11 @@
       $(this).attr("id", ship_id);
 
     });
-     // $('#["A", "1"]').append($('#cruiser')) 
-
      })     
-    //example of setting ship 
-
 </script>
 
 <h2>Welcome to the Game, <%= @player1_name %>!</h2>
 <h3>Let's Begin by Placing Your Ships.</h3>
-
-<!-- <h3><div class="player1"></div></h3> -->
 
 <div id="ship_selection">
       <div id="shipyard">
@@ -98,13 +86,7 @@
 <form method="post" action="/all_ships_placed" id="cell_coordinates">
  <button>Submit</button>
 </form>
-   
-
-     
-
-
-
- 
+    
 </body>
 <footer>
  
