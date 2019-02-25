@@ -46,7 +46,7 @@
 
     });
      $('#["A", "1"]').append($('#cruiser')) 
-    
+
      })     
     //example of setting ship 
 
@@ -55,15 +55,25 @@
 <h2>Welcome to the Game, <%= @player1_name %>!</h2>
 <h3>Let's Begin by Placing Your Ships.</h3>
 
-<h3><div class="player1"></div></h3>
-  
+<!-- <h3><div class="player1"></div></h3> -->
+
+<div id="ship_selection">
+      <div id="shipyard">
+        Destroyer<div name="destroyer" class="ship" id="destroyer"  ></div>
+        <div class="spacer"> </div>
+        Battleship<div name="battleship" class="ship" id="battleship" ></div>
+        <div class="spacer"> </div>
+        Cruiser<div name="cruiser" class="ship" id="cruiser" ></div>
+        <div class="spacer"> </div>
+       Submarine <div name="submarine" class="ship" id="submarine" ></div>
+      </div>
+</div>
+
   <% board_layout = @player1_grid %>
   <% row_label = @grid_columns %>
   <% column_label = @grid_rows %>
- 
-    
 
-    <div>
+  <div>
       <table class="table">
             <tr>
             <th> </th>
@@ -83,27 +93,17 @@
       </tr> 
     <% end %>    
         </table>  
-      </div>
-  </div>   
- </div>
-   <div id="ship_selection">
-      <div id="shipyard">
-        Destroyer<div name="destroyer" class="ship" id="destroyer"  ><div>
-        <div class="spacer"> </div>
-        Battleship<div name="battleship" class="ship" id="battleship" ></div>
-        <div class="spacer"> </div>
-        Cruiser<div name="cruiser" class="ship" id="cruiser" ></div>
-        <div class="spacer"> </div>
-       Submarine <div name="submarine" class="ship" id="submarine" ></div>
-      </div>
-    </div>
+  </div>
+  <!-- </div>    -->
+<form method="post" action="/all_ships_placed">
+ <button>Submit</button>
+</form>
+   
 
      
 
 
-<form method="post" action="/all_ships_placed">
- <button>Submit</button>
-</form>
+
  
 </body>
 <footer>

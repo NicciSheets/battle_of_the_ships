@@ -88,7 +88,7 @@ th, td
 table {
    /*float:left;*/
   font-weight: bold;
-  z-index: -50;
+  /*z-index: -50;*/
   width: 442px;
   height: 442px;
   margin: 8px;
@@ -136,7 +136,7 @@ table {
 }
 
 #draggable {
-  float: left;
+  /*float: left;*/
   width: 20px;
   height: 20px;
   background-color: black;
