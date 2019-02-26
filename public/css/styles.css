@@ -16,6 +16,7 @@ table, .board
 {
   /*height: 1rem;*/
   /*width: 8rem;*/
+  /*position: absolute;*/
  font-weight: bold;
     text-align: center;
     border-collapse: collapse;
@@ -139,7 +140,7 @@ th, td
 }
 
 #draggable {
-  /*float: left;*/
+  float: left;
   width: 20px;
   height: 20px;
   background-color: black;
