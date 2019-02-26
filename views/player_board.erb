@@ -5,12 +5,21 @@
   
   <% board_layout = @player1_grid %>
   <% row_label = @grid_columns %>
+  <% row_label2 = [] %>
+  <% row_label.each do |v| %>
+      <% if v.length == 1 %>
+          <% row_label2 << " #{v}" %>
+      <% else %>
+          <% row_label2 << v %>
+      <% end %>
+  <% end %>
+  <% row_label2 %>
   <% column_label = @grid_rows %>
 
     <table id="player1_table">
             <tr>
             <th> </th>
-            <% row_label.each do |v|%>
+            <% row_label2.each do |v|%>
           <th align="justify" padding="5px"><%= v %></th>
             <% end %>
             </tr>
