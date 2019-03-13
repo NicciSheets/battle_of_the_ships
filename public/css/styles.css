@@ -20,10 +20,11 @@ table, .board
  font-weight: bold;
     text-align: center;
     border-collapse: collapse;
-    z-index: -50;
-    width: 430px;
+    /*z-index: -50;*/
+    /*width: 430px;*/
     height: 0px;
-    margin: 0px;
+    margin: 30px;
+    /*float: right;*/
 }
 
 table, th, td
@@ -33,7 +34,8 @@ table, th, td
 
 th, td
 {
-  padding: 3px;
+  padding: 0px;
+  width: 30px;
 }
 
 
@@ -79,6 +81,7 @@ th, td
 
 .grid-item1 {
   grid-column: 1 / 2;
+
 }
 
 .grid-item2 {
@@ -87,6 +90,11 @@ th, td
 
 .key {
   font-size: 0.9rem;
+}
+
+.instructions {
+  font-weight: bold;
+  font-size: 12px;
 }
 
 /*table {*/
@@ -126,7 +134,7 @@ th, td
 
 #ship_selection {
  margin-top: 7px;
-    width: 215px;
+    width: 200px;
     float: left;
     text-align: left;
 }

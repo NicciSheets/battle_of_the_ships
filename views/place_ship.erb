@@ -1,32 +1,49 @@
 <!doctype html>
+
+
 <head>
-  <!-- <script src="/js/main.js"></script> -->
+
 
 </head>
 <body>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-   $(function () {
+$(function () {
+
+// makes the ship class draggable with jquery ui
+$(function () {
     $('.ship').draggable({
-      addClasses: false,
-      containment: '.table',
-      snap: '.board',
-      grid: [30, 30],
-      revert: "invalid"
-
+        containment: '.table',
+        // cursor: 'crosshair',
+        revert: "invalid",
+        snap: '.board',
+        cursorAt: { left: 0 },
+        grid: [30, 30], 
+        // appendTo: '.board'
+        // helper: 'original',
+        handle: "p", 
+       // helper: function() {
+        // debugger;
+        // return $("<div></div>").append($(this).find('#destroyer').clone());
+    // });
     });
-
-    // on drop append ship
-    $('.board').droppable({
-      hoverClass: "red",
-      drop: function (event, ui) {
-        console.log("droppable " + $(this).attr("id"));
-      },
+});
+// attempting to make the row and column headers offlimits to being droppable
+$(function () {
+    $( '.no_drop').droppable({
+      disabled: true
     });
-    
-    // change orientation
-    $('.ship').dblclick(function () {
+});
+$(function () {
+    $( '.donotwant').droppable({
+      disabled: true
+    });
+});
+// unsure, can't remember what this does!!
+$( "div, p" ).disableSelection();
+// This is for the vertical option of each ship, to choose a vertical coordination, double click the ship - this also changes the id to [insertShipId]+V
+$('.ship').dblclick(function () {
 
       var ship_id = $(this).attr("id");
       var height = $(this).css("height");
@@ -39,22 +56,36 @@
       $(this).attr("id", ship_id);
 
     });
-     })     
+// makes the board class droppable and returns 'droppable + cell coordinate' in console.log with jquery ui
+$(function () {
+    $('.board').droppable({
+      // hoverClass: "red",
+      tolerance: "pointer",
+      drop: function (event, ui) {
+        console.log("droppable " + $(this).attr("id"));
+      },
+    });
+});
+})
 </script>
 
-<h2>Welcome to the Game, <%= @player1_name %>!</h2>
-<h3>Let's Begin by Placing Your Ships.</h3>
-
+<div class="whole_page">
 <div id="ship_selection">
-      <div id="shipyard">
-        Destroyer<div name="destroyer" class="ship" id="destroyer"  ></div>
+        <div id="shipyard">
+        Destroyer<div name="destroyer" class="ship" id="destroyer"  ><p style="text-align: center; background-color: white; margin-top: 2px; width: 30px">D</p></div>
         <div class="spacer"> </div>
-        Battleship<div name="battleship" class="ship" id="battleship" ></div>
+        Battleship<div name="battleship" class="ship" id="battleship" ><p style="text-align: center; background-color: white; margin-top: 2px; width: 30px">B</p></div>
         <div class="spacer"> </div>
-        Cruiser<div name="cruiser" class="ship" id="cruiser" ></div>
+        Cruiser<div name="cruiser" class="ship" id="cruiser" ><p style="text-align: center; background-color: white; margin-top: 2px; width: 30px">C</p></div>
         <div class="spacer"> </div>
-       Submarine <div name="submarine" class="ship" id="submarine" ></div>
-      </div>
+        Submarine <div name="submarine" class="ship" id="submarine" ><p style="text-align: center; background-color: white; margin-top: 2px; width: 30px">S</p></div>
+        </div>
+    <div class="instructions">
+        <p><span style="color:red">*</span>Drag each ship onto your board by selecting its white box.</p>
+        <p><span style="color:red">*</span>Double-click to rotate a ship horizontally/vertically.</p>
+        <p><span style="color:red">*</span>Ships may not overlap one another.</p>
+        <p><span style="color:red">*</span>Ships may be placed horizontally or vertically only.</p>
+    </div>
 </div>
 
   <% board_layout = @player1_grid %>
@@ -62,7 +93,7 @@
   <% row_label2 = [] %>
   <% row_label.each do |v| %>
       <% if v.length == 1 %>
-          <% row_label2 << " #{v}" %>
+          <% row_label2 << " #{v} " %>
       <% else %>
           <% row_label2 << v %>
       <% end %>
@@ -71,19 +102,18 @@
   <% column_label = @grid_rows %>
 
   <div>
-   
       <table class="table">
             <tr>
             <th> </th>
             <% row_label2.each do |v|%>
-          <th><%= v %></th>
+          <th class="no_drop" style="padding-bottom: 3px" ><%= "#{v} " %></th>
             <% end %>
             </tr>
           
       
             <% board_layout.each_with_index do |v, i| %>
               <tr>
-                <th><%= "#{column_label[i]}" %></th>
+                <th class="donotwant" style="padding: 4px"><%= "#{column_label[i]}  " %></th>
                 <% v.each do |v| %>
                   <% v %>
         <td class="board" name="cell_coordinates" id="['<%= v.row %>', '<%= v.column %>']" value="['<%= v.row %>', '<%= v.column %>']" form="cell_coordinates"><%= v.render_with_ships %></td>                     
@@ -92,10 +122,12 @@
     <% end %>    
         </table>  
   </div>
-  <!-- </div>    -->
-<form method="post" action="/all_ships_placed" id="cell_coordinates">
+
+<form style="margin-left: 0px;" method="post" action="/all_ships_placed" id="cell_coordinates">
  <button>Submit</button>
 </form>
+
+</div>
     
 </body>
 <footer>

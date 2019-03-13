@@ -39,6 +39,7 @@ get '/place_ship' do
 	session[:placing_ships] = false
 	session[:logo] =  false
 	# session[:welcome_rules] = true
+	# session[:place_ship] =  true
 	@player1_name = game.player1_name
 	@grid_size = game.new_player.board.grid_size
 	@player1_grid = game.new_player.board.grid

@@ -16,27 +16,28 @@
   <% row_label2 %>
   <% column_label = @grid_rows %>
 
-    <table id="player1_table">
+  <div>
+      <table class="table">
             <tr>
             <th> </th>
             <% row_label2.each do |v|%>
-          <th align="justify" padding="5px"><%= v %></th>
+          <th style="padding-bottom: 3px"><%= "#{v} " %></th>
             <% end %>
             </tr>
           
       
             <% board_layout.each_with_index do |v, i| %>
               <tr>
-                <th><%= "#{column_label[i]}" %></th>
+                <th style="padding:4px"><%= "#{column_label[i]}  " %></th>
                 <% v.each do |v| %>
                   <% v %>
-        <td name="cell_coordinates" class="['<%= v.row %>', '<%= v.column %>']" id="<%= v.coordinates %>"><%= v.render_with_ships %></td>                     
+        <td name="cell_coordinates" class="board" id="['<%= v.row %>', '<%= v.column %>']" value="['<%= v.row %>', '<%= v.column %>']"><%= v.render_with_ships %></td>                     
       <% end %>
       </tr> 
     <% end %>    
         </table>            
-
-
+</div>
+ 
 <div class="key">
 <h3>Key:</h3>
 <p><span style="font-weight: bold;"> . </span> = Unknown Status, Yet to be Fired Upon </p>
