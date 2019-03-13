@@ -9,7 +9,7 @@ enable :sessions
 game = Game.new
 
 get '/' do
-	session[:opponent_board_display], session[:placing_ships] = false
+	session[:opponent_board_display], session[:placing_ships], session[:new_game] = false
 	session[:logo] = true
 	erb :register
 end
@@ -38,8 +38,8 @@ end
 get '/place_ship' do
 	session[:placing_ships] = false
 	session[:logo] =  false
-	# session[:welcome_rules] = true
-	# session[:place_ship] =  true
+	session[:new_game] = true
+	
 	@player1_name = game.player1_name
 	@grid_size = game.new_player.board.grid_size
 	@player1_grid = game.new_player.board.grid
@@ -88,7 +88,7 @@ end
 # end
 
 get '/fire_shot' do
-	session[:placing_ships] = false
+	session[:placing_ships], session[:new_game] = false
 	session[:opponent_board_display] = true
 	
 	@opponent_name = game.opponent_name

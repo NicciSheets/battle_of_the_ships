@@ -19,9 +19,9 @@ $(function () {
         revert: "invalid",
         snap: '.board',
         // cursorAt: { left: 0 },
-        grid: [30, 30], 
+        grid: [20, 20], 
         // helper: 'original',
-        handle: "p", 
+        handle: 'p', 
     });
 });
 // attempting to make the row and column headers offlimits to being droppable
@@ -49,6 +49,7 @@ $('.ship').dblclick(function () {
       $(this).css("height", width);
       $(this).css("width", height);
       $(this).attr("id", ship_id);
+      console.log($('.ship').attr("id"));
 
     });
 // makes the board class droppable and returns 'droppable + cell coordinate' in console.log with jquery ui
@@ -58,7 +59,8 @@ $(function () {
       tolerance: "pointer",
       drop: function (event, ui) {
         // position("left");
-        console.log($('.ship').attr("id") + $(this).attr("id"));
+        $('.ship').attr("value", $(this).attr("id"));
+        console.log($('.ship').attr("id"), $(this).attr("id"));
       },
     });
 });
@@ -76,12 +78,12 @@ $(function () {
         <div class="spacer"> </div>
         Submarine <div name="submarine" class="ship" id="submarine" ><p style="text-align: center; background-color: white; margin-top: 2px; width: 30px">S</p></div>
         </div>
-    <div class="instructions">
+   <!--  <div class="instructions">
         <p><span style="color:red">*</span>Drag each ship onto your board by selecting its white box.</p>
         <p><span style="color:red">*</span>Double-click to rotate a ship horizontally/vertically.</p>
         <p><span style="color:red">*</span>Ships may not overlap one another.</p>
         <p><span style="color:red">*</span>Ships may be placed horizontally or vertically only.</p>
-    </div>
+    </div> -->
 </div>
 
   <% board_layout = @player1_grid %>
@@ -124,9 +126,10 @@ $(function () {
 </form>
 
 </div>
+
     
 </body>
+
 <footer>
- 
 
 </footer>

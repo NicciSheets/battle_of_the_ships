@@ -1,3 +1,15 @@
 <% if session[:logo] %>
 	<img src='/img/battleship.jpg' style="width:800px;height:500px;">
 <% end %>
+
+<% if session[:new_game] %>
+	 <a href="/new_game">New Game</a>
+	  <div class="instructions">
+        <p><span style="color:red">*</span>Drag each ship onto your board by selecting its white box.</p>
+        <p><span style="color:red">*</span>Double-click to rotate a ship horizontally/vertically.</p>
+        <p><span style="color:red">*</span>Ships may not overlap one another.</p>
+        <p><span style="color:red">*</span>Ships may be placed horizontally or vertically only.</p>
+    </div>
+<% end %>
+
+
