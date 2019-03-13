@@ -15,18 +15,13 @@ $(function () {
 $(function () {
     $('.ship').draggable({
         containment: '.table',
-        // cursor: 'crosshair',
+        cursor: 'crosshair',
         revert: "invalid",
         snap: '.board',
-        cursorAt: { left: 0 },
+        // cursorAt: { left: 0 },
         grid: [30, 30], 
-        // appendTo: '.board'
         // helper: 'original',
         handle: "p", 
-       // helper: function() {
-        // debugger;
-        // return $("<div></div>").append($(this).find('#destroyer').clone());
-    // });
     });
 });
 // attempting to make the row and column headers offlimits to being droppable
@@ -62,7 +57,8 @@ $(function () {
       // hoverClass: "red",
       tolerance: "pointer",
       drop: function (event, ui) {
-        console.log("droppable " + $(this).attr("id"));
+        // position("left");
+        console.log($('.ship').attr("id") + $(this).attr("id"));
       },
     });
 });
