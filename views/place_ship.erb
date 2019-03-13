@@ -49,7 +49,8 @@ $('.ship').dblclick(function () {
       $(this).css("height", width);
       $(this).css("width", height);
       $(this).attr("id", ship_id);
-      console.log($('.ship').attr("id"));
+      $('.ship').attr("value", $('.table').attr("id"));
+      console.log($('.ship').attr("id"), $('.ship').attr("value"));
 
     });
 // makes the board class droppable and returns 'droppable + cell coordinate' in console.log with jquery ui
